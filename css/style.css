@@ -635,7 +635,7 @@ body.nav-open {
 
 .hero-line {
   grid-area: 1 / 1;
-  max-width: 16ch;
+  max-width: 19ch;
   font-family: var(--font-display);
   font-size: var(--text-hero);
   font-weight: 500;
@@ -783,6 +783,14 @@ body.nav-open {
     linear-gradient(160deg, var(--color-navy), color-mix(in srgb, var(--color-navy) 72%, var(--color-steel-blue)));
 }
 
+/* Steel-Blue-Moment — hellere Variante für Abwechslung zu Navy-Duotone */
+.media--steel {
+  background:
+    radial-gradient(120% 90% at 20% 15%, color-mix(in srgb, var(--color-steel-blue) 85%, var(--color-cream)), transparent 60%),
+    radial-gradient(100% 80% at 85% 90%, color-mix(in srgb, var(--color-navy) 40%, var(--color-steel-blue)), transparent 65%),
+    linear-gradient(155deg, var(--color-steel-blue), color-mix(in srgb, var(--color-steel-blue) 70%, var(--color-navy)));
+}
+
 /* Feines Fensterlicht als Overlay */
 .media::after {
   content: "";
@@ -897,6 +905,57 @@ body.nav-open {
 .service-card .card-icon svg {
   width: 100%;
   height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   9b. Warme Sektion & Trust-Badges — Farbvielfalt jenseits Cream/Navy
+   -------------------------------------------------------------------------- */
+.section--warm {
+  background: linear-gradient(155deg, var(--color-tan), var(--color-brown));
+  color: var(--color-cream);
+}
+
+.section--warm h2,
+.section--warm .eyebrow {
+  color: var(--color-cream);
+}
+
+.section--warm .eyebrow {
+  color: color-mix(in srgb, var(--color-cream) 80%, var(--color-navy));
+}
+
+.badge-strip {
+  display: grid;
+  gap: 1px;
+  background: color-mix(in srgb, var(--color-cream) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
+}
+
+.badge-item {
+  padding: 1.75rem 1.5rem;
+  background: linear-gradient(155deg, var(--color-tan), var(--color-brown));
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.badge-item .badge-icon {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--color-cream);
+}
+
+.badge-item .badge-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.badge-item p {
+  font-size: var(--text-small);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-cream);
 }
 
 /* --------------------------------------------------------------------------
@@ -1113,6 +1172,81 @@ body.nav-open {
   line-height: 1.75;
   color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
   max-width: 58ch;
+}
+
+/* --------------------------------------------------------------------------
+   12b. Projekte & Referenzen
+   -------------------------------------------------------------------------- */
+.empty-state {
+  padding: clamp(2rem, 4vw, 3.5rem);
+  border: 1px solid var(--line-soft);
+  background: color-mix(in srgb, var(--color-tan) 7%, transparent);
+  max-width: 46rem;
+}
+
+.empty-state p {
+  font-size: var(--text-small);
+  line-height: 1.8;
+  color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
+}
+
+.empty-state p + p {
+  margin-top: 1.1rem;
+}
+
+.empty-state .btn {
+  margin-top: 1.75rem;
+}
+
+.project-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: var(--space-inner);
+}
+
+.project-card {
+  padding: 2rem 1.75rem;
+  border: 1px dashed color-mix(in srgb, var(--color-tan) 55%, transparent);
+  background: color-mix(in srgb, var(--color-cream) 55%, transparent);
+}
+
+.project-card .card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-brown);
+  margin-bottom: 1.25rem;
+}
+
+.project-card .card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.project-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+.project-card p {
+  font-size: var(--text-small);
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
+}
+
+.testimonial-placeholder {
+  padding: clamp(2rem, 4vw, 3.5rem);
+  text-align: center;
+  border-top: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
+}
+
+.testimonial-placeholder p {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+  line-height: 1.5;
+  max-width: 32rem;
+  margin-inline: auto;
+  color: var(--color-cream);
 }
 
 /* --------------------------------------------------------------------------
@@ -1573,6 +1707,14 @@ body.nav-open {
 
   .process-step h3 {
     grid-column: 2;
+  }
+
+  .badge-strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
