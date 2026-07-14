@@ -1,0 +1,17 @@
+# 1. Git im Ordner aktivieren
+git init
+
+# 2. Alle von Claude erstellten Dateien für den Upload markieren
+git add .
+
+# 3. Die Dateien lokal speichern (Commit erstellen)
+git commit -m "Erster Commit mit Claudes Code"
+
+# 4. Den Hauptzweig auf "main" benennen
+git branch -M main
+
+# 5. Dein lokales Projekt mit dem leeren GitHub-Repository verknüpfen
+git remote add origin https://github.com/aiALG01/WebReitverein.git
+
+# 6. Alles zu GitHub hochladen
+git push -u origin main
