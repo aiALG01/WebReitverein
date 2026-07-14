@@ -76,13 +76,28 @@ Vertrauen & Professionalität, Cream/Tan/Brown für Wärme & Exklusivität.
 Deutsche Texte, kein Lorem Ipsum. Ruhig, selbstbewusst, hochwertig. Kurze
 Sätze. Verlässlichkeit und Handwerk statt lauter Werbesprache.
 
+## SEO & GEO
+
+- JSON-LD auf jeder Seite: `ProfessionalService`/Organisation, `Service` je
+  Leistung, `FAQPage` (mit sichtbarem Akkordeon auf `leistungen.html`),
+  `AboutPage`/`Person` (Founderin), `ContactPage`, `BreadcrumbList`.
+- Open Graph, Twitter Cards, Canonical-Tags auf jeder Seite.
+- `robots.txt` (Full-Crawl, verweist auf Sitemap) und `sitemap.xml`
+  (die vier indexierbaren Seiten; Rechtsseiten bewusst ausgenommen).
+- FAQ-Sektion als natives `<details>`/`<summary>` — kein JS nötig, Inhalt
+  deckt sich mit dem FAQPage-Schema.
+
 ## Getroffene Annahmen (bei Bedarf ändern)
 
 1. **Firmenname:** „Studio Gerth" — der Platzhalter `[Firmenname]` war nicht
    belegt; Rückfrage war technisch nicht möglich.
-2. **Impressum/Kontakt:** reale Daten aus dem Lebenslauf der Founderin —
+2. **Domain:** Platzhalter `https://www.studio-gerth.de` für Canonicals,
+   Open-Graph-URLs, JSON-LD-`@id`/`url`, `robots.txt` und `sitemap.xml` —
+   vor Launch durch die echte Domain ersetzen.
+3. **Impressum/Kontakt:** reale Daten aus dem Lebenslauf der Founderin —
    vor Veröffentlichung prüfen (siehe Kommentare in den Rechtsseiten).
-3. **Bilder:** CSS-Texturen als Platzhalter; erwartete Fotografien sind in
-   `assets/README.md` dokumentiert.
-4. **Fonts:** vorerst per CDN (Fontshare/Google); Empfehlung für den
+4. **Bilder:** CSS-Texturen als Platzhalter; erwartete Fotografien sind in
+   `assets/README.md` dokumentiert, inkl. `og-image.jpg` (1200×630) für
+   Social-Previews.
+5. **Fonts:** vorerst per CDN (Fontshare/Google); Empfehlung für den
    Echtbetrieb: lokal einbinden (Datenschutz), siehe `assets/README.md`.

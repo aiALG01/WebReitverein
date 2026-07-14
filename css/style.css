@@ -1057,6 +1057,65 @@ body.nav-open {
 }
 
 /* --------------------------------------------------------------------------
+   12b. FAQ (native <details>/<summary>, kein JS nötig)
+   -------------------------------------------------------------------------- */
+.faq-list {
+  display: grid;
+  max-width: 46rem;
+}
+
+.faq-item {
+  border-top: 1px solid var(--line-soft);
+  padding-block: 1.5rem;
+}
+
+.faq-item:last-child {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--color-navy);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  flex: none;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-tan);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--color-steel-blue);
+  outline-offset: 4px;
+}
+
+.faq-item p {
+  margin-top: 1rem;
+  font-size: var(--text-small);
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
+  max-width: 58ch;
+}
+
+/* --------------------------------------------------------------------------
    13. Über mich
    -------------------------------------------------------------------------- */
 .about-grid {
