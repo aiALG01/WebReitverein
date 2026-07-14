@@ -249,9 +249,12 @@
            01 · WEBSITE-ERSTELLUNG
            ============================================================ -->
       <article class="service-detail" id="webdesign" aria-labelledby="webdesign-heading">
-        <div class="media media--silk detail-media" data-reveal role="img" aria-label="Platzhalter: Editorial-Fotografie einer fokussierten Arbeitsszene am Schreibtisch, warmes Fensterlicht">
-          <span class="media-caption">Handwerk vor Werkzeug</span>
-        </div>
+        <figure class="media media--silk detail-media" data-reveal>
+          <!-- Sobald assets/portrait-founder-working.jpg im Repo liegt (siehe assets/README.md),
+               wird das Bild automatisch angezeigt; bis dahin bleibt die Seiden-Textur sichtbar. -->
+          <img src="assets/portrait-founder-working.jpg" alt="Anna Lena Gerth bei der konzentrierten Arbeit am Laptop" loading="lazy" width="1600" height="1200" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">
+          <figcaption class="media-caption">Handwerk vor Werkzeug</figcaption>
+        </figure>
         <div data-reveal style="--reveal-delay: 0.1s">
           <div class="detail-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
