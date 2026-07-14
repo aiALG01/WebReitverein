@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="de" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Gerth — Websites, Hosting &amp; Datenschutz aus einer Hand</title>
+  <meta name="description" content="Studio Gerth gestaltet ruhige, hochwertige Websites und betreut sie dauerhaft: Hosting, DSGVO-Datenschutz, Wartung und Aktualisierung. Verlässlichkeit statt Werbesprache.">
+
+  <!-- Display-Fonts: Melodrama & Britney (Indian Type Foundry, kostenfrei via Fontshare) -->
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=melodrama@400,500,600&amp;f[]=britney@400,700&amp;display=swap" rel="stylesheet">
+  <!-- Body-Font: Inter (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+
+  <!-- Favicon: Monogramm "G." als Inline-SVG (keine Bilddatei nötig) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23072768'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' fill='%23F4EAE1' text-anchor='middle'%3EG.%3C/text%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header header-on-dark">
+    <div class="container container--wide header-inner">
+      <a class="brand" href="index.html">Studio Gerth<span class="brand-dot">.</span></a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="nav-list">
+          <li><a href="index.html" aria-current="page">Start</a></li>
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="ueber-mich.html">Über mich</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+          <li><a class="nav-cta" href="kontakt.html">Beratung anfragen</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Menü öffnen" aria-controls="nav-overlay">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobiles Vollbild-Menü -->
+  <nav class="nav-overlay" id="nav-overlay" aria-label="Mobile Navigation">
+    <ul>
+      <li><a href="index.html" aria-current="page">Start</a></li>
+      <li><a href="leistungen.html">Leistungen</a></li>
+      <li><a href="ueber-mich.html">Über mich</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <p class="overlay-meta">
+      Studio Gerth · Gera<br>
+      <a href="mailto:lena.gerth@outlook.de">lena.gerth@outlook.de</a>
+    </p>
+  </nav>
+
+  <main id="main">
+
+    <!-- ================================================================
+         HERO — Scroll-Bühne: drei Statement-Zeilen, Navy → Cream
+         (bei prefers-reduced-motion: eine statische Zeile, kein Effekt)
+         ================================================================ -->
+    <section class="hero" data-hero aria-label="Einführung">
+      <div class="hero-stage">
+        <div class="hero-silk" aria-hidden="true"></div>
+        <div class="hero-wash" aria-hidden="true"></div>
+
+        <p class="hero-kicker">Studio Gerth — Websites · Hosting · Datenschutz</p>
+
+        <div class="hero-lines">
+          <p class="hero-line">Discipline <span class="script">today</span>.</p>
+          <p class="hero-line">Success <span class="script">tomorrow</span>.</p>
+          <h1 class="hero-line hero-line--final">Websites mit <span class="script">Haltung</span>.</h1>
+        </div>
+
+        <p class="hero-cue" aria-hidden="true">Scrollen</p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         INTRO
+         ================================================================ -->
+    <section class="section" aria-labelledby="intro-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Studio Gerth</span>
+          <h2 id="intro-heading">Ihre Website ist kein Projekt.<br>Sie ist ein Versprechen.</h2>
+        </div>
+        <p class="lead" data-reveal style="--reveal-delay: 0.1s">
+          Wir gestalten Websites, die Ihr Unternehmen so zeigen, wie es arbeitet:
+          klar, verlässlich, hochwertig. Und wir bleiben — mit Hosting,
+          Datenschutz und laufender Pflege aus einer Hand.
+        </p>
+        <p data-reveal style="--reveal-delay: 0.2s; margin-top: 2rem">
+          <a class="link-line" href="ueber-mich.html">Warum wir so arbeiten</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         DREI KERNLEISTUNGEN
+         ================================================================ -->
+    <section class="section section--flush" aria-labelledby="services-heading" style="padding-bottom: var(--space-section)">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Leistungen</span>
+          <h2 id="services-heading">Drei Dinge. Richtig gemacht.</h2>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card" data-reveal>
+            <span class="card-index">01</span>
+            <div class="card-icon" aria-hidden="true">
+              <!-- Feines Linien-Icon: Gestaltungsraster -->
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                <rect x="6" y="8" width="36" height="32" rx="1"/>
+                <line x1="6" y1="16" x2="42" y2="16"/>
+                <line x1="20" y1="16" x2="20" y2="40"/>
+                <line x1="26" y1="24" x2="36" y2="24"/>
+                <line x1="26" y1="30" x2="34" y2="30"/>
+              </svg>
+            </div>
+            <h3>Website-Erstellung</h3>
+            <p>
+              Konzept, Design und Umsetzung — maßgeschneidert statt Baukasten.
+              Schnell, barrierearm und gebaut, um Jahre zu halten.
+            </p>
+            <a class="link-line" href="leistungen.html#webdesign">Mehr erfahren</a>
+          </article>
+
+          <article class="service-card" data-reveal style="--reveal-delay: 0.12s">
+            <span class="card-index">02</span>
+            <div class="card-icon" aria-hidden="true">
+              <!-- Feines Linien-Icon: Hosting-Ebenen -->
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                <ellipse cx="24" cy="12" rx="16" ry="5"/>
+                <path d="M8 12v12c0 2.8 7.2 5 16 5s16-2.2 16-5V12"/>
+                <path d="M8 24v12c0 2.8 7.2 5 16 5s16-2.2 16-5V24"/>
+              </svg>
+            </div>
+            <h3>Hosting</h3>
+            <p>
+              Ihre Website läuft auf schneller, europäischer Infrastruktur —
+              überwacht, gesichert, täglich im Backup. Sie merken davon nichts.
+              Genau das ist der Punkt.
+            </p>
+            <a class="link-line" href="leistungen.html#hosting">Mehr erfahren</a>
+          </article>
+
+          <article class="service-card" data-reveal style="--reveal-delay: 0.24s">
+            <span class="card-index">03</span>
+            <div class="card-icon" aria-hidden="true">
+              <!-- Feines Linien-Icon: Schutzschild -->
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                <path d="M24 5l15 5v12c0 10-6.5 17.5-15 21C15.5 39.5 9 32 9 22V10l15-5z"/>
+                <path d="M17.5 23.5l5 5 9-10"/>
+              </svg>
+            </div>
+            <h3>Datenschutz &amp; Wartung</h3>
+            <p>
+              DSGVO-Betreuung, Updates und Aktualisierungen im laufenden
+              Betrieb. Ihre Website bleibt rechtssicher und aktuell —
+              dauerhaft, nicht nur zum Start.
+            </p>
+            <a class="link-line" href="leistungen.html#datenschutz">Mehr erfahren</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         STATEMENT — Navy-Duotone-Moment als Section-Übergang
+         ================================================================ -->
+    <section class="statement on-dark" aria-label="Leitsatz">
+      <div class="statement-bg media--duotone" aria-hidden="true"></div>
+      <blockquote>
+        <p class="statement-quote" data-reveal="fade">
+          Discipline today.<br><span class="script script--light">Success</span> tomorrow.
+        </p>
+        <footer class="statement-source" data-reveal="fade" style="--reveal-delay: 0.2s">Unser Arbeitsprinzip</footer>
+      </blockquote>
+    </section>
+
+    <!-- ================================================================
+         PROZESS — Vertrauen durch Klarheit
+         ================================================================ -->
+    <section class="section on-dark process" aria-labelledby="process-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">So arbeiten wir</span>
+          <h2 id="process-heading">Vier Schritte.<br>Kein Rätselraten.</h2>
+        </div>
+
+        <ol class="process-list">
+          <li class="process-step" data-reveal>
+            <h3>Konzept</h3>
+            <p>
+              Wir hören zu, bevor wir gestalten. Ziele, Zielgruppen, Inhalte —
+              am Ende steht ein klarer Plan, den Sie verstehen und mittragen.
+            </p>
+          </li>
+          <li class="process-step" data-reveal style="--reveal-delay: 0.08s">
+            <h3>Design</h3>
+            <p>
+              Ein Entwurf, der zu Ihnen gehört: Typografie, Farben und
+              Bildsprache mit ruhiger Hand. Sie sehen jede Entscheidung —
+              und den Grund dahinter.
+            </p>
+          </li>
+          <li class="process-step" data-reveal style="--reveal-delay: 0.16s">
+            <h3>Umsetzung</h3>
+            <p>
+              Sauberer Code, schnelle Ladezeiten, barrierearm und auf jedem
+              Gerät zu Hause. Getestet, bevor Sie es je sehen müssen.
+            </p>
+          </li>
+          <li class="process-step" data-reveal style="--reveal-delay: 0.24s">
+            <h3>Betreuung</h3>
+            <p>
+              Nach dem Start beginnt die eigentliche Arbeit: Hosting,
+              Datenschutz, Updates und Inhalte — verlässlich, Monat für Monat.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         CALL-TO-ACTION
+         ================================================================ -->
+    <section class="section cta-band" aria-labelledby="cta-heading">
+      <div class="container">
+        <span class="eyebrow" data-reveal>Der nächste Schritt</span>
+        <h2 id="cta-heading" data-reveal style="--reveal-delay: 0.08s">
+          Erzählen Sie uns von Ihrem <span class="script">Vorhaben</span>.
+        </h2>
+        <p class="lead" data-reveal style="--reveal-delay: 0.16s">
+          Ein Gespräch, kein Verkaufstermin. Wir hören zu und sagen ehrlich,
+          was Ihr Projekt braucht — und was nicht.
+        </p>
+        <div class="cta-actions" data-reveal style="--reveal-delay: 0.24s">
+          <a class="btn btn--primary" href="kontakt.html">Beratungstermin anfragen <span class="btn-arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--outline" href="leistungen.html">Leistungen ansehen</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">Studio Gerth<span class="brand-dot">.</span></a>
+          <p>Websites, Hosting und Datenschutz — gestaltet und betreut mit ruhiger Hand aus Gera.</p>
+        </div>
+        <nav class="footer-col" aria-label="Footer-Navigation">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="leistungen.html">Leistungen</a></li>
+            <li><a href="ueber-mich.html">Über mich</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <h3>Leistungen</h3>
+          <ul>
+            <li><a href="leistungen.html#webdesign">Website-Erstellung</a></li>
+            <li><a href="leistungen.html#hosting">Hosting</a></li>
+            <li><a href="leistungen.html#datenschutz">Datenschutz</a></li>
+            <li><a href="leistungen.html#wartung">Wartung &amp; Pflege</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Kontakt &amp; Rechtliches</h3>
+          <ul>
+            <li><a href="mailto:lena.gerth@outlook.de">lena.gerth@outlook.de</a></li>
+            <li><a href="https://www.linkedin.com/" rel="noopener" target="_blank">LinkedIn</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span data-year>2026</span> Studio Gerth, Gera. Alle Rechte vorbehalten.</p>
+        <p class="footer-claim">Discipline today. Success tomorrow.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
