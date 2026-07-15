@@ -111,6 +111,28 @@
      ------------------------------------------------------------------------ */
   var hero = document.querySelector("[data-hero]");
 
+  /* Einstiegs-Clip: Verdunkelungs-Overlay nur zuschalten, wenn der Clip
+     tatsächlich lädt (siehe .hero-stage.has-video in css/style.css).
+     Ohne Videodatei bleibt die reine Seiden-Textur unverändert sichtbar. */
+  var heroStage = hero && hero.querySelector(".hero-stage");
+  var heroVideoEl = heroStage && heroStage.querySelector(".hero-video");
+
+  if (heroVideoEl) {
+    if (prefersReducedMotion) {
+      heroVideoEl.pause();
+      heroVideoEl.removeAttribute("autoplay");
+    } else {
+      var markHeroVideoLoaded = function () {
+        heroStage.classList.add("has-video");
+      };
+      heroVideoEl.addEventListener("loadeddata", markHeroVideoLoaded);
+      heroVideoEl.addEventListener("error", function () {
+        heroStage.classList.remove("has-video");
+      });
+      if (heroVideoEl.readyState >= 2) markHeroVideoLoaded();
+    }
+  }
+
   if (hero && !prefersReducedMotion) {
     var heroLines = hero.querySelectorAll(".hero-line");
     var heroWash = hero.querySelector(".hero-wash");

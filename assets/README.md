@@ -28,19 +28,30 @@ und in den `.media`-Containern als `<img loading="lazy" …>` eingesetzt.
 | `statement-duotone.jpg` | Statement-Bänder (Navy-getöntes Motiv, z. B. Skyline/Schatten) | JPG/AVIF, 2400×1400, < 300 KB |
 | `og-image.jpg` | Social-Media-Vorschau (`<meta property="og:image">`) | JPG, 1200×630, < 200 KB |
 | `favicon.svg` | Favicon (Monogramm „G." in Navy auf Cream) | SVG |
+| `hero-intro.mp4` | Startseite · Einstiegs-Clip im Hero-Hintergrund (Seedance 2.0, generiert) | MP4/H.264, 1280×720, 5 s, stumm |
+| `hero-poster.jpg` | Startseite · Standbild, während `hero-intro.mp4` lädt | JPG, 1280×720, < 150 KB |
 
-### Bereitgestellte Founder-Fotos (noch nicht eingesetzt)
+### Bereitgestellte Founder-Fotos (Status)
 
-Drei Porträt-/Arbeitsfotos wurden im Chat bereitgestellt, konnten aber aus
-dieser Sitzung heraus technisch nicht als Dateien gespeichert werden (siehe
-Hinweis in `README.md`). Sobald sie als Dateien vorliegen (z. B. per Upload
-in einer neuen Sitzung oder direkt ins Repo kopiert), bitte so benennen und
-einsetzen:
+Vier Porträt-/Arbeitsfotos wurden im Chat bereitgestellt und liegen bei
+Higgsfield; die Datei-Übertragung ins Repo konnte aus dieser Sitzung heraus
+technisch nicht automatisch erfolgen (Netzwerk-Policy blockiert den
+CDN-Host, siehe Chatverlauf). Erwartete Zuordnung:
 
 - Zwei Studio-Porträts (heller Hintergrund) → `portrait-founder.jpg`
   (für `ueber-mich.html`, Hochformat zuschneiden)
 - Foto mit Laptop (dunkler Hintergrund) → `portrait-founder-working.jpg`
   (für Startseite/Leistungen als Arbeitsszene)
+
+### Hero-Einstiegs-Clip (Status)
+
+Ein 5-sekündiger Clip wurde mit Seedance 2.0 auf Basis des Laptop-Fotos
+generiert (720p, stumm, ruhige Kamerafahrt: Blick aufs Display → Blick in
+die Kamera). Aus demselben Netzwerkgrund liegt er noch nicht im Repo.
+Herunterladen und als `hero-intro.mp4` einsetzen — der Code in `index.html`
+spielt ihn automatisch ab, sobald die Datei vorhanden ist (Fallback: die
+bestehende Seiden-Textur, keine Änderung nötig, falls kein Video gewünscht
+ist). Optional: `hero-poster.jpg` als Standbild fürs Laden ergänzen.
 
 ## Fonts (empfohlen: lokal einbinden)
 

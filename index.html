@@ -147,6 +147,14 @@
     <section class="hero" data-hero aria-label="Einführung">
       <div class="hero-stage">
         <div class="hero-silk" aria-hidden="true"></div>
+        <!-- Kurzer Einstiegs-Clip (Seedance 2.0). Sobald assets/hero-intro.mp4
+             im Repo liegt (siehe assets/README.md), spielt er automatisch ab;
+             bis dahin bleibt die Seiden-Textur als Hintergrund sichtbar.
+             Wird bei fehlender Datei sowie bei prefers-reduced-motion/no-js
+             ausgeblendet (siehe css/style.css). -->
+        <video class="hero-video" autoplay muted loop playsinline aria-hidden="true" poster="assets/hero-poster.jpg" onerror="this.style.display='none'">
+          <source src="assets/hero-intro.mp4" type="video/mp4">
+        </video>
         <div class="hero-wash" aria-hidden="true"></div>
 
         <p class="hero-kicker">Studio Gerth — Websites für Handwerk &amp; regionale Betriebe</p>

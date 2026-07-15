@@ -615,10 +615,42 @@ body.nav-open {
   will-change: transform;
 }
 
-/* Cream-Überblendung, die per Scroll-Fortschritt eingeblendet wird */
+/* Einstiegs-Clip: deckt die Seiden-Textur ab, sobald eine Datei vorliegt */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) saturate(1.05);
+}
+
+/* Verdunkelung über dem Clip zugunsten der Textlesbarkeit — nur aktiv, wenn
+   main.js bestätigt hat, dass der Clip tatsächlich lädt (.has-video-Klasse
+   auf .hero-stage). Ohne Video bleibt die reine Seiden-Textur unverändert.
+   Bleibt unter der Cream-Überblendung (.hero-wash) und dem Text (z-index 2). */
+.hero-stage.has-video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-navy) 55%, transparent) 0%, transparent 30%, transparent 60%, color-mix(in srgb, var(--color-navy) 70%, transparent) 100%);
+  pointer-events: none;
+}
+
+/* Kein Clip vorhanden, kein no-js/reduced-motion nötig: Video einfach ausblenden */
+.no-js .hero-video,
+.reduced-motion .hero-video {
+  display: none;
+}
+
+/* Cream-Überblendung, die per Scroll-Fortschritt eingeblendet wird.
+   z-index 1, gleiche Ebene wie .hero-stage::before, aber später im
+   Dokument — steht damit über dem Verdunkelungs-Overlay. */
 .hero-wash {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: var(--color-cream);
   opacity: 0;
   will-change: opacity;
