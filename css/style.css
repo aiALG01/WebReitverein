@@ -615,14 +615,17 @@ body.nav-open {
   will-change: transform;
 }
 
-/* Einstiegs-Clip: deckt die Seiden-Textur ab, sobald eine Datei vorliegt */
+/* Einstiegs-Clip: deckt die Seiden-Textur ab, sobald eine Datei vorliegt.
+   Heller als ein reiner Hintergrund-Loop, da der Clip hier die Haupt-
+   erzählung trägt (Blick in die Kamera → Blick auf den Laptop) und nicht
+   nur Text hinterlegt. */
 .hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.55) saturate(1.05);
+  filter: brightness(0.85) saturate(1.05);
 }
 
 /* Verdunkelung über dem Clip zugunsten der Textlesbarkeit — nur aktiv, wenn

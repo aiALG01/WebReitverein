@@ -105,50 +105,33 @@
      4. Hero-Choreografie (Startseite)
         Die Hero-Sektion ist 340vh hoch, die Bühne klebt im Viewport.
         Der Scroll-Fortschritt (0–1) steuert:
-        - drei Statement-Zeilen, die nacheinander ein- und ausblenden
-        - die Farbüberblendung Navy → Cream
-        - einen sanften Zoom der Seiden-Textur
+        - den Einstiegs-Clip frame-genau (currentTime = f(progress)) über die
+          ersten ~78 % der Strecke: Blick in die Kamera → Blick auf den
+          Laptop → Kamera schwenkt in die Ich-Perspektive auf den Bildschirm
+        - die Farbüberblendung Navy → Cream im letzten Fünftel, die den
+          Laptop-Blick nahtlos in die echte Webseite darunter übergehen lässt
+        - die abschließende Zeile, die genau in diesem Übergang erscheint
+        - einen sanften Zoom der Seiden-Textur (Fallback ohne Video)
      ------------------------------------------------------------------------ */
   var hero = document.querySelector("[data-hero]");
-
-  /* Einstiegs-Clip: Verdunkelungs-Overlay nur zuschalten, wenn der Clip
-     tatsächlich lädt (siehe .hero-stage.has-video in css/style.css).
-     Ohne Videodatei bleibt die reine Seiden-Textur unverändert sichtbar. */
   var heroStage = hero && hero.querySelector(".hero-stage");
   var heroVideoEl = heroStage && heroStage.querySelector(".hero-video");
 
   if (heroVideoEl) {
-    if (prefersReducedMotion) {
-      heroVideoEl.pause();
-      heroVideoEl.removeAttribute("autoplay");
-    } else {
-      var markHeroVideoLoaded = function () {
-        heroStage.classList.add("has-video");
-      };
-      heroVideoEl.addEventListener("loadeddata", markHeroVideoLoaded);
-      heroVideoEl.addEventListener("error", function () {
-        heroStage.classList.remove("has-video");
-      });
-      if (heroVideoEl.readyState >= 2) markHeroVideoLoaded();
-    }
+    heroVideoEl.pause();
   }
 
   if (hero && !prefersReducedMotion) {
-    var heroLines = hero.querySelectorAll(".hero-line");
+    var heroLine = hero.querySelector(".hero-line--final");
     var heroWash = hero.querySelector(".hero-wash");
     var heroSilk = hero.querySelector(".hero-silk");
     var heroCue = hero.querySelector(".hero-cue");
     var heroKicker = hero.querySelector(".hero-kicker");
     var heroTicking = false;
+    var heroVideoReady = false;
 
     var clamp01 = function (v) {
       return Math.min(1, Math.max(0, v));
-    };
-
-    /* Glockenkurve: Zeile blendet um ihre Phasenmitte ein und wieder aus */
-    var lineOpacity = function (progress, center, width) {
-      var d = Math.abs(progress - center) / width;
-      return clamp01(1 - d * d * 1.6);
     };
 
     var renderHero = function () {
@@ -158,34 +141,29 @@
       if (total <= 0) return;
       var progress = clamp01(-hero.getBoundingClientRect().top / total);
 
-      /* Drei Phasen: Zeile 1 steht beim Laden, Zeile 2 um 0.42,
-         die letzte Zeile blendet ab 0.62 ein und bleibt stehen */
-      heroLines.forEach(function (line, i) {
-        var isLast = i === heroLines.length - 1;
-        var opacity;
-        var drift;
-        if (isLast) {
-          opacity = clamp01((progress - 0.62) / 0.2);
-          drift = (1 - opacity) * 2.5;
-        } else if (i === 0) {
-          opacity = progress <= 0.08 ? 1 : clamp01(1 - (progress - 0.08) / 0.16);
-          drift = progress * -10;
-        } else {
-          opacity = lineOpacity(progress, 0.42, 0.17);
-          drift = (0.42 - progress) * -14;
-        }
-        line.style.opacity = opacity.toFixed(3);
-        line.style.transform =
-          "translateY(" + drift.toFixed(2) + "rem) scale(" +
-          (0.985 + opacity * 0.015).toFixed(4) + ")";
-      });
-
-      /* Farbüberblendung Navy → Cream im letzten Drittel */
-      if (heroWash) {
-        heroWash.style.opacity = clamp01((progress - 0.58) / 0.24).toFixed(3);
+      /* Video läuft über die ersten 78 % des Scrollwegs; die letzten 22 %
+         gehören dem Übergang in die echte Seite. */
+      if (heroVideoEl && heroVideoReady && heroVideoEl.duration) {
+        var videoProgress = clamp01(progress / 0.78);
+        heroVideoEl.currentTime = videoProgress * heroVideoEl.duration;
       }
 
-      /* Seide zoomt kaum merklich — Ruhe statt Effekthascherei */
+      /* Cream-Überblendung: der Blick auf den (im Clip leeren) Bildschirm
+         wird zur echten Webseite, die direkt darunter beginnt. */
+      if (heroWash) {
+        heroWash.style.opacity = clamp01((progress - 0.7) / 0.22).toFixed(3);
+      }
+
+      /* Schlusszeile erscheint erst, wenn die Kamera die Bildschirm-
+         Perspektive erreicht hat, und bleibt auf dem Cream-Übergang stehen */
+      if (heroLine) {
+        var lineOpacity = clamp01((progress - 0.78) / 0.16);
+        heroLine.style.opacity = lineOpacity.toFixed(3);
+        heroLine.style.transform = "translateY(" + ((1 - lineOpacity) * 1.5).toFixed(2) + "rem)";
+      }
+
+      /* Seide zoomt kaum merklich — Ruhe statt Effekthascherei (Fallback,
+         falls kein Video lädt) */
       if (heroSilk) {
         heroSilk.style.transform = "scale(" + (1 + progress * 0.12).toFixed(4) + ")";
       }
@@ -195,7 +173,7 @@
       }
 
       if (heroKicker) {
-        heroKicker.style.opacity = clamp01(1 - (progress - 0.5) / 0.15).toFixed(3);
+        heroKicker.style.opacity = clamp01(1 - progress * 4.5).toFixed(3);
       }
     };
 
@@ -205,6 +183,29 @@
         window.requestAnimationFrame(renderHero);
       }
     };
+
+    if (heroVideoEl) {
+      var markHeroVideoLoaded = function () {
+        if (heroVideoReady) return;
+        heroVideoReady = true;
+        heroStage.classList.add("has-video");
+        /* iOS Safari rendert geseekte Frames erst, nachdem der Decoder
+           einmal per play()/pause() „aufgewärmt" wurde — sonst bleibt das
+           Bild beim Scrubben auf dem allerersten Frame stehen. */
+        var playAttempt = heroVideoEl.play();
+        if (playAttempt && playAttempt.then) {
+          playAttempt.then(function () { heroVideoEl.pause(); }).catch(function () {});
+        } else {
+          heroVideoEl.pause();
+        }
+        requestHeroFrame();
+      };
+      heroVideoEl.addEventListener("loadedmetadata", markHeroVideoLoaded);
+      heroVideoEl.addEventListener("error", function () {
+        heroStage.classList.remove("has-video");
+      });
+      if (heroVideoEl.readyState >= 1) markHeroVideoLoaded();
+    }
 
     window.addEventListener("scroll", requestHeroFrame, { passive: true });
     window.addEventListener("resize", requestHeroFrame);

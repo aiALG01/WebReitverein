@@ -28,30 +28,35 @@ und in den `.media`-Containern als `<img loading="lazy" …>` eingesetzt.
 | `statement-duotone.jpg` | Statement-Bänder (Navy-getöntes Motiv, z. B. Skyline/Schatten) | JPG/AVIF, 2400×1400, < 300 KB |
 | `og-image.jpg` | Social-Media-Vorschau (`<meta property="og:image">`) | JPG, 1200×630, < 200 KB |
 | `favicon.svg` | Favicon (Monogramm „G." in Navy auf Cream) | SVG |
-| `hero-intro.mp4` | Startseite · Einstiegs-Clip im Hero-Hintergrund (Seedance 2.0, generiert) | MP4/H.264, 1280×720, 5 s, stumm |
-| `hero-poster.jpg` | Startseite · Standbild, während `hero-intro.mp4` lädt | JPG, 1280×720, < 150 KB |
+| `hero-scroll.mp4` | Startseite · scroll-gesteuerter Einstiegs-Clip (Seedance 2.0, generiert) | MP4/H.264, 1280×720, 8 s, stumm |
+| `hero-poster.jpg` | Startseite · Standbild, während `hero-scroll.mp4` lädt (bereits im Repo) | JPG, 1280×720, < 150 KB |
 
-### Bereitgestellte Founder-Fotos (Status)
+### Bereitgestellte Founder-Fotos (Status: erledigt)
 
-Vier Porträt-/Arbeitsfotos wurden im Chat bereitgestellt und liegen bei
-Higgsfield; die Datei-Übertragung ins Repo konnte aus dieser Sitzung heraus
-technisch nicht automatisch erfolgen (Netzwerk-Policy blockiert den
-CDN-Host, siehe Chatverlauf). Erwartete Zuordnung:
+Sechs Fotos (Lena-20/25/27/61/66/67) wurden hochgeladen — allerdings zunächst
+auf den `main`-Branch statt auf den Arbeits-Branch, weshalb sie zunächst
+nirgends sichtbar waren. Sind inzwischen von dort geholt, zugeschnitten und
+korrekt eingesetzt:
 
-- Zwei Studio-Porträts (heller Hintergrund) → `portrait-founder.jpg`
-  (für `ueber-mich.html`, Hochformat zuschneiden)
-- Foto mit Laptop (dunkler Hintergrund) → `portrait-founder-working.jpg`
-  (für Startseite/Leistungen als Arbeitsszene)
+- `Lena-25.jpg` → `portrait-founder.jpg` (Studio-Porträt, für `ueber-mich.html`)
+- `Lena-67.jpg` → `portrait-founder-working.jpg` (Laptop-Szene, für `leistungen.html`)
+- `Lena-61.jpg` → `hero-poster.jpg` (Blick in die Kamera, Startbild des Hero-Clips)
 
-### Hero-Einstiegs-Clip (Status)
+Falls künftig wieder direkt über die GitHub-Weboberfläche hochgeladen wird:
+oben links den Branch von `main` auf `claude/quiet-luxury-agency-site-1443vv`
+umstellen, bevor „Add file → Upload files" gewählt wird — sonst landen die
+Dateien wieder auf dem falschen Branch.
 
-Ein 5-sekündiger Clip wurde mit Seedance 2.0 auf Basis des Laptop-Fotos
-generiert (720p, stumm, ruhige Kamerafahrt: Blick aufs Display → Blick in
-die Kamera). Aus demselben Netzwerkgrund liegt er noch nicht im Repo.
-Herunterladen und als `hero-intro.mp4` einsetzen — der Code in `index.html`
-spielt ihn automatisch ab, sobald die Datei vorhanden ist (Fallback: die
-bestehende Seiden-Textur, keine Änderung nötig, falls kein Video gewünscht
-ist). Optional: `hero-poster.jpg` als Standbild fürs Laden ergänzen.
+### Hero-Scroll-Clip (Status: in Arbeit)
+
+Ein 8-sekündiger Clip wird mit Seedance 2.0 generiert (720p, stumm, aus
+`Lena-61.jpg` als Start- und `Lena-67.jpg` als End-Referenz): Blick in die
+Kamera → Blick auf den Laptop → Kamera schwenkt in die Ich-Perspektive auf
+den Bildschirm. Anders als der vorherige Loop-Ansatz läuft dieser Clip nicht
+automatisch ab, sondern wird beim Scrollen frame-genau gesteuert (siehe
+`js/main.js`, Abschnitt 4) — der Bildschirm-Blick am Ende geht nahtlos in die
+Cream-Überblendung und damit in die echte Webseite darunter über. Sobald der
+Job fertig ist, wird die Datei als `hero-scroll.mp4` eingesetzt.
 
 ## Fonts (empfohlen: lokal einbinden)
 

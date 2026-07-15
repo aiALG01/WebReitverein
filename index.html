@@ -147,21 +147,22 @@
     <section class="hero" data-hero aria-label="Einführung">
       <div class="hero-stage">
         <div class="hero-silk" aria-hidden="true"></div>
-        <!-- Kurzer Einstiegs-Clip (Seedance 2.0). Sobald assets/hero-intro.mp4
-             im Repo liegt (siehe assets/README.md), spielt er automatisch ab;
-             bis dahin bleibt die Seiden-Textur als Hintergrund sichtbar.
-             Wird bei fehlender Datei sowie bei prefers-reduced-motion/no-js
-             ausgeblendet (siehe css/style.css). -->
-        <video class="hero-video" autoplay muted loop playsinline aria-hidden="true" poster="assets/hero-poster.jpg" onerror="this.style.display='none'">
-          <source src="assets/hero-intro.mp4" type="video/mp4">
+        <!-- Scroll-gesteuerter Einstiegs-Clip (Seedance 2.0): kein Autoplay,
+             kein Loop — main.js setzt currentTime direkt aus dem Scroll-
+             Fortschritt (Blick in die Kamera → Blick auf den Laptop → Kamera
+             schwenkt in die Ich-Perspektive auf den Bildschirm). Sobald
+             assets/hero-scroll.mp4 im Repo liegt (siehe assets/README.md),
+             wird frame-genau mitgescrollt; bis dahin bleibt die Seiden-Textur
+             als Hintergrund sichtbar. Wird bei fehlender Datei sowie bei
+             prefers-reduced-motion/no-js ausgeblendet (siehe css/style.css). -->
+        <video class="hero-video" muted playsinline preload="auto" aria-hidden="true" poster="assets/hero-poster.jpg" onerror="this.style.display='none'">
+          <source src="assets/hero-scroll.mp4" type="video/mp4">
         </video>
         <div class="hero-wash" aria-hidden="true"></div>
 
         <p class="hero-kicker">Studio Gerth — Websites für Handwerk &amp; regionale Betriebe</p>
 
         <div class="hero-lines">
-          <p class="hero-line">Noch keine <span class="script">Website</span>?</p>
-          <p class="hero-line">Zeit, sichtbar zu werden.</p>
           <h1 class="hero-line hero-line--final">Websites mit <span class="script">Handschlag</span>.</h1>
         </div>
 
