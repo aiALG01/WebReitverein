@@ -104,14 +104,19 @@
   /* ------------------------------------------------------------------------
      4. Hero-Choreografie (Startseite)
         Die Hero-Sektion ist 340vh hoch, die Bühne klebt im Viewport.
-        Der Scroll-Fortschritt (0–1) steuert:
-        - den Einstiegs-Clip frame-genau (currentTime = f(progress)) über die
-          ersten ~78 % der Strecke: Blick in die Kamera → Blick auf den
-          Laptop → Kamera schwenkt in die Ich-Perspektive auf den Bildschirm
-        - die Farbüberblendung Navy → Cream im letzten Fünftel, die den
-          Laptop-Blick nahtlos in die echte Webseite darunter übergehen lässt
-        - die abschließende Zeile, die genau in diesem Übergang erscheint
-        - einen sanften Zoom der Seiden-Textur (Fallback ohne Video)
+        Vier Phasen entlang des Scroll-Fortschritts (0–1):
+        A) 0.00–0.16  Clip als kleine Karte rechts, Text links (Kicker + h1)
+        B) 0.16–0.34  Karte wächst per FLIP-Transform zur Vollbild-Bühne,
+                      der Text blendet im selben Takt aus
+        C) 0.00–0.82  Clip läuft frame-genau mit (currentTime = f(progress),
+                      läuft technisch über A–C hinweg): Blick in die Kamera →
+                      Blick auf den Laptop → Kamera schwenkt in die
+                      Ich-Perspektive auf den Bildschirm
+        D) 0.82–1.00  Bildschirm-Reveal (echter Screenshot der Startseite,
+                      an der Bildschirm-Position im letzten Video-Frame
+                      platziert) blendet ein und wächst per FLIP-Transform
+                      zur Vollbild-Ansicht — der Laptop-Blick wird zur
+                      echten Webseite, die direkt darunter weitergeht
      ------------------------------------------------------------------------ */
   var hero = document.querySelector("[data-hero]");
   var heroStage = hero && hero.querySelector(".hero-stage");
@@ -122,16 +127,55 @@
   }
 
   if (hero && !prefersReducedMotion) {
-    var heroLine = hero.querySelector(".hero-line--final");
-    var heroWash = hero.querySelector(".hero-wash");
+    var heroIntroCopy = hero.querySelector(".hero-intro-copy");
+    var heroFrame = hero.querySelector(".hero-video-frame");
+    var heroReveal = hero.querySelector(".hero-screen-reveal");
     var heroSilk = hero.querySelector(".hero-silk");
     var heroCue = hero.querySelector(".hero-cue");
     var heroKicker = hero.querySelector(".hero-kicker");
     var heroTicking = false;
     var heroVideoReady = false;
 
+    var FRAME_GROW_START = 0.16;
+    var FRAME_GROW_END = 0.34;
+    var VIDEO_END = 0.82;
+    var REVEAL_START = 0.82;
+
     var clamp01 = function (v) {
       return Math.min(1, Math.max(0, v));
+    };
+
+    /* FLIP-Basiswerte: Rect der kleinen Karte bzw. des Bildschirm-
+       Ausschnitts im Ruhezustand (ohne Transform) — einmalig gemessen,
+       bei Resize erneuert. */
+    var frameBaseRect = null;
+    var revealBaseRect = null;
+
+    var measureBaseRects = function () {
+      if (heroFrame) {
+        heroFrame.style.transform = "none";
+        frameBaseRect = heroFrame.getBoundingClientRect();
+      }
+      if (heroReveal) {
+        heroReveal.style.transform = "none";
+        revealBaseRect = heroReveal.getBoundingClientRect();
+      }
+    };
+
+    var applyFlip = function (el, base, t) {
+      if (!el || !base || t <= 0) {
+        if (el) el.style.transform = "none";
+        return;
+      }
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
+      var scaleX = 1 + (vw / base.width - 1) * t;
+      var scaleY = 1 + (vh / base.height - 1) * t;
+      var dx = (vw / 2 - (base.left + base.width / 2)) * t;
+      var dy = (vh / 2 - (base.top + base.height / 2)) * t;
+      el.style.transform =
+        "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px) scale(" +
+        scaleX.toFixed(4) + "," + scaleY.toFixed(4) + ")";
     };
 
     var renderHero = function () {
@@ -141,25 +185,34 @@
       if (total <= 0) return;
       var progress = clamp01(-hero.getBoundingClientRect().top / total);
 
-      /* Video läuft über die ersten 78 % des Scrollwegs; die letzten 22 %
-         gehören dem Übergang in die echte Seite. */
+      /* Video läuft frame-genau über den gesamten Erzählabschnitt
+         (Phasen A–C), unabhängig davon, wie groß die Karte gerade ist */
       if (heroVideoEl && heroVideoReady && heroVideoEl.duration) {
-        var videoProgress = clamp01(progress / 0.78);
+        var videoProgress = clamp01(progress / VIDEO_END);
         heroVideoEl.currentTime = videoProgress * heroVideoEl.duration;
       }
 
-      /* Cream-Überblendung: der Blick auf den (im Clip leeren) Bildschirm
-         wird zur echten Webseite, die direkt darunter beginnt. */
-      if (heroWash) {
-        heroWash.style.opacity = clamp01((progress - 0.7) / 0.22).toFixed(3);
+      /* Phase B: Karte wächst zur Vollbild-Bühne, Text blendet im selben
+         Takt aus */
+      var growT = clamp01((progress - FRAME_GROW_START) / (FRAME_GROW_END - FRAME_GROW_START));
+      applyFlip(heroFrame, frameBaseRect, growT);
+      if (heroFrame) {
+        heroFrame.style.borderRadius = (1.25 * (1 - growT)).toFixed(3) + "rem";
+      }
+      if (heroIntroCopy) {
+        var introOpacity = 1 - growT;
+        heroIntroCopy.style.opacity = introOpacity.toFixed(3);
+        heroIntroCopy.style.transform = "translateX(" + (-(1 - introOpacity) * 1.5).toFixed(2) + "rem)";
       }
 
-      /* Schlusszeile erscheint erst, wenn die Kamera die Bildschirm-
-         Perspektive erreicht hat, und bleibt auf dem Cream-Übergang stehen */
-      if (heroLine) {
-        var lineOpacity = clamp01((progress - 0.78) / 0.16);
-        heroLine.style.opacity = lineOpacity.toFixed(3);
-        heroLine.style.transform = "translateY(" + ((1 - lineOpacity) * 1.5).toFixed(2) + "rem)";
+      /* Phase D: Bildschirm-Reveal blendet ein und wächst zur Vollbild-
+         Ansicht — der Laptop-Blick im Video wird zur echten Webseite */
+      var revealFade = clamp01((progress - REVEAL_START) / 0.06);
+      var revealGrow = clamp01((progress - REVEAL_START) / (1 - REVEAL_START));
+      if (heroReveal) {
+        heroReveal.style.opacity = revealFade.toFixed(3);
+        heroReveal.style.borderRadius = (0.4 * (1 - revealGrow)).toFixed(3) + "rem";
+        applyFlip(heroReveal, revealBaseRect, revealGrow);
       }
 
       /* Seide zoomt kaum merklich — Ruhe statt Effekthascherei (Fallback,
@@ -173,7 +226,7 @@
       }
 
       if (heroKicker) {
-        heroKicker.style.opacity = clamp01(1 - progress * 4.5).toFixed(3);
+        heroKicker.style.opacity = clamp01(1 - progress * 3).toFixed(3);
       }
     };
 
@@ -183,6 +236,8 @@
         window.requestAnimationFrame(renderHero);
       }
     };
+
+    measureBaseRects();
 
     if (heroVideoEl) {
       var markHeroVideoLoaded = function () {
@@ -208,7 +263,10 @@
     }
 
     window.addEventListener("scroll", requestHeroFrame, { passive: true });
-    window.addEventListener("resize", requestHeroFrame);
+    window.addEventListener("resize", function () {
+      measureBaseRects();
+      requestHeroFrame();
+    });
     renderHero();
   }
 

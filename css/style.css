@@ -598,14 +598,13 @@ body.nav-open {
   height: 100vh;
   height: 100svh;
   overflow: hidden;
-  display: grid;
-  place-items: center;
   background: var(--color-navy);
 }
 
 /* Seidige Textur als ruhige Hintergrund-Ebene (rein CSS, keine Bilddatei) */
 .hero-silk {
   position: absolute;
+  z-index: 0;
   inset: -20%;
   background:
     radial-gradient(120% 80% at 15% 20%, color-mix(in srgb, var(--color-steel-blue) 45%, transparent), transparent 60%),
@@ -615,10 +614,70 @@ body.nav-open {
   will-change: transform;
 }
 
-/* Einstiegs-Clip: deckt die Seiden-Textur ab, sobald eine Datei vorliegt.
-   Heller als ein reiner Hintergrund-Loop, da der Clip hier die Haupt-
-   erzählung trägt (Blick in die Kamera → Blick auf den Laptop) und nicht
-   nur Text hinterlegt. */
+/* Phase A: linker Einstiegstext, sichtbar bis der Clip zur Vollbild-Bühne
+   wächst (Phase B blendet ihn aus, siehe js/main.js) */
+.hero-intro-copy {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  bottom: 0;
+  left: var(--gutter);
+  margin-block: auto;
+  height: fit-content;
+  max-width: min(28rem, 44vw);
+  display: grid;
+  gap: 0.75rem;
+  will-change: opacity, transform;
+}
+
+.hero-intro-copy-line {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--color-cream);
+}
+
+h1.hero-intro-copy-line {
+  font-size: var(--text-hero);
+  max-width: 12ch;
+}
+
+p.hero-intro-copy-line {
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-weight: 400;
+  color: color-mix(in srgb, var(--color-cream) 88%, var(--color-steel-blue));
+}
+
+.hero-intro-copy .script {
+  font-size: 1.06em;
+  /* Auf Navy braucht der Tan-Akzent mehr Leuchtkraft */
+  color: color-mix(in srgb, var(--color-tan) 55%, var(--color-cream));
+}
+
+/* Phase A: kleine Karte rechts. Phase B lässt main.js per FLIP-Transform
+   (translate + scale, aus den gemessenen Rects berechnet) zur Vollbild-
+   Bühne wachsen — die Basiswerte hier gelten für den Ausgangszustand. */
+.hero-video-frame {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 7vw;
+  margin-block: auto;
+  width: min(42vw, 34rem);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  box-shadow: 0 2rem 5rem -1rem color-mix(in srgb, var(--color-navy) 55%, transparent);
+  background: var(--color-navy) url("../assets/hero-poster.jpg") center / cover no-repeat;
+  transform-origin: center center;
+  will-change: transform, border-radius;
+}
+
+/* Einstiegs-Clip: deckt die Seiden-Textur/das Standbild ab, sobald eine
+   Datei vorliegt. Heller als ein reiner Hintergrund-Loop, da der Clip hier
+   die Haupterzählung trägt (Blick in die Kamera → Blick auf den Laptop). */
 .hero-video {
   position: absolute;
   inset: 0;
@@ -628,15 +687,15 @@ body.nav-open {
   filter: brightness(0.85) saturate(1.05);
 }
 
-/* Verdunkelung über dem Clip zugunsten der Textlesbarkeit — nur aktiv, wenn
-   main.js bestätigt hat, dass der Clip tatsächlich lädt (.has-video-Klasse
-   auf .hero-stage). Ohne Video bleibt die reine Seiden-Textur unverändert.
-   Bleibt unter der Cream-Überblendung (.hero-wash) und dem Text (z-index 2). */
+/* Verdunkelung zugunsten der Textlesbarkeit an Ober-/Unterkante (Kicker,
+   Scroll-Hinweis) — nur aktiv, wenn main.js bestätigt hat, dass der Clip
+   tatsächlich lädt (.has-video-Klasse auf .hero-stage). Ohne Video bleibt
+   die reine Seiden-Textur unverändert. */
 .hero-stage.has-video::before {
   content: "";
   position: absolute;
+  z-index: 2;
   inset: 0;
-  z-index: 1;
   background: linear-gradient(180deg, color-mix(in srgb, var(--color-navy) 55%, transparent) 0%, transparent 30%, transparent 60%, color-mix(in srgb, var(--color-navy) 70%, transparent) 100%);
   pointer-events: none;
 }
@@ -647,53 +706,32 @@ body.nav-open {
   display: none;
 }
 
-/* Cream-Überblendung, die per Scroll-Fortschritt eingeblendet wird.
-   z-index 1, gleiche Ebene wie .hero-stage::before, aber später im
-   Dokument — steht damit über dem Verdunkelungs-Overlay. */
-.hero-wash {
+/* Phase D: an der Position des Laptop-Bildschirms im letzten Video-Frame
+   platziert (siehe assets/README.md). Zeigt einen echten Screenshot der
+   Startseite und wächst per FLIP-Transform zur Vollbild-Ansicht, die
+   nahtlos in den echten Seiteninhalt darunter übergeht. */
+.hero-screen-reveal {
+  position: absolute;
+  z-index: 3;
+  left: 13.9%;
+  top: 20.8%;
+  width: 38.3%;
+  height: 48.6%;
+  overflow: hidden;
+  border-radius: 0.4rem;
+  opacity: 0;
+  transform-origin: center center;
+  pointer-events: none;
+  will-change: transform, opacity, border-radius;
+}
+
+.hero-screen-reveal img {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  background: var(--color-cream);
-  opacity: 0;
-  will-change: opacity;
-}
-
-.hero-lines {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding-inline: var(--gutter);
-}
-
-.hero-line {
-  grid-area: 1 / 1;
-  max-width: 19ch;
-  font-family: var(--font-display);
-  font-size: var(--text-hero);
-  font-weight: 500;
-  line-height: 1.05;
-  color: var(--color-cream);
-  opacity: 0;
-  transform: translateY(2.5rem) scale(0.985);
-  will-change: opacity, transform;
-}
-
-.hero-line .script {
-  font-size: 1.06em;
-  /* Auf Navy braucht der Tan-Akzent mehr Leuchtkraft */
-  color: color-mix(in srgb, var(--color-tan) 55%, var(--color-cream));
-}
-
-/* Die letzte Zeile steht auf Cream und wechselt daher auf Navy */
-.hero-line--final {
-  color: var(--color-navy);
-}
-
-.hero-line--final .script {
-  color: var(--color-tan);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .hero-kicker {
@@ -701,7 +739,7 @@ body.nav-open {
   top: calc(var(--header-h) + clamp(1rem, 4vh, 3rem));
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 4;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: var(--tracking-wide);
@@ -719,7 +757,7 @@ body.nav-open {
   bottom: clamp(1.5rem, 5vh, 3rem);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -746,7 +784,8 @@ body.nav-open {
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
 
-/* Statischer Hero-Fallback (reduced motion / kein JS) */
+/* Statischer Hero-Fallback (reduced motion / kein JS): Karte + Text
+   untereinander, kein Scroll-Effekt, kein Bildschirm-Reveal */
 .no-js .hero,
 .reduced-motion .hero {
   height: auto;
@@ -755,25 +794,45 @@ body.nav-open {
 .no-js .hero-stage,
 .reduced-motion .hero-stage {
   position: relative;
+  height: auto;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 3rem) var(--gutter) 3rem;
 }
 
-.no-js .hero-line,
-.reduced-motion .hero-line {
-  display: none;
+.no-js .hero-kicker,
+.reduced-motion .hero-kicker,
+.no-js .hero-cue,
+.reduced-motion .hero-cue {
+  position: static;
+  transform: none;
   opacity: 1;
+}
+
+.no-js .hero-intro-copy,
+.reduced-motion .hero-intro-copy {
+  position: static;
+  opacity: 1;
+  transform: none;
+  max-width: 32rem;
+  text-align: center;
+  justify-items: center;
+}
+
+.no-js .hero-video-frame,
+.reduced-motion .hero-video-frame {
+  position: static;
+  width: min(100%, 40rem);
   transform: none;
 }
 
-.no-js .hero-line--final,
-.reduced-motion .hero-line--final {
-  display: block;
-  color: var(--color-cream);
-}
-
-.no-js .hero-line--final .script,
-.reduced-motion .hero-line--final .script {
-  color: var(--color-cream);
+.no-js .hero-screen-reveal,
+.reduced-motion .hero-screen-reveal {
+  display: none;
 }
 
 .no-js .hero-cue::after,
@@ -1778,7 +1837,7 @@ body.nav-open {
     --container-wide: 96rem;
   }
 
-  .hero-line {
-    max-width: 18ch;
+  h1.hero-intro-copy-line {
+    max-width: 11ch;
   }
 }

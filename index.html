@@ -141,29 +141,47 @@
   <main id="main">
 
     <!-- ================================================================
-         HERO — Scroll-Bühne: drei Statement-Zeilen, Navy → Cream
-         (bei prefers-reduced-motion: eine statische Zeile, kein Effekt)
+         HERO — Scroll-Bühne, vier Phasen (siehe js/main.js, Abschnitt 4):
+         A) Clip steht als kleine Karte rechts, Text links
+         B) Clip wächst zur Vollbild-Bühne, Text blendet aus
+         C) Clip läuft frame-genau mit: Blick in die Kamera → Blick auf den
+            Laptop → Kamera schwenkt in die Ich-Perspektive auf den Bildschirm
+         D) Bildschirm-Reveal wächst zur Vollbild-Ansicht — echter Screenshot
+            der Startseite, die direkt darunter weitergeht
+         (bei prefers-reduced-motion/no-js: statische Karte, kein Effekt)
          ================================================================ -->
     <section class="hero" data-hero aria-label="Einführung">
       <div class="hero-stage">
         <div class="hero-silk" aria-hidden="true"></div>
-        <!-- Scroll-gesteuerter Einstiegs-Clip (Seedance 2.0): kein Autoplay,
-             kein Loop — main.js setzt currentTime direkt aus dem Scroll-
-             Fortschritt (Blick in die Kamera → Blick auf den Laptop → Kamera
-             schwenkt in die Ich-Perspektive auf den Bildschirm). Sobald
-             assets/hero-scroll.mp4 im Repo liegt (siehe assets/README.md),
-             wird frame-genau mitgescrollt; bis dahin bleibt die Seiden-Textur
-             als Hintergrund sichtbar. Wird bei fehlender Datei sowie bei
-             prefers-reduced-motion/no-js ausgeblendet (siehe css/style.css). -->
-        <video class="hero-video" muted playsinline preload="auto" aria-hidden="true" poster="assets/hero-poster.jpg" onerror="this.style.display='none'">
-          <source src="assets/hero-scroll.mp4" type="video/mp4">
-        </video>
-        <div class="hero-wash" aria-hidden="true"></div>
 
         <p class="hero-kicker">Studio Gerth — Websites für Handwerk &amp; regionale Betriebe</p>
 
-        <div class="hero-lines">
-          <h1 class="hero-line hero-line--final">Websites mit <span class="script">Handschlag</span>.</h1>
+        <!-- Phase A: linker Einstiegstext, blendet in Phase B aus -->
+        <div class="hero-intro-copy">
+          <h1 class="hero-intro-copy-line">Noch keine <span class="script">Website</span>?</h1>
+          <p class="hero-intro-copy-line">Zeit, sichtbar zu werden.</p>
+        </div>
+
+        <!-- Phase A/B/C: Einstiegs-Clip (Seedance 2.0), kein Autoplay, kein
+             Loop — main.js setzt currentTime direkt aus dem Scroll-
+             Fortschritt. Sobald assets/hero-scroll.mp4 im Repo liegt (siehe
+             assets/README.md), wird mitgescrollt; bis dahin bleibt die
+             Seiden-Textur als Hintergrund sichtbar. Fällt bei fehlender
+             Datei sowie bei prefers-reduced-motion/no-js auf ein statisches
+             Standbild zurück (siehe css/style.css). -->
+        <div class="hero-video-frame">
+          <video class="hero-video" muted playsinline preload="auto" aria-hidden="true" poster="assets/hero-poster.jpg" onerror="this.style.display='none'">
+            <source src="assets/hero-scroll.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <!-- Phase D: an der Position des Laptop-Bildschirms im letzten
+             Video-Frame platziert. Zeigt einen echten Screenshot der
+             Startseite — das, was im Video gerade auf ihrem Bildschirm zu
+             sehen ist — und wächst zur Vollbild-Ansicht, die nahtlos in den
+             echten Seiteninhalt darunter übergeht. -->
+        <div class="hero-screen-reveal" aria-hidden="true">
+          <img src="assets/hero-screen-preview.jpg" alt="" loading="eager">
         </div>
 
         <p class="hero-cue" aria-hidden="true">Scrollen</p>
