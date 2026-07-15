@@ -103,79 +103,74 @@
 
   /* ------------------------------------------------------------------------
      4. Hero-Choreografie (Startseite)
-        Die Hero-Sektion ist 340vh hoch, die Bühne klebt im Viewport.
-        Vier Phasen entlang des Scroll-Fortschritts (0–1):
-        A) 0.00–0.16  Clip als kleine Karte rechts, Text links (Kicker + h1)
-        B) 0.16–0.34  Karte wächst per FLIP-Transform zur Vollbild-Bühne,
-                      der Text blendet im selben Takt aus
-        C) 0.00–0.82  Clip läuft frame-genau mit (currentTime = f(progress),
+        Die Hero-Sektion ist 340vh hoch, die Bühne klebt im Viewport. Drei
+        Phasen entlang des Scroll-Fortschritts (0–1):
+        A) 0.00–0.18  Clip als kleiner, randloser Ausschnitt rechts,
+                      Text links (Kicker + h1 + Zeile)
+        B) 0.18–0.38  Clip wird moderat breiter, Text blendet im selben
+                      Takt aus
+        C) 0.00–0.85  Clip läuft frame-genau mit (currentTime = f(progress),
                       läuft technisch über A–C hinweg): Blick in die Kamera →
                       Blick auf den Laptop → Kamera schwenkt in die
-                      Ich-Perspektive auf den Bildschirm
-        D) 0.82–1.00  Bildschirm-Reveal (echter Screenshot der Startseite,
-                      an der Bildschirm-Position im letzten Video-Frame
-                      platziert) blendet ein und wächst per FLIP-Transform
-                      zur Vollbild-Ansicht — der Laptop-Blick wird zur
-                      echten Webseite, die direkt darunter weitergeht
+                      Ich-Perspektive
+        D) 0.85–1.00  kurze Cream-Überblendung — direkt, kein Zoom-Effekt
+        Der Video-Hintergrund wird live freigestellt: main.js zeichnet jeden
+        Frame auf ein <canvas> und macht nahes Schwarz transparent, sodass
+        die Navy-Seide der Seite durchscheint (siehe drawKeyedFrame unten).
      ------------------------------------------------------------------------ */
   var hero = document.querySelector("[data-hero]");
   var heroStage = hero && hero.querySelector(".hero-stage");
   var heroVideoEl = heroStage && heroStage.querySelector(".hero-video");
+  var heroCanvas = heroStage && heroStage.querySelector(".hero-video-canvas");
+  var heroCanvasCtx = heroCanvas && heroCanvas.getContext("2d", { willReadFrequently: true });
 
   if (heroVideoEl) {
     heroVideoEl.pause();
   }
 
+  /* Zeichnet den aktuellen Video-Frame aufs Canvas und stanzt nahes
+     Schwarz (den Studio-Hintergrund) per Helligkeits-Schwelle heraus. */
+  var drawKeyedFrame = function () {
+    if (!heroCanvasCtx || !heroVideoEl.videoWidth) return;
+    if (heroCanvas.width !== heroVideoEl.videoWidth) {
+      heroCanvas.width = heroVideoEl.videoWidth;
+      heroCanvas.height = heroVideoEl.videoHeight;
+    }
+    heroCanvasCtx.drawImage(heroVideoEl, 0, 0, heroCanvas.width, heroCanvas.height);
+    var frame = heroCanvasCtx.getImageData(0, 0, heroCanvas.width, heroCanvas.height);
+    var d = frame.data;
+    var threshold = 46;
+    var soft = 34;
+    for (var i = 0; i < d.length; i += 4) {
+      var lum = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
+      if (lum < threshold) {
+        d[i + 3] = 0;
+      } else if (lum < threshold + soft) {
+        d[i + 3] = Math.round((255 * (lum - threshold)) / soft);
+      }
+    }
+    heroCanvasCtx.putImageData(frame, 0, 0);
+  };
+
   if (hero && !prefersReducedMotion) {
     var heroIntroCopy = hero.querySelector(".hero-intro-copy");
     var heroFrame = hero.querySelector(".hero-video-frame");
-    var heroReveal = hero.querySelector(".hero-screen-reveal");
+    var heroWash = hero.querySelector(".hero-wash");
     var heroSilk = hero.querySelector(".hero-silk");
     var heroCue = hero.querySelector(".hero-cue");
     var heroKicker = hero.querySelector(".hero-kicker");
     var heroTicking = false;
     var heroVideoReady = false;
 
-    var FRAME_GROW_START = 0.16;
-    var FRAME_GROW_END = 0.34;
-    var VIDEO_END = 0.82;
-    var REVEAL_START = 0.82;
+    var FRAME_GROW_START = 0.18;
+    var FRAME_GROW_END = 0.38;
+    var FRAME_W_START = 30; /* vw */
+    var FRAME_W_END = 46; /* vw */
+    var VIDEO_END = 0.85;
+    var WASH_START = 0.85;
 
     var clamp01 = function (v) {
       return Math.min(1, Math.max(0, v));
-    };
-
-    /* FLIP-Basiswerte: Rect der kleinen Karte bzw. des Bildschirm-
-       Ausschnitts im Ruhezustand (ohne Transform) — einmalig gemessen,
-       bei Resize erneuert. */
-    var frameBaseRect = null;
-    var revealBaseRect = null;
-
-    var measureBaseRects = function () {
-      if (heroFrame) {
-        heroFrame.style.transform = "none";
-        frameBaseRect = heroFrame.getBoundingClientRect();
-      }
-      if (heroReveal) {
-        heroReveal.style.transform = "none";
-        revealBaseRect = heroReveal.getBoundingClientRect();
-      }
-    };
-
-    var applyFlip = function (el, base, t) {
-      if (!el || !base || t <= 0) {
-        if (el) el.style.transform = "none";
-        return;
-      }
-      var vw = window.innerWidth;
-      var vh = window.innerHeight;
-      var scaleX = 1 + (vw / base.width - 1) * t;
-      var scaleY = 1 + (vh / base.height - 1) * t;
-      var dx = (vw / 2 - (base.left + base.width / 2)) * t;
-      var dy = (vh / 2 - (base.top + base.height / 2)) * t;
-      el.style.transform =
-        "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px) scale(" +
-        scaleX.toFixed(4) + "," + scaleY.toFixed(4) + ")";
     };
 
     var renderHero = function () {
@@ -186,18 +181,18 @@
       var progress = clamp01(-hero.getBoundingClientRect().top / total);
 
       /* Video läuft frame-genau über den gesamten Erzählabschnitt
-         (Phasen A–C), unabhängig davon, wie groß die Karte gerade ist */
+         (Phasen A–C), unabhängig davon, wie breit der Ausschnitt gerade ist */
       if (heroVideoEl && heroVideoReady && heroVideoEl.duration) {
         var videoProgress = clamp01(progress / VIDEO_END);
         heroVideoEl.currentTime = videoProgress * heroVideoEl.duration;
+        drawKeyedFrame();
       }
 
-      /* Phase B: Karte wächst zur Vollbild-Bühne, Text blendet im selben
-         Takt aus */
+      /* Phase B: Ausschnitt wird moderat breiter, Text blendet im selben
+         Takt aus — kein Vollbild, kein Transform nötig */
       var growT = clamp01((progress - FRAME_GROW_START) / (FRAME_GROW_END - FRAME_GROW_START));
-      applyFlip(heroFrame, frameBaseRect, growT);
       if (heroFrame) {
-        heroFrame.style.borderRadius = (1.25 * (1 - growT)).toFixed(3) + "rem";
+        heroFrame.style.width = (FRAME_W_START + (FRAME_W_END - FRAME_W_START) * growT).toFixed(2) + "vw";
       }
       if (heroIntroCopy) {
         var introOpacity = 1 - growT;
@@ -205,14 +200,10 @@
         heroIntroCopy.style.transform = "translateX(" + (-(1 - introOpacity) * 1.5).toFixed(2) + "rem)";
       }
 
-      /* Phase D: Bildschirm-Reveal blendet ein und wächst zur Vollbild-
-         Ansicht — der Laptop-Blick im Video wird zur echten Webseite */
-      var revealFade = clamp01((progress - REVEAL_START) / 0.06);
-      var revealGrow = clamp01((progress - REVEAL_START) / (1 - REVEAL_START));
-      if (heroReveal) {
-        heroReveal.style.opacity = revealFade.toFixed(3);
-        heroReveal.style.borderRadius = (0.4 * (1 - revealGrow)).toFixed(3) + "rem";
-        applyFlip(heroReveal, revealBaseRect, revealGrow);
+      /* Phase D: kurze, direkte Cream-Überblendung — löst die Bühne auf,
+         die echte Seite darunter geht nahtlos weiter */
+      if (heroWash) {
+        heroWash.style.opacity = clamp01((progress - WASH_START) / (1 - WASH_START)).toFixed(3);
       }
 
       /* Seide zoomt kaum merklich — Ruhe statt Effekthascherei (Fallback,
@@ -237,13 +228,10 @@
       }
     };
 
-    measureBaseRects();
-
     if (heroVideoEl) {
       var markHeroVideoLoaded = function () {
         if (heroVideoReady) return;
         heroVideoReady = true;
-        heroStage.classList.add("has-video");
         /* iOS Safari rendert geseekte Frames erst, nachdem der Decoder
            einmal per play()/pause() „aufgewärmt" wurde — sonst bleibt das
            Bild beim Scrubben auf dem allerersten Frame stehen. */
@@ -256,17 +244,11 @@
         requestHeroFrame();
       };
       heroVideoEl.addEventListener("loadedmetadata", markHeroVideoLoaded);
-      heroVideoEl.addEventListener("error", function () {
-        heroStage.classList.remove("has-video");
-      });
       if (heroVideoEl.readyState >= 1) markHeroVideoLoaded();
     }
 
     window.addEventListener("scroll", requestHeroFrame, { passive: true });
-    window.addEventListener("resize", function () {
-      measureBaseRects();
-      requestHeroFrame();
-    });
+    window.addEventListener("resize", requestHeroFrame);
     renderHero();
   }
 

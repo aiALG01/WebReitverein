@@ -141,14 +141,16 @@
   <main id="main">
 
     <!-- ================================================================
-         HERO — Scroll-Bühne, vier Phasen (siehe js/main.js, Abschnitt 4):
-         A) Clip steht als kleine Karte rechts, Text links
-         B) Clip wächst zur Vollbild-Bühne, Text blendet aus
+         HERO — Scroll-Bühne (siehe js/main.js, Abschnitt 4):
+         A) Clip als kleine, randlose Ausschnitt-Grafik rechts, Text links
+         B) Clip wächst moderat, Text blendet im selben Takt aus
          C) Clip läuft frame-genau mit: Blick in die Kamera → Blick auf den
-            Laptop → Kamera schwenkt in die Ich-Perspektive auf den Bildschirm
-         D) Bildschirm-Reveal wächst zur Vollbild-Ansicht — echter Screenshot
-            der Startseite, die direkt darunter weitergeht
-         (bei prefers-reduced-motion/no-js: statische Karte, kein Effekt)
+            Laptop → Kamera schwenkt in die Ich-Perspektive
+         D) Kurze Cream-Überblendung geht direkt in die echte Seite über
+         Der Clip-Hintergrund wird live per <canvas> freigestellt (nahes
+         Schwarz wird transparent), sodass die Person direkt auf der
+         Navy-Seide der Seite zu stehen scheint — kein Kasten, kein Rand.
+         (bei prefers-reduced-motion/no-js: statische Ansicht, kein Effekt)
          ================================================================ -->
     <section class="hero" data-hero aria-label="Einführung">
       <div class="hero-stage">
@@ -164,25 +166,19 @@
 
         <!-- Phase A/B/C: Einstiegs-Clip (Seedance 2.0), kein Autoplay, kein
              Loop — main.js setzt currentTime direkt aus dem Scroll-
-             Fortschritt. Sobald assets/hero-scroll.mp4 im Repo liegt (siehe
-             assets/README.md), wird mitgescrollt; bis dahin bleibt die
-             Seiden-Textur als Hintergrund sichtbar. Fällt bei fehlender
-             Datei sowie bei prefers-reduced-motion/no-js auf ein statisches
-             Standbild zurück (siehe css/style.css). -->
+             Fortschritt und zeichnet jeden Frame freigestellt auf das
+             Canvas. Das <video> selbst bleibt unsichtbar (dient nur als
+             Bildquelle); ohne JS/Canvas-Unterstützung bzw. bei fehlender
+             Datei bleibt das Standbild (Poster) sichtbar. -->
         <div class="hero-video-frame">
-          <video class="hero-video" muted playsinline preload="auto" aria-hidden="true" poster="assets/hero-poster.jpg" onerror="this.style.display='none'">
+          <video class="hero-video" muted playsinline preload="auto" aria-hidden="true" onerror="this.style.display='none'">
             <source src="assets/hero-scroll.mp4" type="video/mp4">
           </video>
+          <canvas class="hero-video-canvas" aria-hidden="true"></canvas>
         </div>
 
-        <!-- Phase D: an der Position des Laptop-Bildschirms im letzten
-             Video-Frame platziert. Zeigt einen echten Screenshot der
-             Startseite — das, was im Video gerade auf ihrem Bildschirm zu
-             sehen ist — und wächst zur Vollbild-Ansicht, die nahtlos in den
-             echten Seiteninhalt darunter übergeht. -->
-        <div class="hero-screen-reveal" aria-hidden="true">
-          <img src="assets/hero-screen-preview.jpg" alt="" loading="eager">
-        </div>
+        <!-- Phase D: kurze, direkte Cream-Überblendung — kein Zoom-Effekt -->
+        <div class="hero-wash" aria-hidden="true"></div>
 
         <p class="hero-cue" aria-hidden="true">Scrollen</p>
       </div>

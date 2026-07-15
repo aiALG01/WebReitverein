@@ -44,8 +44,8 @@
   --tracking-head: 0.02em;
 
   /* Rhythmus */
-  --space-section: clamp(5rem, 4rem + 8vw, 11rem);
-  --space-inner: clamp(2.5rem, 2rem + 3vw, 5rem);
+  --space-section: clamp(3.25rem, 2.5rem + 5vw, 6.5rem);
+  --space-inner: clamp(1.75rem, 1.5rem + 2vw, 3.25rem);
   --container: 72rem;
   --container-wide: 86rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
@@ -76,7 +76,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-body);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--color-navy);
   background-color: var(--color-cream);
   overflow-x: hidden;
@@ -178,7 +178,7 @@ h3 {
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--color-brown);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
 }
 
 .on-dark .eyebrow {
@@ -655,83 +655,56 @@ p.hero-intro-copy-line {
   color: color-mix(in srgb, var(--color-tan) 55%, var(--color-cream));
 }
 
-/* Phase A: kleine Karte rechts. Phase B lässt main.js per FLIP-Transform
-   (translate + scale, aus den gemessenen Rects berechnet) zur Vollbild-
-   Bühne wachsen — die Basiswerte hier gelten für den Ausgangszustand. */
+/* Phase A: kleine, randlose Ausschnitt-Grafik rechts. Phase B vergrößert
+   main.js nur die Breite (kein Transform nötig) — die Person scheint
+   direkt auf der Navy-Seide zu stehen, kein Rand, kein Kasten. */
 .hero-video-frame {
   position: absolute;
   z-index: 1;
   top: 0;
   bottom: 0;
-  right: 7vw;
+  right: 5vw;
   margin-block: auto;
-  width: min(42vw, 34rem);
+  width: min(30vw, 22rem);
   aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-radius: 1.25rem;
-  box-shadow: 0 2rem 5rem -1rem color-mix(in srgb, var(--color-navy) 55%, transparent);
-  background: var(--color-navy) url("../assets/hero-poster.jpg") center / cover no-repeat;
-  transform-origin: center center;
-  will-change: transform, border-radius;
+  will-change: width;
 }
 
-/* Einstiegs-Clip: deckt die Seiden-Textur/das Standbild ab, sobald eine
-   Datei vorliegt. Heller als ein reiner Hintergrund-Loop, da der Clip hier
-   die Haupterzählung trägt (Blick in die Kamera → Blick auf den Laptop). */
+/* Dient nur als Bildquelle fürs Canvas — bleibt unsichtbar */
 .hero-video {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Zeigt jeden Frame freigestellt: main.js zeichnet das Video auf das
+   Canvas und macht nahes Schwarz (den Studio-Hintergrund) transparent —
+   die Navy-Seide der Seite scheint durch, kein schwarzer Kasten. */
+.hero-video-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: brightness(0.85) saturate(1.05);
+  filter: brightness(1.04) saturate(1.05);
 }
 
-/* Verdunkelung zugunsten der Textlesbarkeit an Ober-/Unterkante (Kicker,
-   Scroll-Hinweis) — nur aktiv, wenn main.js bestätigt hat, dass der Clip
-   tatsächlich lädt (.has-video-Klasse auf .hero-stage). Ohne Video bleibt
-   die reine Seiden-Textur unverändert. */
-.hero-stage.has-video::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--color-navy) 55%, transparent) 0%, transparent 30%, transparent 60%, color-mix(in srgb, var(--color-navy) 70%, transparent) 100%);
-  pointer-events: none;
-}
-
-/* Kein Clip vorhanden, kein no-js/reduced-motion nötig: Video einfach ausblenden */
-.no-js .hero-video,
-.reduced-motion .hero-video {
+/* Kein Clip vorhanden, kein no-js/reduced-motion nötig: Canvas ausblenden */
+.no-js .hero-video-canvas,
+.reduced-motion .hero-video-canvas {
   display: none;
 }
 
-/* Phase D: an der Position des Laptop-Bildschirms im letzten Video-Frame
-   platziert (siehe assets/README.md). Zeigt einen echten Screenshot der
-   Startseite und wächst per FLIP-Transform zur Vollbild-Ansicht, die
-   nahtlos in den echten Seiteninhalt darunter übergeht. */
-.hero-screen-reveal {
-  position: absolute;
-  z-index: 3;
-  left: 13.9%;
-  top: 20.8%;
-  width: 38.3%;
-  height: 48.6%;
-  overflow: hidden;
-  border-radius: 0.4rem;
-  opacity: 0;
-  transform-origin: center center;
-  pointer-events: none;
-  will-change: transform, opacity, border-radius;
-}
-
-.hero-screen-reveal img {
+/* Kurze, direkte Cream-Überblendung am Ende des Scrollwegs — löst die
+   Bühne ohne Zoom-Effekt in die echte Seite darunter auf */
+.hero-wash {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  z-index: 3;
+  background: var(--color-cream);
+  opacity: 0;
+  will-change: opacity;
 }
 
 .hero-kicker {
@@ -826,13 +799,9 @@ p.hero-intro-copy-line {
 .no-js .hero-video-frame,
 .reduced-motion .hero-video-frame {
   position: static;
-  width: min(100%, 40rem);
-  transform: none;
-}
-
-.no-js .hero-screen-reveal,
-.reduced-motion .hero-screen-reveal {
-  display: none;
+  width: min(100%, 28rem);
+  background: var(--color-navy) url("../assets/hero-poster.jpg") center / cover no-repeat;
+  border-radius: 0.75rem;
 }
 
 .no-js .hero-cue::after,
