@@ -951,7 +951,7 @@ p.hero-intro-copy-line {
 .service-card p {
   color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
   font-size: var(--text-small);
-  line-height: 1.75;
+  line-height: 1.6;
 }
 
 .service-card .link-line {
@@ -1065,7 +1065,7 @@ p.hero-intro-copy-line {
 
 .process-step p {
   font-size: var(--text-small);
-  line-height: 1.75;
+  line-height: 1.6;
   color: color-mix(in srgb, var(--color-cream) 82%, var(--color-steel-blue));
   max-width: 52ch;
 }
@@ -1132,7 +1132,7 @@ p.hero-intro-copy-line {
   border-left: 2px solid var(--color-tan);
   background: color-mix(in srgb, var(--color-tan) 8%, transparent);
   font-size: var(--text-small);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .service-detail .benefit strong {
@@ -1232,7 +1232,7 @@ p.hero-intro-copy-line {
 .faq-item p {
   margin-top: 1rem;
   font-size: var(--text-small);
-  line-height: 1.75;
+  line-height: 1.6;
   color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
   max-width: 58ch;
 }
@@ -1292,7 +1292,7 @@ p.hero-intro-copy-line {
 
 .project-card p {
   font-size: var(--text-small);
-  line-height: 1.7;
+  line-height: 1.6;
   color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
 }
 
@@ -1345,7 +1345,7 @@ p.hero-intro-copy-line {
 
 .value-item p {
   font-size: var(--text-small);
-  line-height: 1.75;
+  line-height: 1.6;
   color: color-mix(in srgb, var(--color-cream) 82%, var(--color-steel-blue));
 }
 
