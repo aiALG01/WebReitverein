@@ -97,6 +97,11 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23072768'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' fill='%23F4EAE1' text-anchor='middle'%3EG.%3C/text%3E%3C/svg%3E">
 
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- GSAP + ScrollTrigger: treiben das Video-Scrubbing der Hero-Sektion
+       (siehe js/main.js, Abschnitt 4) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Zum Inhalt springen</a>
@@ -141,44 +146,55 @@
   <main id="main">
 
     <!-- ================================================================
-         HERO — Scroll-Bühne (siehe js/main.js, Abschnitt 4):
-         A) Clip als kleine, randlose Ausschnitt-Grafik rechts, Text links
-         B) Clip wächst moderat, Text blendet im selben Takt aus
-         C) Clip läuft frame-genau mit: Blick in die Kamera → Blick auf den
-            Laptop → Kamera schwenkt in die Ich-Perspektive
-         D) Kurze Cream-Überblendung geht direkt in die echte Seite über
-         Der Clip-Hintergrund wird live per <canvas> freigestellt (nahes
-         Schwarz wird transparent), sodass die Person direkt auf der
-         Navy-Seide der Seite zu stehen scheint — kein Kasten, kein Rand.
-         (bei prefers-reduced-motion/no-js: statische Ansicht, kein Effekt)
+         HERO — scrollgesteuertes Video-Scrubbing (siehe js/main.js,
+         Abschnitt 4, GSAP + ScrollTrigger):
+         1) Beim ersten Scrollen blendet das Standbild weich aus, das Video
+            übernimmt
+         2) Das Video läuft framegenau mit dem Scroll-Fortschritt mit
+         3) Der linke Einstiegstext blendet im ersten Drittel aus
+         4) Ab der Hälfte zoomt das Video heran, bis nur noch der
+            (schwarze) Laptop-Bildschirm im Bild ist
+         5) Das schwarze Overlay blendet ein, die Texte fahren gestaffelt
+            von unten nach oben ein
+         6) Am Ende löst sich die Bühne in den Off-White-Hintergrund der
+            nächsten Sektion auf
+         (bei prefers-reduced-motion/no-js: statisches Standbild, kein Effekt)
          ================================================================ -->
-    <section class="hero" data-hero aria-label="Einführung">
-      <div class="hero-stage">
+    <section class="hero" aria-label="Einführung">
+      <div id="hero-scroll-container">
         <div class="hero-silk" aria-hidden="true"></div>
 
         <p class="hero-kicker">Studio Gerth — Websites für Handwerk &amp; regionale Betriebe</p>
 
-        <!-- Phase A: linker Einstiegstext, blendet in Phase B aus -->
+        <!-- Standbild: fängt unnatürliche KI-Augenbewegungen beim Laden ab,
+             bis der erste Scroll das Video übernehmen lässt. Platzhalter,
+             bis Lena-69.jpg auf main hochgeladen und die Datei ersetzt wird. -->
+        <div id="hero-fallback-image" role="img" aria-label="Anna Lena Gerth blickt in die Kamera, ein aufgeklappter Laptop in der Hand" style="background-image: url('assets/Lena-69.jpg');"></div>
+
+        <video id="hero-video" muted playsinline preload="auto" aria-hidden="true">
+          <source src="assets/hero-cinematic.mp4" type="video/mp4">
+        </video>
+
+        <!-- editierbares, scharfes HTML über dem Video — kein Bild, kein Canvas -->
         <div class="hero-intro-copy">
           <h1 class="hero-intro-copy-line">Noch keine <span class="script">Website</span>?</h1>
           <p class="hero-intro-copy-line">Zeit, sichtbar zu werden.</p>
         </div>
 
-        <!-- Phase A/B/C: Einstiegs-Clip (Seedance 2.0), kein Autoplay, kein
-             Loop — main.js setzt currentTime direkt aus dem Scroll-
-             Fortschritt und zeichnet jeden Frame freigestellt auf das
-             Canvas. Das <video> selbst bleibt unsichtbar (dient nur als
-             Bildquelle); ohne JS/Canvas-Unterstützung bzw. bei fehlender
-             Datei bleibt das Standbild (Poster) sichtbar. -->
-        <div class="hero-video-frame">
-          <video class="hero-video" muted playsinline preload="auto" aria-hidden="true" onerror="this.style.display='none'">
-            <source src="assets/hero-scroll.mp4" type="video/mp4">
-          </video>
-          <canvas class="hero-video-canvas" aria-hidden="true"></canvas>
+        <!-- Ausgeschalteter Laptop-Bildschirm: blendet ein, sobald das Video
+             ganz herangezoomt ist; Texte fahren gestaffelt von unten ein.
+             Wiederholt die echte Überschrift der folgenden Sektion, daher
+             aria-hidden (kein doppelter Inhalt für Screenreader). -->
+        <div class="laptop-screen-overlay" aria-hidden="true">
+          <div class="laptop-screen-overlay-inner">
+            <p class="trigger-headline">Sie leisten gute Arbeit.<br>Zeigen Sie sie.</p>
+            <p class="trigger-text">
+              Ich baue Websites für kleine, regionale Betriebe, die bisher
+              keine hatten — persönlich betreut, mit Hosting und
+              DSGVO-Datenschutz aus einer Hand.
+            </p>
+          </div>
         </div>
-
-        <!-- Phase D: kurze, direkte Cream-Überblendung — kein Zoom-Effekt -->
-        <div class="hero-wash" aria-hidden="true"></div>
 
         <p class="hero-cue" aria-hidden="true">Scrollen</p>
       </div>

@@ -102,154 +102,92 @@
   }
 
   /* ------------------------------------------------------------------------
-     4. Hero-Choreografie (Startseite)
-        Die Hero-Sektion ist 340vh hoch, die Bühne klebt im Viewport. Drei
-        Phasen entlang des Scroll-Fortschritts (0–1):
-        A) 0.00–0.18  Clip als kleiner, randloser Ausschnitt rechts,
-                      Text links (Kicker + h1 + Zeile)
-        B) 0.18–0.38  Clip wird moderat breiter, Text blendet im selben
-                      Takt aus
-        C) 0.00–0.85  Clip läuft frame-genau mit (currentTime = f(progress),
-                      läuft technisch über A–C hinweg): Blick in die Kamera →
-                      Blick auf den Laptop → Kamera schwenkt in die
-                      Ich-Perspektive
-        D) 0.85–1.00  kurze Cream-Überblendung — direkt, kein Zoom-Effekt
-        Der Video-Hintergrund wird live freigestellt: main.js zeichnet jeden
-        Frame auf ein <canvas> und macht nahes Schwarz transparent, sodass
-        die Navy-Seide der Seite durchscheint (siehe drawKeyedFrame unten).
+     4. Hero-Choreografie (Startseite) — GSAP + ScrollTrigger
+        #hero-scroll-container wird für die Dauer des Scrollwegs gepinnt.
+        Eine Timeline (Scroll-Fortschritt 0–1) steuert:
+        1) 0.00–0.06  Standbild blendet weich aus, das Video übernimmt
+        2) 0.00–0.85  Video läuft framegenau mit (currentTime = f(progress))
+        3) 0.00–0.32  linker Einstiegstext blendet aus
+        4) 0.50–0.85  Video zoomt heran (scale 1.25, y: -5%) — MacBook-Rand
+                      und Tastatur verlassen den Viewport, übrig bleibt der
+                      Laptop-Bildschirm als Vollbild
+        5) 0.62–0.88  schwarzes Overlay blendet ein, Headline und Text
+                      fahren gestaffelt von unten nach oben ein
+        6) 0.90–1.00  die ganze Bühne löst sich auf und gibt den
+                      Off-White-Hintergrund der nächsten Sektion frei
      ------------------------------------------------------------------------ */
-  var hero = document.querySelector("[data-hero]");
-  var heroStage = hero && hero.querySelector(".hero-stage");
-  var heroVideoEl = heroStage && heroStage.querySelector(".hero-video");
-  var heroCanvas = heroStage && heroStage.querySelector(".hero-video-canvas");
-  var heroCanvasCtx = heroCanvas && heroCanvas.getContext("2d", { willReadFrequently: true });
+  var heroContainer = document.getElementById("hero-scroll-container");
 
-  if (heroVideoEl) {
-    heroVideoEl.pause();
-  }
+  if (
+    heroContainer &&
+    !prefersReducedMotion &&
+    typeof gsap !== "undefined" &&
+    typeof ScrollTrigger !== "undefined"
+  ) {
+    gsap.registerPlugin(ScrollTrigger);
 
-  /* Zeichnet den aktuellen Video-Frame aufs Canvas und stanzt nahes
-     Schwarz (den Studio-Hintergrund) per Helligkeits-Schwelle heraus. */
-  var drawKeyedFrame = function () {
-    if (!heroCanvasCtx || !heroVideoEl.videoWidth) return;
-    if (heroCanvas.width !== heroVideoEl.videoWidth) {
-      heroCanvas.width = heroVideoEl.videoWidth;
-      heroCanvas.height = heroVideoEl.videoHeight;
+    var heroVideo = document.getElementById("hero-video");
+    var heroFallback = document.getElementById("hero-fallback-image");
+    var heroIntroCopy = heroContainer.querySelector(".hero-intro-copy");
+    var heroOverlay = heroContainer.querySelector(".laptop-screen-overlay");
+    var heroKicker = heroContainer.querySelector(".hero-kicker");
+    var heroCue = heroContainer.querySelector(".hero-cue");
+    var videoScrub = { t: 0 };
+
+    /* Safari (v.a. iOS) rendert per currentTime geseekte Frames erst,
+       nachdem der Decoder einmal per play()/pause() „aufgewärmt" wurde —
+       sonst bleibt das Bild beim Scrubben auf dem ersten Frame stehen. */
+    var warmUpVideoDecoder = function () {
+      var playAttempt = heroVideo.play();
+      if (playAttempt && playAttempt.then) {
+        playAttempt.then(function () { heroVideo.pause(); }).catch(function () {});
+      } else {
+        heroVideo.pause();
+      }
+    };
+    if (heroVideo.readyState >= 1) {
+      warmUpVideoDecoder();
+    } else {
+      heroVideo.addEventListener("loadedmetadata", warmUpVideoDecoder, { once: true });
     }
-    heroCanvasCtx.drawImage(heroVideoEl, 0, 0, heroCanvas.width, heroCanvas.height);
-    var frame = heroCanvasCtx.getImageData(0, 0, heroCanvas.width, heroCanvas.height);
-    var d = frame.data;
-    var threshold = 46;
-    var soft = 34;
-    for (var i = 0; i < d.length; i += 4) {
-      var lum = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
-      if (lum < threshold) {
-        d[i + 3] = 0;
-      } else if (lum < threshold + soft) {
-        d[i + 3] = Math.round((255 * (lum - threshold)) / soft);
+
+    var heroTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: heroContainer,
+        start: "top top",
+        end: "+=300%",
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1
       }
-    }
-    heroCanvasCtx.putImageData(frame, 0, 0);
-  };
+    });
 
-  if (hero && !prefersReducedMotion) {
-    var heroIntroCopy = hero.querySelector(".hero-intro-copy");
-    var heroFrame = hero.querySelector(".hero-video-frame");
-    var heroWash = hero.querySelector(".hero-wash");
-    var heroSilk = hero.querySelector(".hero-silk");
-    var heroCue = hero.querySelector(".hero-cue");
-    var heroKicker = hero.querySelector(".hero-kicker");
-    var heroTicking = false;
-    var heroVideoReady = false;
-
-    var FRAME_GROW_START = 0.18;
-    var FRAME_GROW_END = 0.38;
-    var FRAME_W_START = 30; /* vw */
-    var FRAME_W_END = 46; /* vw */
-    var VIDEO_END = 0.85;
-    var WASH_START = 0.85;
-
-    var clamp01 = function (v) {
-      return Math.min(1, Math.max(0, v));
-    };
-
-    var renderHero = function () {
-      heroTicking = false;
-
-      var total = hero.offsetHeight - window.innerHeight;
-      if (total <= 0) return;
-      var progress = clamp01(-hero.getBoundingClientRect().top / total);
-
-      /* Video läuft frame-genau über den gesamten Erzählabschnitt
-         (Phasen A–C), unabhängig davon, wie breit der Ausschnitt gerade ist */
-      if (heroVideoEl && heroVideoReady && heroVideoEl.duration) {
-        var videoProgress = clamp01(progress / VIDEO_END);
-        heroVideoEl.currentTime = videoProgress * heroVideoEl.duration;
-        drawKeyedFrame();
-      }
-
-      /* Phase B: Ausschnitt wird moderat breiter, Text blendet im selben
-         Takt aus — kein Vollbild, kein Transform nötig */
-      var growT = clamp01((progress - FRAME_GROW_START) / (FRAME_GROW_END - FRAME_GROW_START));
-      if (heroFrame) {
-        heroFrame.style.width = (FRAME_W_START + (FRAME_W_END - FRAME_W_START) * growT).toFixed(2) + "vw";
-      }
-      if (heroIntroCopy) {
-        var introOpacity = 1 - growT;
-        heroIntroCopy.style.opacity = introOpacity.toFixed(3);
-        heroIntroCopy.style.transform = "translateX(" + (-(1 - introOpacity) * 1.5).toFixed(2) + "rem)";
-      }
-
-      /* Phase D: kurze, direkte Cream-Überblendung — löst die Bühne auf,
-         die echte Seite darunter geht nahtlos weiter */
-      if (heroWash) {
-        heroWash.style.opacity = clamp01((progress - WASH_START) / (1 - WASH_START)).toFixed(3);
-      }
-
-      /* Seide zoomt kaum merklich — Ruhe statt Effekthascherei (Fallback,
-         falls kein Video lädt) */
-      if (heroSilk) {
-        heroSilk.style.transform = "scale(" + (1 + progress * 0.12).toFixed(4) + ")";
-      }
-
-      if (heroCue) {
-        heroCue.style.opacity = clamp01(1 - progress * 6).toFixed(3);
-      }
-
-      if (heroKicker) {
-        heroKicker.style.opacity = clamp01(1 - progress * 3).toFixed(3);
-      }
-    };
-
-    var requestHeroFrame = function () {
-      if (!heroTicking) {
-        heroTicking = true;
-        window.requestAnimationFrame(renderHero);
-      }
-    };
-
-    if (heroVideoEl) {
-      var markHeroVideoLoaded = function () {
-        if (heroVideoReady) return;
-        heroVideoReady = true;
-        /* iOS Safari rendert geseekte Frames erst, nachdem der Decoder
-           einmal per play()/pause() „aufgewärmt" wurde — sonst bleibt das
-           Bild beim Scrubben auf dem allerersten Frame stehen. */
-        var playAttempt = heroVideoEl.play();
-        if (playAttempt && playAttempt.then) {
-          playAttempt.then(function () { heroVideoEl.pause(); }).catch(function () {});
-        } else {
-          heroVideoEl.pause();
+    heroTimeline
+      /* 1) Standbild weich ausblenden, sobald gescrollt wird */
+      .to(heroFallback, { opacity: 0, duration: 0.06, ease: "none" }, 0)
+      /* 2) Video framegenau über den Scroll-Fortschritt steuern */
+      .to(videoScrub, {
+        t: 1,
+        duration: 0.85,
+        ease: "none",
+        onUpdate: function () {
+          if (heroVideo.duration) {
+            heroVideo.currentTime = videoScrub.t * heroVideo.duration;
+          }
         }
-        requestHeroFrame();
-      };
-      heroVideoEl.addEventListener("loadedmetadata", markHeroVideoLoaded);
-      if (heroVideoEl.readyState >= 1) markHeroVideoLoaded();
-    }
-
-    window.addEventListener("scroll", requestHeroFrame, { passive: true });
-    window.addEventListener("resize", requestHeroFrame);
-    renderHero();
+      }, 0)
+      /* 3) linker Einstiegstext im ersten Drittel ausfaden */
+      .to(heroIntroCopy, { opacity: 0, y: "-1rem", duration: 0.32, ease: "none" }, 0)
+      .to([heroKicker, heroCue], { opacity: 0, duration: 0.12, ease: "none" }, 0)
+      /* 4) ab der Hälfte heranzoomen, bis nur der Laptop-Bildschirm bleibt */
+      .to(heroVideo, { scale: 1.25, y: "-5%", duration: 0.35, ease: "power1.inOut" }, 0.5)
+      /* 5) schwarzer Bildschirm blendet ein, Texte fahren gestaffelt hoch */
+      .to(heroOverlay, { opacity: 1, duration: 0.2, ease: "none" }, 0.62)
+      .to(".trigger-headline", { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, 0.7)
+      .to(".trigger-text", { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, 0.8)
+      /* 6) die Bühne löst sich auf, der Off-White-Hintergrund der
+         nächsten Sektion (bereits die Body-Hintergrundfarbe) wird sichtbar */
+      .to(heroContainer, { opacity: 0, duration: 0.1, ease: "none" }, 0.9);
   }
 
   /* ------------------------------------------------------------------------
