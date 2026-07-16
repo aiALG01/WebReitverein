@@ -20,6 +20,11 @@
   --color-tan: #9D785D;
   --color-brown: #936A4D;
 
+  /* Sechste, bewusste Ausnahme: der helle Beige-Ton, in den Header und
+     Laptop-Bildschirm am Ende der Hero-Choreografie überblenden (siehe
+     js/main.js, Abschnitt 4) — vom hellen Cream bewusst leicht abgesetzt */
+  --color-beige: #f7f3ee;
+
   /* Abgeleitete Tinten & Schleier (ausschließlich aus den fünf Farben gemischt) */
   --tint-cream-deep: color-mix(in srgb, var(--color-cream) 92%, var(--color-tan));
   --tint-navy-soft: color-mix(in srgb, var(--color-navy) 8%, var(--color-cream));
@@ -646,18 +651,16 @@ body.nav-open {
 }
 
 /* Editierbares, scharfes HTML über dem Video — sichtbar bis der Effekt
-   es im ersten Drittel des Scrollwegs ausblendet (siehe js/main.js) */
+   es im ersten Drittel des Scrollwegs ausblendet (siehe js/main.js).
+   Bewusst tief positioniert: "noch keine" ragt leicht über den Laptop im
+   Hintergrund, "webseite?" liegt auf dessen Höhe daneben. */
 .hero-intro-copy {
   position: absolute;
   z-index: 4;
-  top: 0;
-  bottom: 0;
+  top: auto;
+  bottom: 32%;
   left: var(--gutter);
-  margin-block: auto;
-  height: fit-content;
   max-width: min(28rem, 44vw);
-  display: grid;
-  gap: 0.75rem;
   will-change: opacity, transform;
 }
 
@@ -674,16 +677,25 @@ h1.hero-intro-copy-line {
   max-width: 12ch;
 }
 
-p.hero-intro-copy-line {
-  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-  font-weight: 400;
-  color: color-mix(in srgb, var(--color-cream) 88%, var(--color-steel-blue));
-}
-
 .hero-intro-copy .script {
   font-size: 1.06em;
   /* Auf Navy braucht der Tan-Akzent mehr Leuchtkraft */
   color: color-mix(in srgb, var(--color-tan) 55%, var(--color-cream));
+}
+
+/* Kleiner Subtext, bewusst vom Heading gelöst und nah an den unteren
+   Rand der Hero-Bühne gerückt — eigenständig lesbar, nicht daran geklebt */
+.hero-intro-sub {
+  position: absolute;
+  z-index: 4;
+  left: var(--gutter);
+  bottom: clamp(4.5rem, 12vh, 7rem);
+  max-width: min(24rem, 44vw);
+  margin: 0;
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+  font-weight: 400;
+  color: color-mix(in srgb, var(--color-cream) 88%, var(--color-steel-blue));
+  will-change: opacity, transform;
 }
 
 /* Ausgeschalteter Laptop-Bildschirm: tiefschwarz, anfangs komplett
@@ -809,13 +821,14 @@ p.hero-intro-copy-line {
 }
 
 .no-js .hero-intro-copy,
-.reduced-motion .hero-intro-copy {
+.reduced-motion .hero-intro-copy,
+.no-js .hero-intro-sub,
+.reduced-motion .hero-intro-sub {
   position: static;
   opacity: 1;
   transform: none;
   max-width: 32rem;
   text-align: center;
-  justify-items: center;
   z-index: 2;
 }
 

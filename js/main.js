@@ -108,13 +108,18 @@
         1) 0.00–0.06  Standbild blendet weich aus, das Video übernimmt
         2) 0.00–0.85  Video läuft framegenau mit (currentTime = f(progress))
         3) 0.00–0.32  linker Einstiegstext blendet aus
-        4) 0.50–0.85  Video zoomt heran (scale 1.25, y: -5%) — MacBook-Rand
+        4) 0.05–0.95  Header blendet lang gezogen von Dunkelblau (transparent
+                      über dem Video) zu Beige, Schrift von Cream zu Navy
+        5) 0.50–0.85  Video zoomt heran (scale 1.25, y: -5%) — MacBook-Rand
                       und Tastatur verlassen den Viewport, übrig bleibt der
                       Laptop-Bildschirm als Vollbild
-        5) 0.62–0.88  schwarzes Overlay blendet ein, Headline und Text
+        6) 0.60–0.86  schwarzer Bildschirm blendet ein, Headline und Text
                       fahren gestaffelt von unten nach oben ein
-        6) 0.90–1.00  die ganze Bühne löst sich auf und gibt den
-                      Off-White-Hintergrund der nächsten Sektion frei
+        7) 0.86–0.98  der Bildschirm hellt von Schwarz zu Beige auf, die
+                      Schrift darauf wechselt synchron zu Navy — bleibt
+                      dabei durchgehend lesbar
+        8) 0.97–1.00  letzter, kurzer Rest-Fade der Bühne in den
+                      Off-White-Hintergrund der nächsten Sektion
      ------------------------------------------------------------------------ */
   var heroContainer = document.getElementById("hero-scroll-container");
 
@@ -129,10 +134,24 @@
     var heroVideo = document.getElementById("hero-video");
     var heroFallback = document.getElementById("hero-fallback-image");
     var heroIntroCopy = heroContainer.querySelector(".hero-intro-copy");
+    var heroIntroSub = heroContainer.querySelector(".hero-intro-sub");
     var heroOverlay = heroContainer.querySelector(".laptop-screen-overlay");
     var heroKicker = heroContainer.querySelector(".hero-kicker");
     var heroCue = heroContainer.querySelector(".hero-cue");
+    var triggerHeadline = heroOverlay.querySelector(".trigger-headline");
+    var triggerText = heroOverlay.querySelector(".trigger-text");
     var videoScrub = { t: 0 };
+
+    var siteHeader = document.querySelector(".site-header");
+    var headerTextEls = document.querySelectorAll(
+      ".site-header .brand, .site-header .nav-list a, .site-header .nav-cta, .site-header .nav-toggle .bar"
+    );
+    var headerCta = document.querySelector(".site-header .nav-cta");
+
+    var rootStyle = getComputedStyle(document.documentElement);
+    var colorNavy = rootStyle.getPropertyValue("--color-navy").trim();
+    var colorBeige = rootStyle.getPropertyValue("--color-beige").trim();
+    var colorTan = rootStyle.getPropertyValue("--color-tan").trim();
 
     /* Safari (v.a. iOS) rendert per currentTime geseekte Frames erst,
        nachdem der Decoder einmal per play()/pause() „aufgewärmt" wurde —
@@ -177,17 +196,31 @@
         }
       }, 0)
       /* 3) linker Einstiegstext im ersten Drittel ausfaden */
-      .to(heroIntroCopy, { opacity: 0, y: "-1rem", duration: 0.32, ease: "none" }, 0)
+      .to([heroIntroCopy, heroIntroSub], { opacity: 0, y: "-1rem", duration: 0.32, ease: "none" }, 0)
       .to([heroKicker, heroCue], { opacity: 0, duration: 0.12, ease: "none" }, 0)
-      /* 4) ab der Hälfte heranzoomen, bis nur der Laptop-Bildschirm bleibt */
+      /* 4) Header lang gezogen von Dunkelblau (transparent) zu Beige —
+         bewusst früh gestartet und über fast die ganze Timeline gedehnt,
+         statt abrupt am Scroll-Anfang umzuschalten */
+      .fromTo(siteHeader,
+        { backgroundColor: "rgba(7, 39, 104, 0)" },
+        { backgroundColor: colorBeige, duration: 0.9, ease: "none" },
+        0.05)
+      .to(headerTextEls, { color: colorNavy, duration: 0.9, ease: "none" }, 0.05)
+      .to(headerCta, { borderColor: colorTan, duration: 0.9, ease: "none" }, 0.05)
+      /* 5) ab der Hälfte heranzoomen, bis nur der Laptop-Bildschirm bleibt */
       .to(heroVideo, { scale: 1.25, y: "-5%", duration: 0.35, ease: "power1.inOut" }, 0.5)
-      /* 5) schwarzer Bildschirm blendet ein, Texte fahren gestaffelt hoch */
-      .to(heroOverlay, { opacity: 1, duration: 0.2, ease: "none" }, 0.62)
-      .to(".trigger-headline", { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, 0.7)
-      .to(".trigger-text", { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, 0.8)
-      /* 6) die Bühne löst sich auf, der Off-White-Hintergrund der
-         nächsten Sektion (bereits die Body-Hintergrundfarbe) wird sichtbar */
-      .to(heroContainer, { opacity: 0, duration: 0.1, ease: "none" }, 0.9);
+      /* 6) schwarzer Bildschirm blendet ein, Texte fahren gestaffelt hoch */
+      .to(heroOverlay, { opacity: 1, duration: 0.18, ease: "none" }, 0.6)
+      .to(triggerHeadline, { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, 0.66)
+      .to(triggerText, { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, 0.74)
+      /* 7) der Bildschirm hellt zu Beige auf, die Schrift bleibt lesbar
+         und wechselt im gleichen Atemzug zu Navy */
+      .to(heroOverlay, { backgroundColor: colorBeige, duration: 0.12, ease: "none" }, 0.86)
+      .to([triggerHeadline, triggerText], { color: colorNavy, duration: 0.12, ease: "none" }, 0.86)
+      /* 8) kurzer Rest-Fade der Bühne in den Off-White-Hintergrund der
+         nächsten Sektion — der Bildschirm ist zu diesem Zeitpunkt bereits
+         beige, dieser Fade dient nur noch dem sauberen Übergabe-Moment */
+      .to(heroContainer, { opacity: 0, duration: 0.03, ease: "none" }, 0.97);
   }
 
   /* ------------------------------------------------------------------------
