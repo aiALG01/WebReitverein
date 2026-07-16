@@ -584,38 +584,61 @@ body.nav-open {
 }
 
 /* --------------------------------------------------------------------------
-   7. Hero (Startseite) — sticky Scroll-Bühne, Navy → Cream
+   7. Hero (Startseite) — GSAP/ScrollTrigger Video-Scrubbing, Navy → Cream
    -------------------------------------------------------------------------- */
 .hero {
-  /* Hohe Außensektion = Scrollstrecke; die Bühne bleibt sticky im Viewport */
-  height: 340vh;
   position: relative;
 }
 
-.hero-stage {
-  position: sticky;
-  top: 0;
+/* Pin-Ziel für ScrollTrigger (siehe js/main.js, Abschnitt 4) — die
+   Scrollstrecke selbst legt GSAP per pin-spacer automatisch an. */
+#hero-scroll-container {
+  position: relative;
   height: 100vh;
   height: 100svh;
   overflow: hidden;
   background: var(--color-navy);
 }
 
-/* Seidige Textur als ruhige Hintergrund-Ebene (rein CSS, keine Bilddatei) */
+/* Radiale Navy-Glut über dem Video: mix-blend-mode: screen hebt das
+   Schwarz am Bildrand auf, sodass das Video nahtlos in die Navy-Bühne
+   übergeht statt als hartes schwarzes Rechteck zu wirken. */
 .hero-silk {
   position: absolute;
-  z-index: 0;
-  inset: -20%;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
   background:
-    radial-gradient(120% 80% at 15% 20%, color-mix(in srgb, var(--color-steel-blue) 45%, transparent), transparent 60%),
-    radial-gradient(90% 70% at 85% 75%, color-mix(in srgb, var(--color-steel-blue) 30%, transparent), transparent 65%),
-    radial-gradient(70% 60% at 60% 10%, color-mix(in srgb, var(--color-tan) 18%, transparent), transparent 70%),
-    linear-gradient(160deg, var(--color-navy), color-mix(in srgb, var(--color-navy) 80%, var(--color-steel-blue)));
+    radial-gradient(60% 70% at 15% 15%, color-mix(in srgb, var(--color-steel-blue) 40%, transparent), transparent 65%),
+    radial-gradient(85% 75% at 50% 50%, transparent 40%, color-mix(in srgb, var(--color-navy) 85%, var(--color-steel-blue)) 75%, var(--color-navy) 100%);
+}
+
+/* Standbild: verhindert unnatürliche KI-Augenbewegungen beim Laden, bis
+   der erste Scroll das Video übernehmen lässt (main.js blendet es aus). */
+#hero-fallback-image {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: opacity;
+}
+
+/* Über die gesamte Bühne fixiert, Video zoomt ab Scroll-Hälfte per JS heran */
+#hero-video {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   will-change: transform;
 }
 
-/* Phase A: linker Einstiegstext, sichtbar bis der Clip zur Vollbild-Bühne
-   wächst (Phase B blendet ihn aus, siehe js/main.js) */
+/* Editierbares, scharfes HTML über dem Video — sichtbar bis der Effekt
+   es im ersten Drittel des Scrollwegs ausblendet (siehe js/main.js) */
 .hero-intro-copy {
   position: absolute;
   z-index: 4;
@@ -655,56 +678,47 @@ p.hero-intro-copy-line {
   color: color-mix(in srgb, var(--color-tan) 55%, var(--color-cream));
 }
 
-/* Phase A: kleine, randlose Ausschnitt-Grafik rechts. Phase B vergrößert
-   main.js nur die Breite (kein Transform nötig) — die Person scheint
-   direkt auf der Navy-Seide zu stehen, kein Rand, kein Kasten. */
-.hero-video-frame {
+/* Ausgeschalteter Laptop-Bildschirm: tiefschwarz, anfangs komplett
+   unsichtbar — blendet erst ein, wenn das Video ganz herangezoomt ist */
+.laptop-screen-overlay {
   position: absolute;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  right: 5vw;
-  margin-block: auto;
-  width: min(30vw, 22rem);
-  aspect-ratio: 16 / 9;
-  will-change: width;
-}
-
-/* Dient nur als Bildquelle fürs Canvas — bleibt unsichtbar */
-.hero-video {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Zeigt jeden Frame freigestellt: main.js zeichnet das Video auf das
-   Canvas und macht nahes Schwarz (den Studio-Hintergrund) transparent —
-   die Navy-Seide der Seite scheint durch, kein schwarzer Kasten. */
-.hero-video-canvas {
-  position: absolute;
+  z-index: 5;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  filter: brightness(1.04) saturate(1.05);
-}
-
-/* Kein Clip vorhanden, kein no-js/reduced-motion nötig: Canvas ausblenden */
-.no-js .hero-video-canvas,
-.reduced-motion .hero-video-canvas {
-  display: none;
-}
-
-/* Kurze, direkte Cream-Überblendung am Ende des Scrollwegs — löst die
-   Bühne ohne Zoom-Effekt in die echte Seite darunter auf */
-.hero-wash {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
   opacity: 0;
   will-change: opacity;
+}
+
+.laptop-screen-overlay-inner {
+  max-width: min(46rem, 80vw);
+  text-align: center;
+  display: grid;
+  gap: 1.25rem;
+  padding-inline: var(--gutter);
+}
+
+.trigger-headline,
+.trigger-text {
+  margin: 0;
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
+}
+
+.trigger-headline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--text-h1);
+  line-height: 1.05;
+  color: var(--color-cream);
+}
+
+.trigger-text {
+  font-size: var(--text-lead);
+  color: color-mix(in srgb, var(--color-cream) 85%, var(--color-steel-blue));
 }
 
 .hero-kicker {
@@ -757,15 +771,15 @@ p.hero-intro-copy-line {
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
 
-/* Statischer Hero-Fallback (reduced motion / kein JS): Karte + Text
-   untereinander, kein Scroll-Effekt, kein Bildschirm-Reveal */
+/* Statischer Hero-Fallback (reduced motion / kein JS): nur Standbild und
+   Einstiegstext, kein Scroll-Effekt, kein Bildschirm-Reveal */
 .no-js .hero,
 .reduced-motion .hero {
   height: auto;
 }
 
-.no-js .hero-stage,
-.reduced-motion .hero-stage {
+.no-js #hero-scroll-container,
+.reduced-motion #hero-scroll-container {
   position: relative;
   height: auto;
   min-height: 100vh;
@@ -794,14 +808,21 @@ p.hero-intro-copy-line {
   max-width: 32rem;
   text-align: center;
   justify-items: center;
+  z-index: 2;
 }
 
-.no-js .hero-video-frame,
-.reduced-motion .hero-video-frame {
-  position: static;
-  width: min(100%, 28rem);
-  background: var(--color-navy) url("../assets/hero-poster.jpg") center / cover no-repeat;
-  border-radius: 0.75rem;
+.no-js #hero-fallback-image,
+.reduced-motion #hero-fallback-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.no-js #hero-video,
+.reduced-motion #hero-video,
+.no-js .laptop-screen-overlay,
+.reduced-motion .laptop-screen-overlay {
+  display: none;
 }
 
 .no-js .hero-cue::after,
