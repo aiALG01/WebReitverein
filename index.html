@@ -152,11 +152,14 @@
             übernimmt
          2) Das Video läuft framegenau mit dem Scroll-Fortschritt mit
          3) Der linke Einstiegstext blendet im ersten Drittel aus
-         4) Ab der Hälfte zoomt das Video heran, bis nur noch der
+         4) Der Header blendet lang gezogen von Dunkelblau zu Beige über
+         5) Ab der Hälfte zoomt das Video heran, bis nur noch der
             (schwarze) Laptop-Bildschirm im Bild ist
-         5) Das schwarze Overlay blendet ein, die Texte fahren gestaffelt
+         6) Das schwarze Overlay blendet ein, die Texte fahren gestaffelt
             von unten nach oben ein
-         6) Am Ende löst sich die Bühne in den Off-White-Hintergrund der
+         7) Der Bildschirm hellt zu Beige auf, die Schrift wechselt
+            synchron zu Navy
+         8) Am Ende löst sich die Bühne in den Off-White-Hintergrund der
             nächsten Sektion auf
          (bei prefers-reduced-motion/no-js: statisches Standbild, kein Effekt)
          ================================================================ -->
@@ -167,8 +170,7 @@
         <p class="hero-kicker">Studio Gerth — Websites für Handwerk &amp; regionale Betriebe</p>
 
         <!-- Standbild: fängt unnatürliche KI-Augenbewegungen beim Laden ab,
-             bis der erste Scroll das Video übernehmen lässt. Platzhalter,
-             bis Lena-69.jpg auf main hochgeladen und die Datei ersetzt wird. -->
+             bis der erste Scroll das Video übernehmen lässt. -->
         <div id="hero-fallback-image" role="img" aria-label="Anna Lena Gerth blickt in die Kamera, ein aufgeklappter Laptop in der Hand" style="background-image: url('assets/Lena-69.jpg');"></div>
 
         <video id="hero-video" muted playsinline preload="auto" aria-hidden="true">
@@ -177,9 +179,9 @@
 
         <!-- editierbares, scharfes HTML über dem Video — kein Bild, kein Canvas -->
         <div class="hero-intro-copy">
-          <h1 class="hero-intro-copy-line">Noch keine <span class="script">Website</span>?</h1>
-          <p class="hero-intro-copy-line">Zeit, sichtbar zu werden.</p>
+          <h1 class="hero-intro-copy-line">noch keine<br><span class="script">webseite</span>?</h1>
         </div>
+        <p class="hero-intro-sub">Zeit, sichtbar zu werden.</p>
 
         <!-- Ausgeschalteter Laptop-Bildschirm: blendet ein, sobald das Video
              ganz herangezoomt ist; Texte fahren gestaffelt von unten ein.
@@ -215,7 +217,7 @@
           ehrlich, ohne Fachchinesisch. Und ich bleibe: mit Hosting, Datenschutz
           und laufender Pflege aus einer Hand.
         </p>
-        <p data-reveal style="--reveal-delay: 0.2s; margin-top: 2rem">
+        <p data-reveal style="--reveal-delay: 0.2s; margin-top: 1.25rem">
           <a class="link-line" href="ueber-mich.html">Warum ich das mache</a>
         </p>
       </div>

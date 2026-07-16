@@ -20,6 +20,11 @@
   --color-tan: #9D785D;
   --color-brown: #936A4D;
 
+  /* Sechste, bewusste Ausnahme: der helle Beige-Ton, in den Header und
+     Laptop-Bildschirm am Ende der Hero-Choreografie überblenden (siehe
+     js/main.js, Abschnitt 4) — vom hellen Cream bewusst leicht abgesetzt */
+  --color-beige: #f7f3ee;
+
   /* Abgeleitete Tinten & Schleier (ausschließlich aus den fünf Farben gemischt) */
   --tint-cream-deep: color-mix(in srgb, var(--color-cream) 92%, var(--color-tan));
   --tint-navy-soft: color-mix(in srgb, var(--color-navy) 8%, var(--color-cream));
@@ -43,9 +48,10 @@
   --tracking-wide: 0.18em;
   --tracking-head: 0.02em;
 
-  /* Rhythmus */
-  --space-section: clamp(3.25rem, 2.5rem + 5vw, 6.5rem);
-  --space-inner: clamp(1.75rem, 1.5rem + 2vw, 3.25rem);
+  /* Rhythmus — kompakter als zuvor: höhere Informationsdichte, weniger
+     frei schwebender Leerraum zwischen den Blöcken */
+  --space-section: clamp(2.25rem, 1.75rem + 3vw, 4.25rem);
+  --space-inner: clamp(1.25rem, 1rem + 1.1vw, 2.1rem);
   --container: 72rem;
   --container-wide: 86rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
@@ -76,7 +82,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-body);
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--color-navy);
   background-color: var(--color-cream);
   overflow-x: hidden;
@@ -187,7 +193,7 @@ h3 {
 
 .lead {
   font-size: var(--text-lead);
-  line-height: 1.6;
+  line-height: 1.5;
   color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
   max-width: 42ch;
 }
@@ -197,6 +203,13 @@ p {
 }
 
 .text-brown { color: var(--color-brown); }
+
+/* Dichter, bewusster Fließtext-Rhythmus für längere Prosa-Blöcke (z. B.
+   Markenstory) — ersetzt einzeln inline gesetzte margin-top-Werte */
+.prose {
+  display: grid;
+  gap: 1rem;
+}
 
 /* --------------------------------------------------------------------------
    4. Layout-Helfer
@@ -638,18 +651,16 @@ body.nav-open {
 }
 
 /* Editierbares, scharfes HTML über dem Video — sichtbar bis der Effekt
-   es im ersten Drittel des Scrollwegs ausblendet (siehe js/main.js) */
+   es im ersten Drittel des Scrollwegs ausblendet (siehe js/main.js).
+   Bewusst tief positioniert: "noch keine" ragt leicht über den Laptop im
+   Hintergrund, "webseite?" liegt auf dessen Höhe daneben. */
 .hero-intro-copy {
   position: absolute;
   z-index: 4;
-  top: 0;
-  bottom: 0;
+  top: auto;
+  bottom: 32%;
   left: var(--gutter);
-  margin-block: auto;
-  height: fit-content;
   max-width: min(28rem, 44vw);
-  display: grid;
-  gap: 0.75rem;
   will-change: opacity, transform;
 }
 
@@ -666,16 +677,25 @@ h1.hero-intro-copy-line {
   max-width: 12ch;
 }
 
-p.hero-intro-copy-line {
-  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
-  font-weight: 400;
-  color: color-mix(in srgb, var(--color-cream) 88%, var(--color-steel-blue));
-}
-
 .hero-intro-copy .script {
   font-size: 1.06em;
   /* Auf Navy braucht der Tan-Akzent mehr Leuchtkraft */
   color: color-mix(in srgb, var(--color-tan) 55%, var(--color-cream));
+}
+
+/* Kleiner Subtext, bewusst vom Heading gelöst und nah an den unteren
+   Rand der Hero-Bühne gerückt — eigenständig lesbar, nicht daran geklebt */
+.hero-intro-sub {
+  position: absolute;
+  z-index: 4;
+  left: var(--gutter);
+  bottom: clamp(4.5rem, 12vh, 7rem);
+  max-width: min(24rem, 44vw);
+  margin: 0;
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+  font-weight: 400;
+  color: color-mix(in srgb, var(--color-cream) 88%, var(--color-steel-blue));
+  will-change: opacity, transform;
 }
 
 /* Ausgeschalteter Laptop-Bildschirm: tiefschwarz, anfangs komplett
@@ -801,13 +821,14 @@ p.hero-intro-copy-line {
 }
 
 .no-js .hero-intro-copy,
-.reduced-motion .hero-intro-copy {
+.reduced-motion .hero-intro-copy,
+.no-js .hero-intro-sub,
+.reduced-motion .hero-intro-sub {
   position: static;
   opacity: 1;
   transform: none;
   max-width: 32rem;
   text-align: center;
-  justify-items: center;
   z-index: 2;
 }
 
@@ -902,7 +923,7 @@ p.hero-intro-copy-line {
   overflow: hidden;
   display: grid;
   place-items: center;
-  min-height: 70vh;
+  min-height: clamp(20rem, 44vh, 30rem);
   padding-block: var(--space-section);
   text-align: center;
 }
@@ -940,12 +961,12 @@ p.hero-intro-copy-line {
    -------------------------------------------------------------------------- */
 .services-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .service-card {
   position: relative;
-  padding: 2.5rem 2rem;
+  padding: 2rem 1.75rem;
   background: color-mix(in srgb, var(--color-cream) 60%, transparent);
   border: 1px solid var(--line-soft);
   border-radius: 2px;
@@ -966,7 +987,7 @@ p.hero-intro-copy-line {
 }
 
 .service-card h3 {
-  margin-block: 1.25rem 1rem;
+  margin-block: 1rem 0.75rem;
 }
 
 .service-card p {
@@ -1016,7 +1037,7 @@ p.hero-intro-copy-line {
 }
 
 .badge-item {
-  padding: 1.75rem 1.5rem;
+  padding: 1.4rem 1.5rem;
   background: linear-gradient(155deg, var(--color-tan), var(--color-brown));
   display: flex;
   align-items: center;
@@ -1060,8 +1081,8 @@ p.hero-intro-copy-line {
   counter-increment: step;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1.5rem;
-  padding-block: 2.25rem;
+  gap: 1.25rem;
+  padding-block: 1.5rem;
   border-top: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
   align-items: start;
 }
@@ -1104,7 +1125,7 @@ p.hero-intro-copy-line {
 }
 
 .cta-band .lead {
-  margin: 1.75rem auto 2.75rem;
+  margin: 1.25rem auto 2rem;
 }
 
 .cta-actions {
@@ -1118,19 +1139,19 @@ p.hero-intro-copy-line {
    12. Leistungen (Unterseite)
    -------------------------------------------------------------------------- */
 .page-hero {
-  padding-top: calc(var(--header-h) + var(--space-section) * 0.7);
-  padding-bottom: calc(var(--space-section) * 0.6);
+  padding-top: calc(var(--header-h) + var(--space-section) * 0.6);
+  padding-bottom: calc(var(--space-section) * 0.5);
 }
 
 .page-hero .lead {
-  margin-top: 1.75rem;
+  margin-top: 1.25rem;
 }
 
 .service-detail {
   display: grid;
   gap: var(--space-inner);
   align-items: center;
-  padding-block: calc(var(--space-section) * 0.55);
+  padding-block: calc(var(--space-section) * 0.42);
   border-top: 1px solid var(--line-soft);
 }
 
@@ -1148,8 +1169,8 @@ p.hero-intro-copy-line {
 }
 
 .service-detail .benefit {
-  margin-top: 1.75rem;
-  padding: 1.25rem 1.5rem;
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.4rem;
   border-left: 2px solid var(--color-tan);
   background: color-mix(in srgb, var(--color-tan) 8%, transparent);
   font-size: var(--text-small);
@@ -1180,9 +1201,9 @@ p.hero-intro-copy-line {
 .feature-list {
   list-style: none;
   padding: 0;
-  margin-top: 1.5rem;
+  margin-top: 1.1rem;
   display: grid;
-  gap: 0.65rem;
+  gap: 0.5rem;
   font-size: var(--text-small);
 }
 
@@ -1209,7 +1230,7 @@ p.hero-intro-copy-line {
 
 .faq-item {
   border-top: 1px solid var(--line-soft);
-  padding-block: 1.5rem;
+  padding-block: 1.15rem;
 }
 
 .faq-item:last-child {
@@ -1262,7 +1283,7 @@ p.hero-intro-copy-line {
    12b. Projekte & Referenzen
    -------------------------------------------------------------------------- */
 .empty-state {
-  padding: clamp(2rem, 4vw, 3.5rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid var(--line-soft);
   background: color-mix(in srgb, var(--color-tan) 7%, transparent);
   max-width: 46rem;
@@ -1270,26 +1291,26 @@ p.hero-intro-copy-line {
 
 .empty-state p {
   font-size: var(--text-small);
-  line-height: 1.8;
+  line-height: 1.65;
   color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
 }
 
 .empty-state p + p {
-  margin-top: 1.1rem;
+  margin-top: 0.85rem;
 }
 
 .empty-state .btn {
-  margin-top: 1.75rem;
+  margin-top: 1.4rem;
 }
 
 .project-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin-top: var(--space-inner);
 }
 
 .project-card {
-  padding: 2rem 1.75rem;
+  padding: 1.75rem 1.5rem;
   border: 1px dashed color-mix(in srgb, var(--color-tan) 55%, transparent);
   background: color-mix(in srgb, var(--color-cream) 55%, transparent);
 }
@@ -1318,7 +1339,7 @@ p.hero-intro-copy-line {
 }
 
 .testimonial-placeholder {
-  padding: clamp(2rem, 4vw, 3.5rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   text-align: center;
   border-top: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
@@ -1348,11 +1369,11 @@ p.hero-intro-copy-line {
 
 .values-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .value-item {
-  padding-top: 1.75rem;
+  padding-top: 1.4rem;
   border-top: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
 }
 
@@ -1361,21 +1382,21 @@ p.hero-intro-copy-line {
   font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
   color: var(--color-tan);
   display: block;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
 }
 
 .value-item p {
   font-size: var(--text-small);
-  line-height: 1.6;
+  line-height: 1.55;
   color: color-mix(in srgb, var(--color-cream) 82%, var(--color-steel-blue));
 }
 
 .founder-facts {
   list-style: none;
   padding: 0;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   display: grid;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .founder-facts li {
@@ -1408,7 +1429,7 @@ p.hero-intro-copy-line {
 
 .contact-form {
   display: grid;
-  gap: 1.75rem;
+  gap: 1.4rem;
 }
 
 .form-field {
@@ -1497,7 +1518,7 @@ p.hero-intro-copy-line {
 
 .contact-meta {
   display: grid;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .contact-meta .meta-block h3 {
@@ -1535,36 +1556,51 @@ p.hero-intro-copy-line {
   max-width: 46rem;
 }
 
-.legal-content h2 {
+/* Jeder Abschnitt bekommt einen sichtbaren Trenner statt einer
+   ununterbrochenen Textwand — klare Struktur beim Überfliegen */
+.legal-content > h2 {
   font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem);
   margin-top: var(--space-inner);
-  margin-bottom: 1rem;
+  padding-top: var(--space-inner);
+  margin-bottom: 0.85rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.legal-content > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 
 .legal-content h3 {
   font-size: 1.15rem;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .legal-content p,
 .legal-content li {
   font-size: var(--text-small);
-  line-height: 1.85;
+  line-height: 1.65;
   color: color-mix(in srgb, var(--color-navy) 85%, var(--color-cream));
+}
+
+.legal-content p + p {
+  margin-top: 0.85rem;
 }
 
 .legal-content ul {
   padding-left: 1.25rem;
   display: grid;
-  gap: 0.5rem;
-  margin-block: 0.75rem;
+  gap: 0.4rem;
+  margin-block: 0.6rem;
 }
 
 .legal-content address {
   font-style: normal;
   font-size: var(--text-small);
-  line-height: 1.85;
+  line-height: 1.65;
+  margin-top: 0.6rem;
 }
 
 /* --------------------------------------------------------------------------
@@ -1579,7 +1615,7 @@ p.hero-intro-copy-line {
 
 .footer-grid {
   display: grid;
-  gap: 2.5rem;
+  gap: 2rem;
   padding-bottom: var(--space-inner);
   border-bottom: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
 }
