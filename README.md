@@ -55,20 +55,31 @@ Unternehmen ohne (gute) eigene Website**. Entsprechend wurde die Copy
 
 ## Vor Veröffentlichung prüfen
 
-Die Rückfragen zum Briefing konnten teils nicht gestellt werden (technische
-Ausfälle der Rückfrage-Funktion); diese Annahmen sind bewusst leicht
-änderbar gehalten:
-
+- [x] **Ordnerstruktur repariert** — alle Seiten verlinkten auf `css/style.css`,
+  `js/main.js` und `assets/…`, doch diese Ordner fehlten im Repo (nur flache
+  Dateien im Root, plus eine 1-Byte-Datei namens `assets`). Die Website war
+  dadurch komplett unformatiert und ohne Bilder. Behoben: `css/`, `js/` und
+  `assets/` angelegt, alle Dateien einsortiert.
+- [x] **Bildgrößen optimiert** — die Founder-Fotos lagen als 7–10 MB große
+  Originale (bis 7500 px Kantenlänge) direkt im Repo-Root und wären beim
+  Laden extrem langsam gewesen. Auf 1600–2400 px Kantenlänge verkleinert und
+  komprimiert (jetzt ~65–160 KB je Bild) — für Core Web Vitals/LCP entscheidend.
+- [x] **`assets/og-image.jpg`** (1200×630) ergänzt — fehlte komplett, wodurch
+  Vorschaubilder beim Teilen (Social Media, Messenger, KI-Tools) leer blieben.
+- [x] **Echte Fotografien der Gründerin** — liegen jetzt vor und sind
+  eingebunden (`portrait-founder.jpg`, `portrait-founder-working.jpg`, sowie
+  ein zusätzliches Arbeitsfoto im Wartungs-Abschnitt auf `leistungen.html`).
+- [x] **`llms.txt`** ergänzt — strukturierte Kurzfassung für KI-Antwortmaschinen
+  (GEO), analog zu `robots.txt` für klassische Crawler.
 - [ ] **Firmenname** — aktuell „Studio Gerth". Ändern: Suchen/Ersetzen über alle `.html`-Dateien.
-- [ ] **Domain** — Platzhalter `https://www.studio-gerth.de` in Canonicals, Open-Graph-Tags, JSON-LD, `robots.txt` und `sitemap.xml` durch die echte Domain ersetzen (Suchen/Ersetzen über alle Dateien).
+- [ ] **Domain** — Platzhalter `https://www.studio-gerth.de` in Canonicals, Open-Graph-Tags, JSON-LD, `robots.txt`, `sitemap.xml` und `llms.txt` durch die echte Domain ersetzen (Suchen/Ersetzen über alle Dateien).
 - [ ] **Impressum & Kontaktdaten** — reale Daten aus dem Lebenslauf übernommen (Anna Lena Gerth, Naulitz 9a, 07554 Gera, lena.gerth@outlook.de, +49 1520 2758286). Bitte bestätigen; USt-Hinweis ergänzen.
 - [ ] **Rechtstexte** — Impressum/Datenschutz sind sorgfältig erstellt, ersetzen aber keine Rechtsberatung.
-- [ ] **Fonts lokal einbinden** — aktuell via Fontshare/Google-CDN; für sauberen Datenschutz lokal laden (siehe `assets/README.md`).
+- [ ] **Fonts lokal einbinden** — aktuell via Fontshare/Google-CDN; für sauberen Datenschutz lokal laden (Dateien nach `assets/fonts/` legen, `@font-face` in `css/style.css` ergänzen, CDN-`<link>`-Tags entfernen).
 - [ ] **Formular anbinden** — z. B. Formspree; Anleitung im Kommentar in `js/main.js`, Abschnitt 6.
-- [ ] **Echte Fotografien der Gründerin** — drei Fotos wurden im Chat bereitgestellt, konnten aus dieser Sitzung heraus aber technisch nicht als Dateien gespeichert werden (Chat-Anhänge sind für die verwendeten Werkzeuge nicht als Datei zugänglich). Sobald die Dateien vorliegen: gemäß `assets/README.md` als `portrait-founder.jpg` / `portrait-founder-working.jpg` einsetzen.
-- [ ] **Weitere Fotografien** — übrige Platzhalterflächen ersetzen (Art Direction & Formate in `assets/README.md`), inkl. `assets/og-image.jpg` (1200×630) für Social-Previews.
+- [ ] **Weitere Fotografien** — die Platzhalterflächen für „Hosting" und „Datenschutz" auf `leistungen.html` sind bewusst noch CSS-Texturen geblieben, da keine passende Foto-Art-Direction (Architektur/Papier-Motiv) vorliegt — echte Fotos hier nur einsetzen, wenn sie thematisch passen, sonst wirkt es wie Stock-Material.
 - [ ] **Projekte & Testimonials** — `projekte.html` zeigt bewusst noch keine erfundenen Referenzen (rechtlich riskant, siehe UWG). Sobald reale Projekte/Zitate vorliegen, den in der Datei dokumentierten Muster-Code für `.project-card` und `.testimonial-placeholder` nutzen — Kundenstimmen nur mit ausdrücklicher Einwilligung veröffentlichen.
-- [ ] **Social Links** — LinkedIn-Platzhalter im Footer auf echtes Profil zeigen lassen (aktuell bewusst *nicht* in den JSON-LD-`sameAs`-Daten enthalten, da kein echtes Profil verlinkt ist).
+- [ ] **Social Links** — der LinkedIn-Platzhalter im Footer wurde entfernt (verlinkte nur auf die LinkedIn-Startseite, kein echtes Profil — wirkte wie ein toter Link). Sobald ein echtes Profil existiert: Link im Footer alle `.html`-Dateien ergänzen und in den JSON-LD-`sameAs`-Daten eintragen.
 - [ ] **Google Search Console / Bing Webmaster Tools** — Sitemap nach Domain-Umzug neu einreichen.
 
 ## Geplant, aber noch nicht umgesetzt
@@ -100,6 +111,9 @@ Ausfälle der Rückfrage-Funktion); diese Annahmen sind bewusst leicht
   `noindex` — sonst könnten Crawler das `noindex` gar nicht erst lesen).
 - **`sitemap.xml`** listet die vier indexierbaren Seiten; Rechtsseiten
   bleiben außen vor.
+- **`llms.txt`** im Root: kompakte Markdown-Zusammenfassung (Angebot,
+  Zielgruppe, Kontakt, Link-Liste) speziell für KI-Antwortmaschinen, die
+  Websites zunehmend über diese Konvention statt über HTML crawlen.
 - Alle Titel/Description-Tags sind bereits prägnant und keyword-nah
   formuliert (kein Keyword-Stuffing, echte Sätze — das hilft SEO und GEO
   gleichermaßen, da beide zusammenhängende, klare Sprache bevorzugen).

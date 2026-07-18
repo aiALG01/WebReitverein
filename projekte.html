@@ -134,7 +134,7 @@
     </section>
 
     <!-- Ehrlicher Status + CTA -->
-    <section class="section section--flush" style="padding-bottom: var(--space-section)" aria-labelledby="status-heading">
+    <section class="section section--flush section--flush-bottom" aria-labelledby="status-heading">
       <div class="container">
         <div class="section-head" data-reveal>
           <span class="eyebrow">Aktueller Stand</span>
@@ -156,6 +156,7 @@
             hier auf dieser Seite.
           </p>
           <a class="btn btn--primary" href="kontakt.html">Eines der ersten Projekte werden <span class="btn-arrow" aria-hidden="true">→</span></a>
+          <p class="empty-state-note">Kundenstimmen folgen, sobald es sie gibt — vielleicht ist Ihre die erste.</p>
         </div>
 
         <!-- Beispielhafte Projektarten — bewusst als Kategorien formuliert,
@@ -176,7 +177,7 @@
             <h3>Handwerksbetrieb</h3>
             <p>Website mit Leistungsübersicht, Terminanfrage und Anfahrt — damit Kundschaft Sie findet, bevor sie zur Konkurrenz geht.</p>
           </article>
-          <article class="project-card" data-reveal style="--reveal-delay: 0.1s">
+          <article class="project-card" data-reveal style="--reveal-delay: 0.08s">
             <div class="card-icon" aria-hidden="true">
               <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
                 <path d="M8 16h32l-3 22a3 3 0 0 1-3 2.6H14a3 3 0 0 1-3-2.6L8 16z"/>
@@ -186,7 +187,18 @@
             <h3>Einzelhandel &amp; Ladengeschäft</h3>
             <p>Ein digitales Schaufenster: Sortiment, Öffnungszeiten und Ihre Geschichte — klar präsentiert, auch für Laufkundschaft von unterwegs.</p>
           </article>
-          <article class="project-card" data-reveal style="--reveal-delay: 0.2s">
+          <article class="project-card" data-reveal style="--reveal-delay: 0.16s">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                <path d="M13 20h22v9c0 6.5-5.4 11-11 11s-11-4.5-11-11v-9z"/>
+                <path d="M35 21.5h2.5a4.5 4.5 0 0 1 0 9H35"/>
+                <path d="M19 9c0 2.2-2.5 2.2-2.5 4.4M25 9c0 2.2-2.5 2.2-2.5 4.4M31 9c0 2.2-2.5 2.2-2.5 4.4"/>
+              </svg>
+            </div>
+            <h3>Gastronomie</h3>
+            <p>Café, Bäckerei, Konditorei oder Restaurant: Speisekarte, Öffnungszeiten und Atmosphäre auf einen Blick — bevor der erste Besuch stattfindet.</p>
+          </article>
+          <article class="project-card" data-reveal style="--reveal-delay: 0.24s">
             <div class="card-icon" aria-hidden="true">
               <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
                 <rect x="8" y="10" width="32" height="28" rx="1"/>
@@ -202,26 +214,6 @@
       </div>
     </section>
 
-    <!-- Testimonials — ebenso ehrlich, kein Fake-Trust -->
-    <section class="on-dark" aria-labelledby="testimonial-heading">
-      <div class="container" style="padding-block: 3rem 0" data-reveal>
-        <span class="eyebrow">Kundenstimmen</span>
-        <h2 id="testimonial-heading">Folgen, sobald es sie gibt.</h2>
-      </div>
-      <div class="testimonial-placeholder" data-reveal style="--reveal-delay: 0.1s">
-        <p>
-          „Die erste Kundenstimme steht hier noch aus — vielleicht ist sie
-          bald Ihre."
-        </p>
-      </div>
-      <div class="container" style="padding-bottom: var(--space-section)">
-        <p class="lead" data-reveal style="--reveal-delay: 0.16s; margin-top: 1.25rem; max-width: 40ch">
-          Sie möchten zu den Ersten gehören? Ich freue mich auf Ihre
-          Nachricht.
-        </p>
-      </div>
-    </section>
-
     <!--
       DEV-HINWEIS für später: Sobald reale Projekte vorliegen, hier echte
       .project-card-Einträge mit Link ergänzen, z. B.:
@@ -233,9 +225,12 @@
         <a class="link-line" href="https://kunden-domain.de" rel="noopener" target="_blank">Website ansehen</a>
       </article>
 
-      Für echte Testimonials denselben .testimonial-placeholder-Aufbau
-      nutzen, aber mit echtem Zitat + Name/Betrieb der Kundin/des Kunden
-      (nur mit ausdrücklicher Einwilligung veröffentlichen, DSGVO Art. 6).
+      Für die erste echte Kundenstimme: die bewusst kompakte Zeile
+      .empty-state-note oben durch die vorhandene .testimonial-placeholder-
+      Komponente (siehe css/style.css) mit echtem Zitat + Name/Betrieb der
+      Kundin/des Kunden ersetzen (nur mit ausdrücklicher Einwilligung
+      veröffentlichen, DSGVO Art. 6) — dann darf das Zitat auch wieder mehr
+      Bühne bekommen, weil es dann durch echten Inhalt gedeckt ist.
     -->
 
     <!-- CTA -->
@@ -276,10 +271,9 @@
         <div class="footer-col">
           <h3>Leistungen</h3>
           <ul>
-            <li><a href="leistungen.html#webdesign">Website-Erstellung</a></li>
-            <li><a href="leistungen.html#hosting">Hosting</a></li>
-            <li><a href="leistungen.html#datenschutz">Datenschutz</a></li>
-            <li><a href="leistungen.html#wartung">Wartung &amp; Pflege</a></li>
+            <li><a href="leistungen.html#erstellung">Webseiten-Erstellung</a></li>
+            <li><a href="leistungen.html#betreuung">Webseiten-Betreuung</a></li>
+            <li><a href="leistungen.html#automatisierung">Automatisierung</a></li>
             <li><a href="leistungen.html#faq">Häufige Fragen</a></li>
           </ul>
         </div>
@@ -287,7 +281,6 @@
           <h3>Kontakt &amp; Rechtliches</h3>
           <ul>
             <li><a href="mailto:lena.gerth@outlook.de">lena.gerth@outlook.de</a></li>
-            <li><a href="https://www.linkedin.com/" rel="noopener" target="_blank">LinkedIn</a></li>
             <li><a href="impressum.html">Impressum</a></li>
             <li><a href="datenschutz.html">Datenschutz</a></li>
           </ul>
@@ -295,7 +288,7 @@
       </div>
       <div class="footer-bottom">
         <p>© <span data-year>2026</span> Studio Gerth, Gera. Alle Rechte vorbehalten.</p>
-        <p>Websites für Handwerk &amp; regionale Betriebe.</p>
+        <p>Websites für kleine, regionale Betriebe.</p>
       </div>
     </div>
   </footer>

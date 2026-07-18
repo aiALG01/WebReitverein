@@ -1,0 +1,31 @@
+# Studio Gerth
+
+> Studio Gerth baut Websites für kleine, regionale Betriebe ohne eigene Website —
+> persönlich betreut von der Gründerin Anna Lena Gerth, mit Website-Erstellung,
+> Hosting und DSGVO-Datenschutzbetreuung aus einer Hand. Solo-Studio mit Sitz in
+> Gera, Thüringen (Deutschland).
+
+Anna Lena Gerth ist Wirtschaftsinformatikerin und ehemalige ERP-Expertin bei der
+Jenoptik AG. Sie arbeitet bewusst allein, ohne Agentur-Apparat: Eine Ansprechperson,
+kein Baukasten, kein Fachchinesisch. Zielgruppe sind kleine, regionale Betriebe aus
+Handwerk, Handel und Dienstleistung, die noch keine oder keine überzeugende Website
+haben.
+
+## Leistungen
+
+- [Leistungen im Überblick](https://www.studio-gerth.de/leistungen.html): Website-Erstellung, Hosting, Datenschutz (DSGVO) und laufende Wartung & Aktualisierung — inklusive häufiger Fragen (FAQ).
+- [Website-Erstellung](https://www.studio-gerth.de/leistungen.html#webdesign): individuelles Design und Umsetzung in sauberem Code, kein Baukasten.
+- [Hosting](https://www.studio-gerth.de/leistungen.html#hosting): europäische Infrastruktur, SSL, tägliche Backups, laufende Überwachung.
+- [Datenschutz / DSGVO-Betreuung](https://www.studio-gerth.de/leistungen.html#datenschutz): datensparsame Einrichtung, laufende Pflege von Impressum und Datenschutzerklärung.
+- [Wartung & Aktualisierung](https://www.studio-gerth.de/leistungen.html#wartung): Sicherheitsupdates, Inhaltspflege, monatlicher Kurzbericht.
+
+## Über Studio Gerth
+
+- [Über mich](https://www.studio-gerth.de/ueber-mich.html): Markenstory und Werdegang der Gründerin Anna Lena Gerth.
+- [Projekte & Referenzen](https://www.studio-gerth.de/projekte.html): aktueller Projektstand, ehrlich ohne erfundene Referenzen.
+- [Kontakt](https://www.studio-gerth.de/kontakt.html): Kontaktformular, E-Mail lena.gerth@outlook.de, Telefon +49 1520 2758286, Naulitz 9a, 07554 Gera.
+
+## Rechtliches
+
+- [Impressum](https://www.studio-gerth.de/impressum.html)
+- [Datenschutzerklärung](https://www.studio-gerth.de/datenschutz.html)
