@@ -42,6 +42,10 @@
   --text-lead: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
   --text-h3: clamp(1.375rem, 1.2rem + 0.9vw, 1.75rem);
   --text-h2: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  /* Eine zweite, kleinere H2-Stufe für dichtere Kontexte (Leistungs-Detail,
+     Rechtsseiten) — ersetzt zwei vorherige, unabhängig erfundene clamp()-Werte,
+     die dieselbe Semantik unterschiedlich groß darstellten. */
+  --text-h2-compact: clamp(1.6rem, 1.3rem + 1.5vw, 2.5rem);
   --text-h1: clamp(2.75rem, 1.8rem + 4.5vw, 5.5rem);
   --text-hero: clamp(2.5rem, 1.5rem + 6vw, 6.5rem);
 
@@ -51,6 +55,7 @@
   /* Rhythmus — kompakter als zuvor: höhere Informationsdichte, weniger
      frei schwebender Leerraum zwischen den Blöcken */
   --space-section: clamp(2.25rem, 1.75rem + 3vw, 4.25rem);
+  --space-section-sm: calc(var(--space-section) * 0.5);
   --space-inner: clamp(1.25rem, 1rem + 1.1vw, 2.1rem);
   --container: 72rem;
   --container-wide: 86rem;
@@ -59,6 +64,9 @@
   /* Bewegung */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-reveal: 0.9s;
+  /* Reveal-Staffelung: Verzögerungen sind Vielfache von --stagger
+     (0.08s / 0.16s / 0.24s / 0.32s) statt frei gewählter Werte. */
+  --stagger: 0.08s;
 
   --header-h: 4.5rem;
 }
@@ -231,6 +239,10 @@ p {
 }
 
 .section--flush { padding-block: 0; }
+
+/* Ersetzt das wiederholt inline gesetzte style="padding-bottom: var(--space-section)"
+   auf .section--flush-Blöcken, die nur unten Luft brauchen (Seitenkopf übernimmt oben). */
+.section--flush-bottom { padding-block: 0 var(--space-section); }
 
 .section-head {
   max-width: 46rem;
@@ -917,45 +929,6 @@ h1.hero-intro-copy-line {
   opacity: 0.85;
 }
 
-/* Statement-Band: großes Zitat über Duotone-Fläche */
-.statement {
-  position: relative;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  min-height: clamp(20rem, 44vh, 30rem);
-  padding-block: var(--space-section);
-  text-align: center;
-}
-
-.statement .statement-quote {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-display);
-  font-size: var(--text-h2);
-  line-height: 1.2;
-  color: var(--color-cream);
-  max-width: 20ch;
-  margin-inline: auto;
-}
-
-.statement .statement-source {
-  position: relative;
-  z-index: 1;
-  margin-top: 2rem;
-  font-size: 0.75rem;
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-cream) 70%, var(--color-steel-blue));
-}
-
-.statement-bg {
-  position: absolute;
-  inset: -15% 0;
-  z-index: 0;
-  will-change: transform;
-}
-
 /* --------------------------------------------------------------------------
    9. Leistungs-Karten (Startseite)
    -------------------------------------------------------------------------- */
@@ -1064,6 +1037,48 @@ h1.hero-intro-copy-line {
 }
 
 /* --------------------------------------------------------------------------
+   9c. Fakten-Grid — belegt Versprechen mit überprüfbaren Fakten statt
+   eines weiteren Zitats. Bewusst auf hellem Grund (nicht on-dark), damit
+   nicht zwei dunkle Vollbild-Sections direkt aufeinanderfolgen.
+   -------------------------------------------------------------------------- */
+.fact-grid {
+  display: grid;
+  gap: 1.5rem 2rem;
+}
+
+.fact-item {
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--color-tan);
+}
+
+.fact-item .fact-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+  margin-bottom: 0.4rem;
+}
+
+.fact-item .fact-value {
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
+}
+
+.fact-item strong {
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .fact-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
    10. Prozess-Sektion
    -------------------------------------------------------------------------- */
 .process {
@@ -1139,8 +1154,8 @@ h1.hero-intro-copy-line {
    12. Leistungen (Unterseite)
    -------------------------------------------------------------------------- */
 .page-hero {
-  padding-top: calc(var(--header-h) + var(--space-section) * 0.6);
-  padding-bottom: calc(var(--space-section) * 0.5);
+  padding-top: calc(var(--header-h) + var(--space-section-sm));
+  padding-bottom: var(--space-section-sm);
 }
 
 .page-hero .lead {
@@ -1151,7 +1166,7 @@ h1.hero-intro-copy-line {
   display: grid;
   gap: var(--space-inner);
   align-items: center;
-  padding-block: calc(var(--space-section) * 0.42);
+  padding-block: var(--space-section-sm);
   border-top: 1px solid var(--line-soft);
 }
 
@@ -1164,7 +1179,7 @@ h1.hero-intro-copy-line {
 }
 
 .service-detail h2 {
-  font-size: clamp(1.75rem, 1.4rem + 1.8vw, 2.75rem);
+  font-size: var(--text-h2-compact);
   margin-block: 1rem 1.25rem;
 }
 
@@ -1303,16 +1318,35 @@ h1.hero-intro-copy-line {
   margin-top: 1.4rem;
 }
 
+/* Bewusst klein und zurückhaltend, damit ein leeres Testimonial-Feld nicht
+   dieselbe Bühne bekommt wie ein echter Vertrauensbeweis. */
+.empty-state p.empty-state-note {
+  margin-top: 1.1rem;
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--color-navy) 60%, var(--color-cream));
+}
+
 .project-grid {
   display: grid;
   gap: 1.25rem;
   margin-top: var(--space-inner);
 }
 
+/* Gestrichelter Rand ist hier bewusst anders als bei .service-card:
+   diese Kategorien sind Beispiele, keine abgeschlossenen Fallstudien —
+   der „Skizzen"-Rand trägt diese Ehrlichkeit mit. Kein Hover-Lift, weil
+   die Karte selbst kein Link ist (anders als .service-card mit "Mehr
+   erfahren"-Link) — ein Hebe-Effekt würde Klickbarkeit vortäuschen. */
 .project-card {
   padding: 1.75rem 1.5rem;
   border: 1px dashed color-mix(in srgb, var(--color-tan) 55%, transparent);
   background: color-mix(in srgb, var(--color-cream) 55%, transparent);
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+
+.project-card:hover {
+  border-color: color-mix(in srgb, var(--color-tan) 85%, transparent);
+  background: color-mix(in srgb, var(--color-cream) 75%, transparent);
 }
 
 .project-card .card-icon {
@@ -1416,6 +1450,42 @@ h1.hero-intro-copy-line {
 
 .founder-facts .fact-value {
   font-size: var(--text-small);
+}
+
+/* Sport-Beleg: zwei echte Turnierfotos statt eines erfundenen Zitats */
+.sport-proof {
+  display: grid;
+  gap: var(--space-inner);
+}
+
+.sport-proof > .media {
+  min-height: 18rem;
+}
+
+.sport-proof-side {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+.sport-proof-side .media {
+  min-height: 16rem;
+}
+
+.sport-proof-side p {
+  font-size: var(--text-small);
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
+}
+
+@media (min-width: 768px) {
+  .sport-proof {
+    grid-template-columns: 3fr 2fr;
+  }
+
+  .sport-proof > .media {
+    min-height: 100%;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1559,7 +1629,7 @@ h1.hero-intro-copy-line {
 /* Jeder Abschnitt bekommt einen sichtbaren Trenner statt einer
    ununterbrochenen Textwand — klare Struktur beim Überfliegen */
 .legal-content > h2 {
-  font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  font-size: var(--text-h2-compact);
   margin-top: var(--space-inner);
   padding-top: var(--space-inner);
   margin-bottom: 0.85rem;
@@ -1731,16 +1801,6 @@ h1.hero-intro-copy-line {
     to { transform: scaleX(1); }
   }
 
-  /* Sanfter Parallax-Drift der Statement-Hintergründe beim Durchscrollen */
-  .statement-bg {
-    animation: statement-drift linear both;
-    animation-timeline: view();
-  }
-
-  @keyframes statement-drift {
-    from { transform: translateY(-6%); }
-    to { transform: translateY(6%); }
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1834,7 +1894,7 @@ h1.hero-intro-copy-line {
   }
 
   .project-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -1850,6 +1910,10 @@ h1.hero-intro-copy-line {
 
   .service-detail {
     gap: calc(var(--space-inner) * 1.3);
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .service-detail .detail-media {

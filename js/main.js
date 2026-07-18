@@ -224,12 +224,10 @@
   }
 
   /* ------------------------------------------------------------------------
-     5. JS-Fallbacks für Scroll-Driven Animations
-        (Lesebalken & Statement-Parallax, falls animation-timeline fehlt)
+     5. JS-Fallback für den Lesebalken, falls animation-timeline fehlt
      ------------------------------------------------------------------------ */
   if (!supportsScrollTimeline && !prefersReducedMotion) {
     var progressBar = document.querySelector(".scroll-progress");
-    var statementBgs = document.querySelectorAll(".statement-bg");
     var fallbackTicking = false;
 
     var renderFallbacks = function () {
@@ -241,14 +239,6 @@
         progressBar.style.transform =
           "scaleX(" + (max > 0 ? window.scrollY / max : 0).toFixed(4) + ")";
       }
-
-      statementBgs.forEach(function (bg) {
-        var section = bg.parentElement;
-        var rect = section.getBoundingClientRect();
-        var range = window.innerHeight + rect.height;
-        var visible = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / range));
-        bg.style.transform = "translateY(" + ((visible - 0.5) * 12).toFixed(2) + "%)";
-      });
     };
 
     var requestFallbackFrame = function () {

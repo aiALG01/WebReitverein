@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studio Gerth — Websites für Handwerk &amp; regionale Betriebe</title>
+  <title>Studio Gerth — Websites für kleine, regionale Betriebe</title>
   <meta name="description" content="Studio Gerth baut Websites für kleine, regionale Betriebe ohne eigene Website — persönlich betreut, mit Hosting und DSGVO-Datenschutz aus einer Hand.">
 
   <!-- Display-Fonts: Melodrama & Britney (Indian Type Foundry, kostenfrei via Fontshare) -->
@@ -12,14 +12,14 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Studio Gerth">
   <meta property="og:locale" content="de_DE">
-  <meta property="og:title" content="Studio Gerth — Websites für Handwerk & regionale Betriebe">
+  <meta property="og:title" content="Studio Gerth — Websites für kleine, regionale Betriebe">
   <meta property="og:description" content="Studio Gerth baut Websites für kleine, regionale Betriebe ohne eigene Website — persönlich betreut, mit Hosting und DSGVO-Datenschutz aus einer Hand.">
   <meta property="og:url" content="https://www.studio-gerth.de/">
   <meta property="og:image" content="https://www.studio-gerth.de/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Studio Gerth — Websites für Handwerk & regionale Betriebe">
+  <meta name="twitter:title" content="Studio Gerth — Websites für kleine, regionale Betriebe">
   <meta name="twitter:description" content="Studio Gerth baut Websites für kleine, regionale Betriebe ohne eigene Website — persönlich betreut, mit Hosting und DSGVO-Datenschutz aus einer Hand.">
   <meta name="twitter:image" content="https://www.studio-gerth.de/assets/og-image.jpg">
   <meta name="theme-color" content="#072768">
@@ -73,7 +73,7 @@
       "@type": "WebPage",
       "@id": "https://www.studio-gerth.de/",
       "url": "https://www.studio-gerth.de/",
-      "name": "Studio Gerth — Websites für Handwerk & regionale Betriebe",
+      "name": "Studio Gerth — Websites für kleine, regionale Betriebe",
       "isPartOf": {
         "@id": "https://www.studio-gerth.de/#website"
       },
@@ -167,7 +167,7 @@
       <div id="hero-scroll-container">
         <div class="hero-silk" aria-hidden="true"></div>
 
-        <p class="hero-kicker">Studio Gerth — Websites für Handwerk &amp; regionale Betriebe</p>
+        <p class="hero-kicker">Studio Gerth — Websites für kleine, regionale Betriebe</p>
 
         <!-- Standbild: fängt unnatürliche KI-Augenbewegungen beim Laden ab,
              bis der erste Scroll das Video übernehmen lässt. -->
@@ -202,25 +202,31 @@
     </section>
 
     <!-- ================================================================
-         INTRO
-         <section class="section" aria-labelledby="intro-heading">
-          <div class="container">
-            <div class="section-head" data-reveal>
-              <span class="eyebrow">Studio Gerth</span>
-              <h2 id="intro-heading">Sie leisten gute Arbeit.<br>Zeigen Sie sie.</h2>
-            </div>
-            <p class="lead" data-reveal style="--reveal-delay: 0.1s">
-              Ich baue Websites für kleine, regionale Betriebe, die bisher keine
-              hatten, oder eine, die ihrer Arbeit nicht gerecht wird. Verständlich,
-              ehrlich, ohne Fachchinesisch. Und ich bleibe: mit Hosting, Datenschutz
-              und laufender Pflege aus einer Hand.
-            </p>
-            ================================================================ -->    
+         INTRO — greift die Trigger-Headline aus dem Hero wieder auf (dort nur
+         aria-hidden während der Scroll-Choreografie sichtbar) und macht sie
+         zu echtem, dauerhaft lesbarem Inhalt für alle: auch ohne JS und für
+         Screenreader. Nennt hier bewusst konkret, wer gemeint ist — inklusive
+         Gastronomie, nicht nur Handwerk.
+         ================================================================ -->
+    <section class="section" aria-labelledby="intro-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Studio Gerth</span>
+          <h2 id="intro-heading">Sie leisten gute Arbeit.<br>Zeigen Sie sie.</h2>
+        </div>
+        <p class="lead" data-reveal style="--reveal-delay: 0.08s">
+          Ich baue Websites für kleine, regionale Betriebe, die bisher keine
+          hatten, oder eine, die ihrer Arbeit nicht gerecht wird — vom
+          Handwerksbetrieb bis zum Café um die Ecke. Und ich bleibe: mit
+          Hosting, Datenschutz und laufender Pflege aus einer Hand.
+        </p>
+      </div>
+    </section>
 
     <!-- ================================================================
          DREI KERNLEISTUNGEN
          ================================================================ -->
-    <section class="section section--flush" aria-labelledby="services-heading" style="padding-bottom: var(--space-section)">
+    <section class="section section--flush section--flush-bottom" aria-labelledby="services-heading">
       <div class="container">
         <div class="section-head" data-reveal>
           <span class="eyebrow">Leistungen</span>
@@ -248,7 +254,7 @@
             <a class="link-line" href="leistungen.html#webdesign">Mehr erfahren</a>
           </article>
 
-          <article class="service-card" data-reveal style="--reveal-delay: 0.12s">
+          <article class="service-card" data-reveal style="--reveal-delay: 0.08s">
             <span class="card-index">02</span>
             <div class="card-icon" aria-hidden="true">
               <!-- Feines Linien-Icon: Hosting-Ebenen -->
@@ -329,16 +335,36 @@
     </section>
 
     <!-- ================================================================
-         STATEMENT — Navy-Duotone-Moment als Section-Übergang
+         FAKTEN — belegt die Versprechen der Trust-Badges mit überprüfbaren
+         Tatsachen statt eines weiteren Zitats (siehe Details auf „Über mich").
+         Bewusst hell, damit hier kein zweiter dunkler Vollbild-Block direkt
+         auf „Ohne Umwege" folgt.
          ================================================================ -->
-    <section class="statement on-dark" aria-label="Leitsatz">
-      <div class="statement-bg media--duotone" aria-hidden="true"></div>
-      <blockquote>
-        <p class="statement-quote" data-reveal="fade">
-          Ihr Handwerk verdient <span class="script script--light">mehr</span> als eine Visitenkarte im Netz.
-        </p>
-        <footer class="statement-source" data-reveal="fade" style="--reveal-delay: 0.2s">Meine Überzeugung</footer>
-      </blockquote>
+    <section class="section" aria-labelledby="facts-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Keine leeren Worte</span>
+          <h2 id="facts-heading">Woher die Sorgfalt kommt.</h2>
+        </div>
+        <div class="fact-grid">
+          <div class="fact-item" data-reveal>
+            <span class="fact-label">Ausbildung</span>
+            <p class="fact-value"><strong>Wirtschaftsinformatik &amp; ERP.</strong> Danach eigenständige Betreuung geschäftskritischer Systeme bei der Jenoptik&nbsp;AG.</p>
+          </div>
+          <div class="fact-item" data-reveal style="--reveal-delay: 0.08s">
+            <span class="fact-label">Technik</span>
+            <p class="fact-value"><strong>Baut auch eigene Software.</strong> Entwickelt eine App (Flutter) für den Reitsport — kein reiner Baukasten-Betrieb.</p>
+          </div>
+          <div class="fact-item" data-reveal style="--reveal-delay: 0.16s">
+            <span class="fact-label">Verlässlichkeit</span>
+            <p class="fact-value"><strong>Über 10 Jahre Leistungssport.</strong> Springreiterin auf Landesniveau — Disziplin ist tägliche Praxis, kein Werbewort.</p>
+          </div>
+          <div class="fact-item" data-reveal style="--reveal-delay: 0.24s">
+            <span class="fact-label">Zusammenarbeit</span>
+            <p class="fact-value"><strong>Ein Ansprechpartner.</strong> Kein Agentur-Apparat, keine Warteschleife — Sie sprechen immer direkt mit mir.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ================================================================
@@ -446,7 +472,7 @@
       </div>
       <div class="footer-bottom">
         <p>© <span data-year>2026</span> Studio Gerth, Gera. Alle Rechte vorbehalten.</p>
-        <p>Websites für Handwerk &amp; regionale Betriebe.</p>
+        <p>Websites für kleine, regionale Betriebe.</p>
       </div>
     </div>
   </footer>
