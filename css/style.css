@@ -921,13 +921,19 @@ h1.hero-intro-copy-line {
     linear-gradient(155deg, var(--color-steel-blue), color-mix(in srgb, var(--color-steel-blue) 70%, var(--color-navy)));
 }
 
-/* Feines Fensterlicht als Overlay */
+/* Feines Fensterlicht als Overlay — nur auf den abstrakten Verlaufs-
+   Platzhaltern; auf echten Fotos sieht dasselbe Muster wie ein Objektiv-
+   Reflex aus, den echte Aufnahmen nicht brauchen. */
 .media::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(115deg, transparent 42%, color-mix(in srgb, var(--color-cream) 22%, transparent) 47%, transparent 55%, color-mix(in srgb, var(--color-cream) 14%, transparent) 62%, transparent 70%);
   pointer-events: none;
+}
+
+.media:has(img)::after {
+  content: none;
 }
 
 .media .media-caption {
@@ -1286,7 +1292,15 @@ h1.hero-intro-copy-line {
 .capability-summary {
   cursor: pointer;
   list-style: none;
+  padding: 2rem 1.75rem;
   transition: background-color 0.25s ease;
+}
+
+/* Karten mit redaktionellem Foto/Textur-Kopf brauchen kein Padding auf
+   der Summary selbst — das übernimmt .capability-summary-body, damit
+   das Bild randlos bis an die Panel-Kante reicht. */
+.capability-summary:has(.capability-media) {
+  padding: 0;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1308,6 +1322,32 @@ h1.hero-intro-copy-line {
 
 .capability-summary-body {
   padding: 1.5rem 1.75rem 2rem;
+}
+
+/* Erstellung und Betreuung gehören als "Webseiten" zusammen — ein
+   gemeinsam beschrifteter Bereich, innen aber klar in zwei Felder
+   getrennt. Automatisierung ist keine Website-Leistung im engeren Sinn
+   und steht bewusst als eigene Zeile darunter, nicht daneben. */
+.capability-group-label {
+  display: block;
+  padding: 1.5rem 1.75rem 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+}
+
+.capability-group-row {
+  display: grid;
+}
+
+.capability-group-row .capability-details {
+  border-top: 1px solid var(--line-soft);
+}
+
+.capability-group-row .capability-details:first-child {
+  border-top: none;
 }
 
 .capability-summary .card-index {
@@ -1376,17 +1416,25 @@ h1.hero-intro-copy-line {
   }
 }
 
-@media (min-width: 768px) {
-  .capability-panel {
-    grid-template-columns: repeat(3, 1fr);
+@media (min-width: 640px) {
+  .capability-group-row {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .capability-details {
+  .capability-group-row .capability-details {
     border-top: none;
   }
 
-  .capability-details:not(:first-child) {
+  .capability-group-row .capability-details:not(:first-child) {
     border-left: 1px solid var(--line-soft);
+  }
+
+  /* Automatisierung steht als einzige Zeile auf voller Breite — Foto
+     und Text nebeneinander statt gestapelt, damit der zusätzliche
+     Platz nicht ungenutzt bleibt. */
+  .capability-summary:has(.capability-media) {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
   }
 }
 
@@ -1611,35 +1659,30 @@ h1.hero-intro-copy-line {
   font-size: var(--text-small);
 }
 
-/* Sport-Beleg: zwei echte Turnierfotos statt eines erfundenen Zitats */
+/* Sport-Beleg: ein echtes Turnierfoto statt eines erfundenen Zitats */
 .sport-proof {
   display: grid;
   gap: var(--space-inner);
 }
 
 .sport-proof > .media {
-  min-height: 18rem;
+  min-height: 22rem;
 }
 
 .sport-proof-side {
   display: grid;
-  gap: 1.25rem;
-  align-content: start;
-}
-
-.sport-proof-side .media {
-  min-height: 20rem;
+  align-content: center;
 }
 
 .sport-proof-side p {
-  font-size: var(--text-small);
-  line-height: 1.65;
+  font-size: var(--text-lead);
+  line-height: 1.55;
   color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
 }
 
 @media (min-width: 768px) {
   .sport-proof {
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 2fr 1fr;
   }
 
   .sport-proof > .media {
