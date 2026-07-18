@@ -206,11 +206,24 @@ h3 {
   max-width: 42ch;
 }
 
+/* Für editoriale Fließtext-Absätze, die mehr als eine kurze Anmoderation
+   sind (z. B. "Warum es zählt") — breiter, damit lange Sätze nicht in
+   unnötig viele kurze Zeilen zerfallen. */
+.lead--wide {
+  max-width: 62ch;
+}
+
 p {
   max-width: 62ch;
 }
 
 .text-brown { color: var(--color-brown); }
+
+/* Hervorhebung einzelner Wörter im Fließtext (Gewicht + Akzentfarbe,
+   nicht die Display-Schrift) — passt sich auf dunklem Grund an, wie
+   viele andere Klassen im System (.eyebrow, .script, .lead). */
+.text-accent { color: var(--color-tan); }
+.on-dark .text-accent { color: var(--color-cream); }
 
 /* Dichter, bewusster Fließtext-Rhythmus für längere Prosa-Blöcke (z. B.
    Markenstory) — ersetzt einzeln inline gesetzte margin-top-Werte */
@@ -953,6 +966,7 @@ h1.hero-intro-copy-line {
 .services-grid {
   display: grid;
   gap: 1.25rem;
+  counter-reset: service;
 }
 
 .service-card {
@@ -975,6 +989,11 @@ h1.hero-intro-copy-line {
   font-size: 0.95rem;
   letter-spacing: 0.2em;
   color: var(--color-tan);
+}
+
+.service-card .card-index::before {
+  content: counter(service, upper-roman);
+  counter-increment: service;
 }
 
 .service-card h3 {
@@ -1103,46 +1122,41 @@ h1.hero-intro-copy-line {
   counter-reset: step;
 }
 
+/* Kompaktes Raster statt breiter vertikaler Liste — bei sechs Schritten
+   wäre eine lange Zeilen-für-Zeile-Liste unübersichtlich geworden.
+   Jede Zelle bekommt oben eine dünne Linie (dasselbe Verbindungsmotiv
+   wie .value-item auf "Über mich") statt eigener umrandeter Kästen. */
 .process-list {
   list-style: none;
   padding: 0;
   display: grid;
-  gap: 0;
+  gap: 1.75rem 1.5rem;
 }
 
 .process-step {
-  counter-increment: step;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.25rem;
-  padding-block: 1.5rem;
+  padding-top: 1.25rem;
   border-top: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
-  align-items: start;
-}
-
-.process-step:last-child {
-  border-bottom: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
 }
 
 .process-step::before {
-  content: "0" counter(step);
+  content: counter(step, upper-roman);
+  counter-increment: step;
+  display: block;
   font-family: var(--font-display);
-  font-size: var(--text-h3);
-  line-height: 1.2;
+  font-size: 1.35rem;
   color: var(--color-tan);
-  min-width: 3.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .process-step h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.25rem;
+  margin-bottom: 0.4rem;
+  font-size: 1.05rem;
 }
 
 .process-step p {
   font-size: var(--text-small);
-  line-height: 1.6;
+  line-height: 1.55;
   color: color-mix(in srgb, var(--color-cream) 82%, var(--color-steel-blue));
-  max-width: 52ch;
 }
 
 /* --------------------------------------------------------------------------
@@ -1272,7 +1286,6 @@ h1.hero-intro-copy-line {
 .capability-summary {
   cursor: pointer;
   list-style: none;
-  padding: 2rem 1.75rem;
   transition: background-color 0.25s ease;
 }
 
@@ -1284,6 +1297,17 @@ h1.hero-intro-copy-line {
 
 .capability-summary::-webkit-details-marker {
   display: none;
+}
+
+/* Redaktionelles Foto (oder Textur-Platzhalter, wenn keines vorliegt) als
+   Vollbild-Kopf direkt in der Summary — bewusst keine eigene, separat
+   umrandete Karte darüber, sondern derselbe Panel-Ausschnitt wie der Rest. */
+.capability-media {
+  min-height: 12rem;
+}
+
+.capability-summary-body {
+  padding: 1.5rem 1.75rem 2rem;
 }
 
 .capability-summary .card-index {
@@ -1975,6 +1999,10 @@ h1.hero-intro-copy-line {
   .cta-actions {
     gap: 1.25rem;
   }
+
+  .process-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 768px) {
@@ -2003,17 +2031,8 @@ h1.hero-intro-copy-line {
     grid-template-columns: 2fr 1fr 1fr 1fr;
   }
 
-  .process-step {
-    grid-template-columns: 6rem 1fr 1.2fr;
-  }
-
-  .process-step p {
-    grid-column: 3;
-    grid-row: 1;
-  }
-
-  .process-step h3 {
-    grid-column: 2;
+  .process-list {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .badge-strip {
@@ -2036,7 +2055,7 @@ h1.hero-intro-copy-line {
   }
 
   .project-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
