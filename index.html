@@ -155,10 +155,10 @@
          4) Der Header blendet lang gezogen von Dunkelblau zu Beige über
          5) Ab der Hälfte zoomt das Video heran, bis nur noch der
             (schwarze) Laptop-Bildschirm im Bild ist
-         6) Das schwarze Overlay blendet ein, die Texte fahren gestaffelt
-            von unten nach oben ein
-         7) Der Bildschirm hellt zu Beige auf, die Schrift wechselt
-            synchron zu Navy
+         6) Das schwarze Overlay blendet ein und hellt zu Beige auf —
+            abgeschlossen, bevor Text erscheint
+         7) Erst danach fahren Headline und Text (bereits in Navy)
+            gestaffelt von unten nach oben ein
          8) Am Ende löst sich die Bühne in den Off-White-Hintergrund der
             nächsten Sektion auf
          (bei prefers-reduced-motion/no-js: statisches Standbild, kein Effekt)
@@ -202,23 +202,24 @@
     </section>
 
     <!-- ================================================================
-         INTRO — greift die Trigger-Headline aus dem Hero wieder auf (dort nur
-         aria-hidden während der Scroll-Choreografie sichtbar) und macht sie
-         zu echtem, dauerhaft lesbarem Inhalt für alle: auch ohne JS und für
-         Screenreader. Nennt hier bewusst konkret, wer gemeint ist — inklusive
+         INTRO — eigenständiger Text, bewusst anders formuliert als die
+         Trigger-Headline im Hero (dort nur aria-hidden während der
+         Scroll-Choreografie sichtbar), damit derselbe Satz nicht zweimal
+         auf der Seite steht. Macht für alle dauerhaft lesbar (auch ohne
+         JS und für Screenreader), wer hier konkret gemeint ist — inklusive
          Gastronomie, nicht nur Handwerk.
          ================================================================ -->
     <section class="section" aria-labelledby="intro-heading">
       <div class="container">
         <div class="section-head" data-reveal>
           <span class="eyebrow">Studio Gerth</span>
-          <h2 id="intro-heading">Sie leisten gute Arbeit.<br>Zeigen Sie sie.</h2>
+          <h2 id="intro-heading">Vom Handwerksbetrieb bis zum Café um die Ecke.</h2>
         </div>
         <p class="lead" data-reveal style="--reveal-delay: 0.08s">
-          Ich baue Websites für kleine, regionale Betriebe, die bisher keine
-          hatten, oder eine, die ihrer Arbeit nicht gerecht wird — vom
-          Handwerksbetrieb bis zum Café um die Ecke. Und ich bleibe: mit
-          Hosting, Datenschutz und laufender Pflege aus einer Hand.
+          Ich baue Websites für kleine, regionale Betriebe, die bisher
+          keine hatten, oder eine, die ihrer Arbeit nicht gerecht wird.
+          Und ich bleibe: mit Hosting, Datenschutz und laufender Pflege
+          aus einer Hand.
         </p>
       </div>
     </section>

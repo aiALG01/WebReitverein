@@ -929,6 +929,24 @@ h1.hero-intro-copy-line {
   opacity: 0.85;
 }
 
+/* Echte Fotos haben unvorhersehbaren lokalen Kontrast — die Caption
+   bekommt hier zusätzlich einen dunklen Verlauf als Scrim, damit sie
+   unabhängig vom Bildinhalt lesbar bleibt (die reinen Verlaufs-Platzhalter
+   sind dafür bereits kontrastreich genug und brauchen ihn nicht). */
+.media:has(img) .media-caption {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3rem 1.5rem 1.1rem;
+  opacity: 1;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-navy) 80%, transparent) 0%,
+    color-mix(in srgb, var(--color-navy) 45%, transparent) 60%,
+    transparent 100%
+  );
+}
+
 /* --------------------------------------------------------------------------
    9. Leistungs-Karten (Startseite)
    -------------------------------------------------------------------------- */
@@ -1397,8 +1415,12 @@ h1.hero-intro-copy-line {
   align-items: start;
 }
 
+/* Aspect-ratio statt fixer min-height: das Bild wird nicht mehr je nach
+   Spaltenbreite unterschiedlich stark oben/unten beschnitten — es bleibt
+   immer vollständig zu sehen, in seinem eigenen Seitenverhältnis (4:5). */
 .about-portrait {
-  min-height: 24rem;
+  aspect-ratio: 4 / 5;
+  min-height: 20rem;
 }
 
 .values-grid {
@@ -1469,7 +1491,7 @@ h1.hero-intro-copy-line {
 }
 
 .sport-proof-side .media {
-  min-height: 16rem;
+  min-height: 20rem;
 }
 
 .sport-proof-side p {
