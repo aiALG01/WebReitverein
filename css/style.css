@@ -1244,26 +1244,42 @@ h1.hero-intro-copy-line {
    natives <details>/<summary> aufklappbar (kein JS nötig, wie bei der FAQ
    auf derselben Seite — bewusst dasselbe Muster statt eines neuen Widgets).
    -------------------------------------------------------------------------- */
-.capability-grid {
+/* Ein gemeinsames Panel statt drei einzeln umrandeter Karten: die drei
+   Leistungen gehören zusammen, nicht nebeneinander gestreut. Trennlinien
+   statt eigener Rahmen — und dank align-items: stretch (Grid-Standard)
+   ziehen sich diese Trennlinien immer über die volle Panel-Höhe, egal wie
+   unterschiedlich lang Überschrift/Text in den einzelnen Feldern sind. */
+.capability-panel {
   display: grid;
-  gap: 1.25rem;
-}
-
-.capability-details {
   border: 1px solid var(--line-soft);
   border-radius: 2px;
   background: color-mix(in srgb, var(--color-cream) 60%, transparent);
-  transition: border-color 0.3s var(--ease-out);
+  overflow: hidden;
+}
+
+.capability-details {
+  border-top: 1px solid var(--line-soft);
+}
+
+.capability-details:first-child {
+  border-top: none;
 }
 
 .capability-details[open] {
-  border-color: color-mix(in srgb, var(--color-tan) 60%, transparent);
+  background: color-mix(in srgb, var(--color-tan) 6%, transparent);
 }
 
 .capability-summary {
   cursor: pointer;
   list-style: none;
   padding: 2rem 1.75rem;
+  transition: background-color 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .capability-summary:hover {
+    background: color-mix(in srgb, var(--color-tan) 6%, transparent);
+  }
 }
 
 .capability-summary::-webkit-details-marker {
@@ -1305,7 +1321,7 @@ h1.hero-intro-copy-line {
 .capability-toggle-icon {
   font-family: var(--font-body);
   font-size: 1rem;
-  transition: transform 0.3s var(--ease-out);
+  transition: transform 0.25s var(--ease-out);
 }
 
 .capability-details[open] .capability-toggle-icon {
@@ -1313,14 +1329,40 @@ h1.hero-intro-copy-line {
 }
 
 .capability-body {
-  padding: 1.5rem 1.75rem 2rem;
+  padding: 0 1.75rem 2rem;
   border-top: 1px solid var(--line-soft);
+  margin-top: -1px;
+}
+
+/* Der Inhalt blendet sanft ein statt schlagartig zu erscheinen — reine
+   Opacity/Transform-Animation (keine Höhe, kein Layout-Kostenpunkt), nur
+   in Browsern, die @starting-style kennen; überall sonst erscheint der
+   Inhalt einfach sofort, genau wie beim FAQ darunter. */
+.capability-body-inner {
+  padding-top: 1.5rem;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.22s var(--ease-out), transform 0.22s var(--ease-out);
+}
+
+@starting-style {
+  .capability-details[open] .capability-body-inner {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
 }
 
 @media (min-width: 768px) {
-  .capability-grid {
+  .capability-panel {
     grid-template-columns: repeat(3, 1fr);
-    align-items: start;
+  }
+
+  .capability-details {
+    border-top: none;
+  }
+
+  .capability-details:not(:first-child) {
+    border-left: 1px solid var(--line-soft);
   }
 }
 

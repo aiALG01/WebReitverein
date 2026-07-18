@@ -229,20 +229,25 @@
       <div class="container">
         <span class="eyebrow" data-reveal>Leistungen</span>
         <h1 id="page-heading" data-reveal style="--reveal-delay: 0.08s">
-          Drei Leistungen.<br>Kein <span class="script">Sammelsurium</span>.
+          Website. Betreuung.<br><span class="script">Automatisierung</span>.
         </h1>
         <p class="lead" data-reveal style="--reveal-delay: 0.16s">
-          Webseiten-Erstellung, Betreuung und Automatisierung wiederkehrender
-          Abläufe — mehr biete ich bewusst nicht an. Dafür richtig.
+          Drei Leistungen, die aufeinander aufbauen: Ihre Website entsteht,
+          bleibt aktuell — und nimmt Ihnen mit der Zeit auch wiederkehrende
+          Handgriffe ab.
         </p>
       </div>
     </section>
 
     <!-- ============================================================
-         DREI LEISTUNGEN IM ÜBERBLICK — jede Karte ist ein natives
-         <details>/<summary> (dasselbe barrierefreie Muster wie die FAQ
-         weiter unten): Überschrift und Kurztext sind sofort sichtbar,
-         die konkrete Leistungsliste klappt erst auf Klick auf.
+         DREI LEISTUNGEN IM ÜBERBLICK — ein gemeinsames Panel statt drei
+         einzelner Karten, damit unterschiedlich lange Texte nicht wie drei
+         zufällig große Boxen wirken. Jedes Feld ist ein natives
+         <details name="capabilities">: dasselbe Attribut sorgt browserseitig
+         dafür, dass immer nur eines offen ist — ganz ohne JavaScript
+         (Fallback in älteren Browsern: mehrere können offen bleiben, bleibt
+         trotzdem voll nutzbar). Überschrift und Kurztext sind sofort
+         sichtbar, die konkrete Leistungsliste klappt erst auf Klick auf.
          ============================================================ -->
     <section class="section section--flush section--flush-bottom" aria-labelledby="capabilities-heading">
       <div class="container">
@@ -250,32 +255,32 @@
           <span class="eyebrow">Im Überblick</span>
           <h2 id="capabilities-heading">Klicken Sie sich rein.</h2>
         </div>
-        <div class="capability-grid">
+        <div class="capability-panel" data-reveal>
 
-          <!-- 01 · WEBSEITEN-ERSTELLUNG -->
-          <article id="erstellung">
-            <details class="capability-details" data-reveal>
-              <summary class="capability-summary">
-                <span class="card-index" aria-hidden="true">01</span>
-                <div class="detail-icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
-                    <rect x="6" y="8" width="36" height="32" rx="1"/>
-                    <line x1="6" y1="16" x2="42" y2="16"/>
-                    <line x1="20" y1="16" x2="20" y2="40"/>
-                    <line x1="26" y1="24" x2="36" y2="24"/>
-                    <line x1="26" y1="30" x2="34" y2="30"/>
-                  </svg>
-                </div>
-                <h3>Webseiten-Erstellung</h3>
-                <p class="capability-intro">
-                  Eine Website, die zeigt, was Sie können — ohne Baukasten und
-                  ohne Vorlage von der Stange. Ich entwerfe und baue sie von
-                  Grund auf, damit sie auch in einigen Jahren noch zu Ihrem
-                  Betrieb passt.
-                </p>
-                <span class="capability-toggle">Details <span class="capability-toggle-icon">+</span></span>
-              </summary>
-              <div class="capability-body">
+          <!-- I · WEBSEITEN-ERSTELLUNG -->
+          <details class="capability-details" name="capabilities" id="erstellung">
+            <summary class="capability-summary">
+              <span class="card-index" aria-hidden="true">I</span>
+              <div class="detail-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                  <rect x="6" y="8" width="36" height="32" rx="1"/>
+                  <line x1="6" y1="16" x2="42" y2="16"/>
+                  <line x1="20" y1="16" x2="20" y2="40"/>
+                  <line x1="26" y1="24" x2="36" y2="24"/>
+                  <line x1="26" y1="30" x2="34" y2="30"/>
+                </svg>
+              </div>
+              <h3>Webseiten-Erstellung</h3>
+              <p class="capability-intro">
+                Eine Website, die zeigt, was Sie können — ohne Baukasten und
+                ohne Vorlage von der Stange. Ich entwerfe und baue sie von
+                Grund auf, damit sie auch in einigen Jahren noch zu Ihrem
+                Betrieb passt.
+              </p>
+              <span class="capability-toggle">Details <span class="capability-toggle-icon">+</span></span>
+            </summary>
+            <div class="capability-body">
+              <div class="capability-body-inner">
                 <ul class="feature-list">
                   <li>Individuelles Design</li>
                   <li>Mobile Optimierung</li>
@@ -290,31 +295,31 @@
                   Gespräch stattfindet.
                 </div>
               </div>
-            </details>
-          </article>
+            </div>
+          </details>
 
-          <!-- 02 · WEBSEITEN-BETREUUNG -->
-          <article id="betreuung">
-            <details class="capability-details" data-reveal style="--reveal-delay: 0.08s">
-              <summary class="capability-summary">
-                <span class="card-index" aria-hidden="true">02</span>
-                <div class="detail-icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
-                    <ellipse cx="24" cy="12" rx="16" ry="5"/>
-                    <path d="M8 12v12c0 2.8 7.2 5 16 5s16-2.2 16-5V12"/>
-                    <path d="M8 24v12c0 2.8 7.2 5 16 5s16-2.2 16-5V24"/>
-                  </svg>
-                </div>
-                <h3>Webseiten-Betreuung</h3>
-                <p class="capability-intro">
-                  Eine Website ist am Tag des Livegangs nicht fertig. Ich
-                  halte Ihre Seite technisch aktuell und erreichbar und
-                  kümmere mich um kleine Änderungen — damit Sie es nicht
-                  müssen.
-                </p>
-                <span class="capability-toggle">Details <span class="capability-toggle-icon">+</span></span>
-              </summary>
-              <div class="capability-body">
+          <!-- II · WEBSEITEN-BETREUUNG -->
+          <details class="capability-details" name="capabilities" id="betreuung">
+            <summary class="capability-summary">
+              <span class="card-index" aria-hidden="true">II</span>
+              <div class="detail-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                  <ellipse cx="24" cy="12" rx="16" ry="5"/>
+                  <path d="M8 12v12c0 2.8 7.2 5 16 5s16-2.2 16-5V12"/>
+                  <path d="M8 24v12c0 2.8 7.2 5 16 5s16-2.2 16-5V24"/>
+                </svg>
+              </div>
+              <h3>Webseiten-Betreuung</h3>
+              <p class="capability-intro">
+                Eine Website ist am Tag des Livegangs nicht fertig. Ich
+                halte Ihre Seite technisch aktuell und erreichbar und
+                kümmere mich um kleine Änderungen — damit Sie es nicht
+                müssen.
+              </p>
+              <span class="capability-toggle">Details <span class="capability-toggle-icon">+</span></span>
+            </summary>
+            <div class="capability-body">
+              <div class="capability-body-inner">
                 <ul class="feature-list">
                   <li>Hosting</li>
                   <li>Updates</li>
@@ -328,33 +333,33 @@
                   Tag für Tag.
                 </div>
               </div>
-            </details>
-          </article>
+            </div>
+          </details>
 
-          <!-- 03 · AUTOMATISIERUNG WIEDERKEHRENDER ABLÄUFE -->
-          <article id="automatisierung">
-            <details class="capability-details" data-reveal style="--reveal-delay: 0.16s">
-              <summary class="capability-summary">
-                <span class="card-index" aria-hidden="true">03</span>
-                <div class="detail-icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
-                    <circle cx="10" cy="24" r="5"/>
-                    <circle cx="24" cy="12" r="5"/>
-                    <circle cx="24" cy="36" r="5"/>
-                    <circle cx="38" cy="24" r="5"/>
-                    <path d="M14.5 22l5-7M14.5 26l5 7M28.5 15l5 7M28.5 33l5-7"/>
-                  </svg>
-                </div>
-                <h3>Automatisierung wiederkehrender Abläufe</h3>
-                <p class="capability-intro">
-                  Manche Abläufe wiederholen sich jede Woche — Anfragen
-                  sortieren, Termine bestätigen, immer dieselbe E-Mail
-                  schreiben. Als Ergänzung zu Ihrer Website automatisiere
-                  ich solche Routinen, wo es sich lohnt.
-                </p>
-                <span class="capability-toggle">Details <span class="capability-toggle-icon">+</span></span>
-              </summary>
-              <div class="capability-body">
+          <!-- III · AUTOMATISIERUNG WIEDERKEHRENDER ABLÄUFE -->
+          <details class="capability-details" name="capabilities" id="automatisierung">
+            <summary class="capability-summary">
+              <span class="card-index" aria-hidden="true">III</span>
+              <div class="detail-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                  <circle cx="10" cy="24" r="5"/>
+                  <circle cx="24" cy="12" r="5"/>
+                  <circle cx="24" cy="36" r="5"/>
+                  <circle cx="38" cy="24" r="5"/>
+                  <path d="M14.5 22l5-7M14.5 26l5 7M28.5 15l5 7M28.5 33l5-7"/>
+                </svg>
+              </div>
+              <h3>Automatisierung wiederkehrender Abläufe</h3>
+              <p class="capability-intro">
+                Manche Abläufe wiederholen sich jede Woche — Anfragen
+                sortieren, Termine bestätigen, immer dieselbe E-Mail
+                schreiben. Als Ergänzung zu Ihrer Website automatisiere
+                ich solche Routinen, wo es sich lohnt.
+              </p>
+              <span class="capability-toggle">Details <span class="capability-toggle-icon">+</span></span>
+            </summary>
+            <div class="capability-body">
+              <div class="capability-body-inner">
                 <ul class="feature-list">
                   <li>Automatisierung wiederkehrender Aufgaben</li>
                   <li>Formular- und E-Mail-Workflows</li>
@@ -367,8 +372,8 @@
                   eigentliche Arbeit.
                 </div>
               </div>
-            </details>
-          </article>
+            </div>
+          </details>
 
         </div>
       </div>
