@@ -113,11 +113,14 @@
         5) 0.50–0.85  Video zoomt heran (scale 1.25, y: -5%) — MacBook-Rand
                       und Tastatur verlassen den Viewport, übrig bleibt der
                       Laptop-Bildschirm als Vollbild
-        6) 0.58–0.76  schwarzer Bildschirm blendet ein und hellt zu Beige
-                      auf — abgeschlossen, bevor Text erscheint
-        7) 0.80–0.98  erst danach fahren Headline und Text (bereits in
-                      Navy) gestaffelt von unten nach oben ein
-        8) 0.97–1.00  letzter, kurzer Rest-Fade der Bühne in den
+        6) 0.56–0.64  Bildschirm blendet zu vollständigem Schwarz ein und
+                      hält diesen Zustand kurz (bis 0.68), bevor überhaupt
+                      etwas anderes passiert
+        7) 0.68–0.82  erst danach hellt der bereits vollständig schwarze
+                      Bildschirm zu Beige auf
+        8) 0.84–0.98  erst wenn Beige feststeht, fahren Headline und Text
+                      (bereits in Navy) gestaffelt von unten nach oben ein
+        9) 0.97–1.00  letzter, kurzer Rest-Fade der Bühne in den
                       Off-White-Hintergrund der nächsten Sektion
      ------------------------------------------------------------------------ */
   var heroContainer = document.getElementById("hero-scroll-container");
@@ -208,18 +211,20 @@
       .to(headerCta, { borderColor: colorTan, duration: 0.9, ease: "none" }, 0.05)
       /* 5) ab der Hälfte heranzoomen, bis nur der Laptop-Bildschirm bleibt */
       .to(heroVideo, { scale: 1.25, y: "-5%", duration: 0.35, ease: "power1.inOut" }, 0.5)
-      /* 6) schwarzer Bildschirm blendet ein und hellt zu Beige auf — der
-         Bildschirmwechsel ist vollständig abgeschlossen, BEVOR der Text
-         erscheint (nicht gleichzeitig) */
-      .to(heroOverlay, { opacity: 1, duration: 0.12, ease: "none" }, 0.58)
-      .to(heroOverlay, { backgroundColor: colorBeige, duration: 0.16, ease: "none" }, 0.6)
-      /* 7) erst jetzt, auf bereits beigem Grund, fahren Headline und Text
+      /* 6) Bildschirm blendet zu vollständigem Schwarz ein und hält diesen
+         Zustand kurz — erst wenn er wirklich komplett schwarz ist (nicht
+         währenddessen), beginnt Schritt 7 */
+      .to(heroOverlay, { opacity: 1, duration: 0.08, ease: "none" }, 0.56)
+      /* 7) erst auf vollständig schwarzem Grund hellt der Bildschirm zu
+         Beige auf */
+      .to(heroOverlay, { backgroundColor: colorBeige, duration: 0.14, ease: "none" }, 0.68)
+      /* 8) erst jetzt, auf bereits beigem Grund, fahren Headline und Text
          gestaffelt von unten hoch — direkt in Navy, kein Farbwechsel mehr
          am Text nötig, weil der Untergrund schon feststeht */
-      .set([triggerHeadline, triggerText], { color: colorNavy }, 0.78)
-      .to(triggerHeadline, { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0.8)
-      .to(triggerText, { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0.88)
-      /* 8) kurzer Rest-Fade der Bühne in den Off-White-Hintergrund der
+      .set([triggerHeadline, triggerText], { color: colorNavy }, 0.82)
+      .to(triggerHeadline, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.84)
+      .to(triggerText, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.9)
+      /* 9) kurzer Rest-Fade der Bühne in den Off-White-Hintergrund der
          nächsten Sektion */
       .to(heroContainer, { opacity: 0, duration: 0.03, ease: "none" }, 0.97);
   }
