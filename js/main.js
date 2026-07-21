@@ -1,5 +1,5 @@
 /* ==========================================================================
-   STUDIO GERTH — main.js
+   ALEWING — main.js
    Vanilla JS, kein Build-Step. Progressive Enhancement:
    - IntersectionObserver für Reveal-on-Scroll
    - requestAnimationFrame für Hero-Choreografie & Parallax-Fallback
@@ -109,7 +109,7 @@
         2) 0.00–0.85  Video läuft framegenau mit (currentTime = f(progress))
         3) 0.00–0.32  linker Einstiegstext blendet aus
         4) 0.05–0.95  Header blendet lang gezogen von Dunkelblau (transparent
-                      über dem Video) zu Beige, Schrift von Cream zu Navy
+                      über dem Video) zu Cream, Schrift von Cream zu Navy
         5) 0.50–0.85  Video zoomt heran (scale 1.25, y: -5%) — MacBook-Rand
                       und Tastatur verlassen den Viewport, übrig bleibt der
                       Laptop-Bildschirm als Vollbild
@@ -117,8 +117,8 @@
                       hält diesen Zustand kurz (bis 0.68), bevor überhaupt
                       etwas anderes passiert
         7) 0.68–0.82  erst danach hellt der bereits vollständig schwarze
-                      Bildschirm zu Beige auf
-        8) 0.84–0.98  erst wenn Beige feststeht, fahren Headline und Text
+                      Bildschirm zu Cream auf
+        8) 0.84–0.98  erst wenn Cream feststeht, fahren Headline und Text
                       (bereits in Navy) gestaffelt von unten nach oben ein
         Kein Fade am Ende: die Bühne entpinnt sich nach Fortschritt 1 ganz
         normal und wird von der nächsten Sektion weggescrollt wie jeder
@@ -153,7 +153,7 @@
 
     var rootStyle = getComputedStyle(document.documentElement);
     var colorNavy = rootStyle.getPropertyValue("--color-navy").trim();
-    var colorBeige = rootStyle.getPropertyValue("--color-beige").trim();
+    var colorCream = rootStyle.getPropertyValue("--color-cream").trim();
     var colorTan = rootStyle.getPropertyValue("--color-tan").trim();
 
     /* Safari (v.a. iOS) rendert per currentTime geseekte Frames erst,
@@ -201,12 +201,12 @@
       /* 3) linker Einstiegstext im ersten Drittel ausfaden */
       .to([heroIntroCopy, heroIntroSub], { opacity: 0, y: "-1rem", duration: 0.32, ease: "none" }, 0)
       .to([heroKicker, heroCue], { opacity: 0, duration: 0.12, ease: "none" }, 0)
-      /* 4) Header lang gezogen von Dunkelblau (transparent) zu Beige —
+      /* 4) Header lang gezogen von Dunkelblau (transparent) zu Cream —
          bewusst früh gestartet und über fast die ganze Timeline gedehnt,
          statt abrupt am Scroll-Anfang umzuschalten */
       .fromTo(siteHeader,
         { backgroundColor: "rgba(7, 39, 104, 0)" },
-        { backgroundColor: colorBeige, duration: 0.9, ease: "none" },
+        { backgroundColor: colorCream, duration: 0.9, ease: "none" },
         0.05)
       .to(headerTextEls, { color: colorNavy, duration: 0.9, ease: "none" }, 0.05)
       .to(headerCta, { borderColor: colorTan, duration: 0.9, ease: "none" }, 0.05)
@@ -217,9 +217,9 @@
          währenddessen), beginnt Schritt 7 */
       .to(heroOverlay, { opacity: 1, duration: 0.08, ease: "none" }, 0.56)
       /* 7) erst auf vollständig schwarzem Grund hellt der Bildschirm zu
-         Beige auf */
-      .to(heroOverlay, { backgroundColor: colorBeige, duration: 0.14, ease: "none" }, 0.68)
-      /* 8) erst jetzt, auf bereits beigem Grund, fahren Headline und Text
+         Cream auf */
+      .to(heroOverlay, { backgroundColor: colorCream, duration: 0.14, ease: "none" }, 0.68)
+      /* 8) erst jetzt, auf bereits cremefarbenem Grund, fahren Headline und Text
          gestaffelt von unten hoch — direkt in Navy, kein Farbwechsel mehr
          am Text nötig, weil der Untergrund schon feststeht */
       .set([triggerHeadline, triggerText], { color: colorNavy }, 0.82)

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   STUDIO GERTH — Quiet Luxury / Editorial Discipline
+   ALEWING — Quiet Luxury / Editorial Discipline
    Design-System & Layout
    --------------------------------------------------------------------------
    Farbwelt:  Navy & Steel-Blue (Vertrauen, Professionalität)
@@ -19,11 +19,6 @@
   --color-cream: #F4EAE1;
   --color-tan: #9D785D;
   --color-brown: #936A4D;
-
-  /* Sechste, bewusste Ausnahme: der helle Beige-Ton, in den Header und
-     Laptop-Bildschirm am Ende der Hero-Choreografie überblenden (siehe
-     js/main.js, Abschnitt 4) — vom hellen Cream bewusst leicht abgesetzt */
-  --color-beige: #f7f3ee;
 
   /* Abgeleitete Tinten & Schleier (ausschließlich aus den fünf Farben gemischt) */
   --tint-cream-deep: color-mix(in srgb, var(--color-cream) 92%, var(--color-tan));
@@ -1032,7 +1027,11 @@ h1.hero-intro-copy-line {
    9b. Warme Sektion & Trust-Badges — Farbvielfalt jenseits Cream/Navy
    -------------------------------------------------------------------------- */
 .section--warm {
-  background: linear-gradient(155deg, var(--color-tan), var(--color-brown));
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--color-brown) 88%, var(--color-navy)),
+    color-mix(in srgb, var(--color-brown) 70%, var(--color-navy))
+  );
   color: var(--color-cream);
 }
 
@@ -1043,6 +1042,24 @@ h1.hero-intro-copy-line {
 
 .section--warm .eyebrow {
   color: color-mix(in srgb, var(--color-cream) 80%, var(--color-navy));
+}
+
+/* Fakten-Grid auf warmem Grund: Label/Wert/Trennlinie auf Cream statt
+   Navy umgestellt, sonst gegen den dunkleren Untergrund unlesbar */
+.section--warm .fact-item {
+  border-left-color: color-mix(in srgb, var(--color-cream) 55%, transparent);
+}
+
+.section--warm .fact-item .fact-label {
+  color: var(--color-cream);
+}
+
+.section--warm .fact-item .fact-value {
+  color: color-mix(in srgb, var(--color-cream) 92%, transparent);
+}
+
+.section--warm .fact-item strong {
+  color: var(--color-cream);
 }
 
 .badge-strip {
@@ -1081,8 +1098,10 @@ h1.hero-intro-copy-line {
 
 /* --------------------------------------------------------------------------
    9c. Fakten-Grid — belegt Versprechen mit überprüfbaren Fakten statt
-   eines weiteren Zitats. Bewusst auf hellem Grund (nicht on-dark), damit
-   nicht zwei dunkle Vollbild-Sections direkt aufeinanderfolgen.
+   eines weiteren Zitats. Bewusst auf warmem Grund (.section--warm, nicht
+   Cream, nicht on-dark): sonst stünden drei helle Cream-Sections in Folge
+   (Intro, Leistungen, Fakten), und direkt vor der dunklen Prozess-Section
+   wäre ein zweiter dunkler Vollbild-Block ebenfalls zu viel.
    -------------------------------------------------------------------------- */
 .fact-grid {
   display: grid;
