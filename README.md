@@ -1,4 +1,4 @@
-# Studio Gerth — Website
+# Alewing — Website
 
 Minimalistische, hochwertige Agentur-Website im Stil „Quiet Luxury /
 Editorial Discipline". Reines HTML/CSS/Vanilla-JS — kein Build-Step, direkt
@@ -71,7 +71,10 @@ Unternehmen ohne (gute) eigene Website**. Entsprechend wurde die Copy
   ein zusätzliches Arbeitsfoto im Wartungs-Abschnitt auf `leistungen.html`).
 - [x] **`llms.txt`** ergänzt — strukturierte Kurzfassung für KI-Antwortmaschinen
   (GEO), analog zu `robots.txt` für klassische Crawler.
-- [ ] **Firmenname** — aktuell „Studio Gerth". Ändern: Suchen/Ersetzen über alle `.html`-Dateien.
+- [x] **Firmenname** — von „Studio Gerth" auf „Alewing" umbenannt (Logo,
+  Nav, Footer, Meta-Tags, JSON-LD, `robots.txt`, `llms.txt`). Domain bleibt
+  bewusst `studio-gerth.de`, bis die neue Domain feststeht (siehe Punkt
+  darunter).
 - [ ] **Domain** — Platzhalter `https://www.studio-gerth.de` in Canonicals, Open-Graph-Tags, JSON-LD, `robots.txt`, `sitemap.xml` und `llms.txt` durch die echte Domain ersetzen (Suchen/Ersetzen über alle Dateien).
 - [ ] **Impressum & Kontaktdaten** — reale Daten aus dem Lebenslauf übernommen (Anna Lena Gerth, Naulitz 9a, 07554 Gera, lena.gerth@outlook.de, +49 1520 2758286). Bitte bestätigen; USt-Hinweis ergänzen.
 - [ ] **Rechtstexte** — Impressum/Datenschutz sind sorgfältig erstellt, ersetzen aber keine Rechtsberatung.

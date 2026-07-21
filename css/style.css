@@ -1259,6 +1259,56 @@ h1.hero-intro-copy-line {
   margin-bottom: 0.4rem;
 }
 
+/* Richtwerte statt Festpreisen — Trennlinien statt Karten, damit sich das
+   Muster in dieselbe ruhige Zeilen-Sprache wie .process-step/.value-item
+   einfügt statt eine eigene Preistabellen-Optik einzuführen. */
+.pricing-tiers {
+  display: grid;
+  margin-top: 1.25rem;
+}
+
+.pricing-tier {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-block: 0.85rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.pricing-tier:first-child {
+  border-top: none;
+}
+
+.pricing-tier-name {
+  display: block;
+  font-size: var(--text-small);
+  color: color-mix(in srgb, var(--color-navy) 85%, var(--color-cream));
+}
+
+.pricing-scope {
+  display: block;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--color-navy) 60%, var(--color-cream));
+  margin-top: 0.2rem;
+}
+
+.pricing-tier-value {
+  flex: none;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-brown);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.pricing-note {
+  margin-top: 0.85rem;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--color-navy) 62%, var(--color-cream));
+}
+
 /* --------------------------------------------------------------------------
    12a. Leistungs-Übersicht — drei Karten, im Überblick sichtbar, per
    natives <details>/<summary> aufklappbar (kein JS nötig, wie bei der FAQ

@@ -1,4 +1,4 @@
-# Studio Gerth — robots.txt
+# Alewing — robots.txt
 # HINWEIS: Domain ist ein Platzhalter (www.studio-gerth.de).
 # Vor Launch durch die echte Domain ersetzen.
 

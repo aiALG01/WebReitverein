@@ -1,9 +1,10 @@
-# Studio Gerth
+# Alewing
 
-> Studio Gerth baut Websites für kleine, regionale Betriebe ohne eigene Website —
+> Alewing baut Websites für kleine, regionale Betriebe ohne eigene Website —
 > persönlich betreut von der Gründerin Anna Lena Gerth, mit Website-Erstellung,
-> Hosting und DSGVO-Datenschutzbetreuung aus einer Hand. Solo-Studio mit Sitz in
-> Gera, Thüringen (Deutschland).
+> Betreuung und Automatisierung wiederkehrender Abläufe aus einer Hand. Solo-Studio
+> mit Sitz in Gera, Thüringen (Deutschland). Der Name spielt auf Pegasus an: Flügel
+> als Bild für Pferde-Bezug und dafür, Kundschaft sichtbar nach oben zu tragen.
 
 Anna Lena Gerth ist Wirtschaftsinformatikerin und ehemalige ERP-Expertin bei der
 Jenoptik AG. Sie arbeitet bewusst allein, ohne Agentur-Apparat: Eine Ansprechperson,
@@ -13,13 +14,12 @@ haben.
 
 ## Leistungen
 
-- [Leistungen im Überblick](https://www.studio-gerth.de/leistungen.html): Website-Erstellung, Hosting, Datenschutz (DSGVO) und laufende Wartung & Aktualisierung — inklusive häufiger Fragen (FAQ).
-- [Website-Erstellung](https://www.studio-gerth.de/leistungen.html#webdesign): individuelles Design und Umsetzung in sauberem Code, kein Baukasten.
-- [Hosting](https://www.studio-gerth.de/leistungen.html#hosting): europäische Infrastruktur, SSL, tägliche Backups, laufende Überwachung.
-- [Datenschutz / DSGVO-Betreuung](https://www.studio-gerth.de/leistungen.html#datenschutz): datensparsame Einrichtung, laufende Pflege von Impressum und Datenschutzerklärung.
-- [Wartung & Aktualisierung](https://www.studio-gerth.de/leistungen.html#wartung): Sicherheitsupdates, Inhaltspflege, monatlicher Kurzbericht.
+- [Leistungen im Überblick](https://www.studio-gerth.de/leistungen.html): Webseiten-Erstellung, Webseiten-Betreuung und Automatisierung wiederkehrender Abläufe — inklusive Preisen und häufiger Fragen (FAQ).
+- [Webseiten-Erstellung](https://www.studio-gerth.de/leistungen.html#erstellung): individuelles Design und Umsetzung in sauberem Code, kein Baukasten. Richtwerte: Kleine Website (1–5 Seiten) 1.200–2.000 €, Business Website (5–10 Seiten) 2.000–3.500 €, individuelle Projekte auf Anfrage. Zusatz Video-Hero-Section: 350 €.
+- [Webseiten-Betreuung](https://www.studio-gerth.de/leistungen.html#betreuung): Hosting, Updates, Inhaltsänderungen und technische Wartung aus einer Hand. Richtwert: 50–200 € pro Monat, abhängig von Hosting, Wartung und Änderungsaufwand.
+- [Automatisierung wiederkehrender Abläufe](https://www.studio-gerth.de/leistungen.html#automatisierung): Formular- und E-Mail-Workflows, Termin- und Anfragenmanagement, inklusive Auftragsverarbeitungsvertrag. Individuelle Kalkulation.
 
-## Über Studio Gerth
+## Über Alewing
 
 - [Über mich](https://www.studio-gerth.de/ueber-mich.html): Markenstory und Werdegang der Gründerin Anna Lena Gerth.
 - [Projekte & Referenzen](https://www.studio-gerth.de/projekte.html): aktueller Projektstand, ehrlich ohne erfundene Referenzen.

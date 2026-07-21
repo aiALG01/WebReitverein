@@ -3,6 +3,10 @@
 > Dieses Dokument hält das Briefing für die Website fest („Prompt als
 > Markdown gespeichert"), inklusive der Referenzen aus Moodboard und
 > Lebenslauf. Es dient als Grundlage für Weiterentwicklung und Pflege.
+>
+> **Update:** Die Agentur heißt inzwischen **Alewing** (vormals „Studio
+> Gerth" — siehe „Getroffene Annahmen" unten). Der Rest dieses Dokuments
+> beschreibt weiterhin das ursprüngliche, unverändert gültige Briefing.
 
 ## Auftrag
 
@@ -89,8 +93,10 @@ Sätze. Verlässlichkeit und Handwerk statt lauter Werbesprache.
 
 ## Getroffene Annahmen (bei Bedarf ändern)
 
-1. **Firmenname:** „Studio Gerth" — der Platzhalter `[Firmenname]` war nicht
-   belegt; Rückfrage war technisch nicht möglich.
+1. **Firmenname:** ursprünglich „Studio Gerth" (Platzhalter `[Firmenname]`
+   war nicht belegt, Rückfrage war technisch nicht möglich) — inzwischen auf
+   „Alewing" umbenannt (Anspielung auf Pegasus/Flügel: Pferde-Bezug und das
+   Bild, Kundschaft „nach oben zu tragen").
 2. **Domain:** Platzhalter `https://www.studio-gerth.de` für Canonicals,
    Open-Graph-URLs, JSON-LD-`@id`/`url`, `robots.txt` und `sitemap.xml` —
    vor Launch durch die echte Domain ersetzen.
