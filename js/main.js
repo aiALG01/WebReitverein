@@ -120,8 +120,9 @@
                       Bildschirm zu Beige auf
         8) 0.84–0.98  erst wenn Beige feststeht, fahren Headline und Text
                       (bereits in Navy) gestaffelt von unten nach oben ein
-        9) 0.97–1.00  letzter, kurzer Rest-Fade der Bühne in den
-                      Off-White-Hintergrund der nächsten Sektion
+        Kein Fade am Ende: die Bühne entpinnt sich nach Fortschritt 1 ganz
+        normal und wird von der nächsten Sektion weggescrollt wie jeder
+        andere Seitenabschnitt auch — kein künstliches Verschwinden.
      ------------------------------------------------------------------------ */
   var heroContainer = document.getElementById("hero-scroll-container");
 
@@ -223,10 +224,11 @@
          am Text nötig, weil der Untergrund schon feststeht */
       .set([triggerHeadline, triggerText], { color: colorNavy }, 0.82)
       .to(triggerHeadline, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.84)
-      .to(triggerText, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.9)
-      /* 9) kurzer Rest-Fade der Bühne in den Off-White-Hintergrund der
-         nächsten Sektion */
-      .to(heroContainer, { opacity: 0, duration: 0.03, ease: "none" }, 0.97);
+      .to(triggerText, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.9);
+    /* Kein Opacity-Fade am Ende: die Bühne bleibt bis Fortschritt 1 sichtbar
+       und wird danach ganz regulär von der nächsten Sektion weggescrollt —
+       kein Ausfaden, sondern derselbe Effekt wie bei jedem anderen
+       Seitenabschnitt. */
   }
 
   /* ------------------------------------------------------------------------
