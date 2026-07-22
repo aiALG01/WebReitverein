@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="de" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alewing — Websites für kleine, regionale Betriebe</title>
+  <meta name="description" content="Alewing baut Websites für kleine, regionale Betriebe ohne eigene Website — persönlich betreut, mit Hosting und DSGVO-Datenschutz aus einer Hand.">
+
+  <!-- Display-Fonts: Melodrama & Britney (Indian Type Foundry, kostenfrei via Fontshare) -->
+  <!-- SEO / GEO: Canonical, Open Graph & Twitter Card -->
+  <link rel="canonical" href="https://www.studio-gerth.de/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Alewing">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="Alewing — Websites für kleine, regionale Betriebe">
+  <meta property="og:description" content="Alewing baut Websites für kleine, regionale Betriebe ohne eigene Website — persönlich betreut, mit Hosting und DSGVO-Datenschutz aus einer Hand.">
+  <meta property="og:url" content="https://www.studio-gerth.de/">
+  <meta property="og:image" content="https://www.studio-gerth.de/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Alewing — Websites für kleine, regionale Betriebe">
+  <meta name="twitter:description" content="Alewing baut Websites für kleine, regionale Betriebe ohne eigene Website — persönlich betreut, mit Hosting und DSGVO-Datenschutz aus einer Hand.">
+  <meta name="twitter:image" content="https://www.studio-gerth.de/assets/og-image.jpg">
+  <meta name="theme-color" content="#072768">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.studio-gerth.de/#organization",
+      "name": "Alewing",
+      "url": "https://www.studio-gerth.de/",
+      "image": "https://www.studio-gerth.de/assets/og-image.jpg",
+      "description": "Alewing baut Websites für kleine, regionale Betriebe — persönlich betreut, mit Hosting und DSGVO-Datenschutz aus einer Hand.",
+      "founder": {
+        "@type": "Person",
+        "name": "Anna Lena Gerth"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Naulitz 9a",
+        "postalCode": "07554",
+        "addressLocality": "Gera",
+        "addressRegion": "Thüringen",
+        "addressCountry": "DE"
+      },
+      "email": "lena.gerth@outlook.de",
+      "telephone": "+49-1520-2758286",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Deutschland"
+      },
+      "priceRange": "€€",
+      "knowsLanguage": [
+        "de",
+        "en"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.studio-gerth.de/#website",
+      "url": "https://www.studio-gerth.de/",
+      "name": "Alewing",
+      "inLanguage": "de-DE",
+      "publisher": {
+        "@id": "https://www.studio-gerth.de/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.studio-gerth.de/",
+      "url": "https://www.studio-gerth.de/",
+      "name": "Alewing — Websites für kleine, regionale Betriebe",
+      "isPartOf": {
+        "@id": "https://www.studio-gerth.de/#website"
+      },
+      "about": {
+        "@id": "https://www.studio-gerth.de/#organization"
+      },
+      "inLanguage": "de-DE"
+    }
+  ]
+}
+  </script>
+
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=melodrama@400,500,600&amp;f[]=britney@400,700&amp;display=swap" rel="stylesheet">
+  <!-- Body-Font: Inter (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+
+  <!-- Favicon: Monogramm "A." als Inline-SVG (keine Bilddatei nötig) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23072768'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' fill='%23F4EAE1' text-anchor='middle'%3EA.%3C/text%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- GSAP + ScrollTrigger: treiben das Video-Scrubbing der Hero-Sektion
+       (siehe js/main.js, Abschnitt 4) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header header-on-dark">
+    <div class="container container--wide header-inner">
+      <a class="brand" href="index.html">Alewing<span class="brand-dot">.</span></a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="nav-list">
+          <li><a href="index.html" aria-current="page">Start</a></li>
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="projekte.html">Projekte</a></li>
+          <li><a href="ueber-mich.html">Über mich</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+          <li><a class="nav-cta" href="kontakt.html">Beratung anfragen</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Menü öffnen" aria-controls="nav-overlay">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobiles Vollbild-Menü -->
+  <nav class="nav-overlay" id="nav-overlay" aria-label="Mobile Navigation">
+    <ul>
+      <li><a href="index.html" aria-current="page">Start</a></li>
+      <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="projekte.html">Projekte</a></li>
+      <li><a href="ueber-mich.html">Über mich</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <p class="overlay-meta">
+      Alewing · Gera<br>
+      <a href="mailto:lena.gerth@outlook.de">lena.gerth@outlook.de</a>
+    </p>
+  </nav>
+
+  <main id="main">
+
+    <!-- ================================================================
+         HERO — scrollgesteuertes Video-Scrubbing (siehe js/main.js,
+         Abschnitt 4, GSAP + ScrollTrigger):
+         1) Beim ersten Scrollen blendet das Standbild weich aus, das Video
+            übernimmt
+         2) Das Video läuft framegenau mit dem Scroll-Fortschritt mit
+         3) Der linke Einstiegstext blendet im ersten Drittel aus
+         4) Der Header blendet lang gezogen von Dunkelblau zu Cream über
+         5) Ab der Hälfte zoomt das Video heran, bis nur noch der
+            (schwarze) Laptop-Bildschirm im Bild ist
+         6) Das schwarze Overlay blendet ein und hellt zu Cream auf —
+            abgeschlossen, bevor Text erscheint
+         7) Erst danach fahren Headline und Text (bereits in Navy)
+            gestaffelt von unten nach oben ein
+         8) Am Ende löst sich die Bühne in den Off-White-Hintergrund der
+            nächsten Sektion auf
+         (bei prefers-reduced-motion/no-js: statisches Standbild, kein Effekt)
+         ================================================================ -->
+    <section class="hero" aria-label="Einführung">
+      <div id="hero-scroll-container">
+        <div class="hero-silk" aria-hidden="true"></div>
+
+        <p class="hero-kicker">Alewing — Websites für kleine, regionale Betriebe</p>
+
+        <!-- Standbild: fängt unnatürliche KI-Augenbewegungen beim Laden ab,
+             bis der erste Scroll das Video übernehmen lässt. -->
+        <div id="hero-fallback-image" role="img" aria-label="Anna Lena Gerth blickt in die Kamera, ein aufgeklappter Laptop in der Hand" style="background-image: url('assets/Lena-69.jpg');"></div>
+
+        <video id="hero-video" muted playsinline preload="auto" aria-hidden="true">
+          <source src="assets/hero-cinematic.mp4" type="video/mp4">
+        </video>
+
+        <!-- editierbares, scharfes HTML über dem Video — kein Bild, kein Canvas -->
+        <div class="hero-intro-copy">
+          <h1 class="hero-intro-copy-line">Noch keine<br><span class="script">Webseite</span>?</h1>
+        </div>
+        <p class="hero-intro-sub">Zeit, sichtbar zu werden.</p>
+
+        <!-- Ausgeschalteter Laptop-Bildschirm: blendet ein, sobald das Video
+             ganz herangezoomt ist; Texte fahren gestaffelt von unten ein.
+             Wiederholt die echte Überschrift der folgenden Sektion, daher
+             aria-hidden (kein doppelter Inhalt für Screenreader). -->
+        <div class="laptop-screen-overlay" aria-hidden="true">
+          <div class="laptop-screen-overlay-inner">
+            <p class="trigger-headline">Sie leisten gute Arbeit.<br>Zeigen Sie sie.</p>
+            <p class="trigger-text">
+              Ich erstelle Websites für kleine, regionale Betriebe. Persönlich betreut, mit Hosting und
+              DSGVO-konform.
+            </p>
+          </div>
+        </div>
+
+        <p class="hero-cue" aria-hidden="true">Scrollen</p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         WARUM ES ZÄHLT — bewusst ein Fließtext-Absatz statt eines
+         vierten Icon-Grids (Services, Trust-Badges und Fakten sind
+         weiter unten bereits gitterbasiert). Vier Kernbegriffe als
+         hervorgehobene Wörter im Satz statt als eigene Boxen. Direkt nach
+         dem Hero auf dunklem Grund, damit der Übergang vom cremefarbenen
+         Hero-Ende nicht sofort wieder hell wirkt.
+         ================================================================ -->
+    <section class="section on-dark" aria-labelledby="why-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Warum es zählt</span>
+          <h2 id="why-heading">Man findet nur, was sichtbar ist.</h2>
+        </div>
+        <p class="lead lead--wide" data-reveal style="--reveal-delay: 0.08s">
+          Die meisten Menschen suchen zuerst online, bevor sie anrufen,
+          vorbeikommen oder eine Anfrage stellen. Ohne Website sind Sie
+          für sie unsichtbar, ganz gleich, wie gut Ihre Arbeit ist. <br><br>
+          Mit einer Website sind Sie es nicht mehr: <br> Sie werden
+          <strong class="text-accent">auffindbar</strong>, wenn jemand
+          sucht, wirken <strong class="text-accent">professionell</strong>,
+          bevor das erste Gespräch stattfindet, bauen
+          <strong class="text-accent">Vertrauen</strong> auf, das
+          Empfehlungen allein nicht schaffen und
+          <strong class="text-accent">gewinnen Kundschaft</strong>,
+          während Sie eigentlich arbeiten. Das gilt für einen
+          Malerbetrieb genauso wie für einen Sportverein oder ein Café.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         INTRO — eigenständiger Text, bewusst anders formuliert als die
+         Trigger-Headline im Hero (dort nur aria-hidden während der
+         Scroll-Choreografie sichtbar), damit derselbe Satz nicht zweimal
+         auf der Seite steht. Macht für alle dauerhaft lesbar (auch ohne
+         JS und für Screenreader), wer hier konkret gemeint ist — inklusive
+         Gastronomie, nicht nur Handwerk.
+         ================================================================ -->
+    <section class="section" aria-labelledby="intro-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Alewing</span>
+          <h2 id="intro-heading">Vom Handwerksbetrieb bis zum Café um die Ecke.</h2>
+        </div>
+        <p class="lead" data-reveal style="--reveal-delay: 0.08s">
+          Ich baue Websites für kleine, regionale Betriebe, die bisher
+          keine hatten, oder eine, die ihrer Arbeit nicht gerecht wird.
+          Und ich bleibe: mit Hosting, Datenschutz und laufender Pflege
+          aus einer Hand.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         DREI KERNLEISTUNGEN
+         ================================================================ -->
+    <section class="section section--flush section--flush-bottom" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Leistungen</span>
+          <h2 id="services-heading">Drei Dinge. Richtig gemacht.</h2>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card" data-reveal>
+            <span class="card-index"></span>
+            <div class="card-icon" aria-hidden="true">
+              <!-- Feines Linien-Icon: Gestaltungsraster -->
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                <rect x="6" y="8" width="36" height="32" rx="1"/>
+                <line x1="6" y1="16" x2="42" y2="16"/>
+                <line x1="20" y1="16" x2="20" y2="40"/>
+                <line x1="26" y1="24" x2="36" y2="24"/>
+                <line x1="26" y1="30" x2="34" y2="30"/>
+              </svg>
+            </div>
+            <h3>Webseiten-Erstellung</h3>
+            <p>
+              Eine Website, die zeigt, was Sie können.
+              Als persönliche Ansprechpartnerin kümmere ich mich um Technik und Design.
+            </p>
+            <a class="link-line" href="leistungen.html#erstellung">Mehr erfahren</a>
+          </article>
+
+          <article class="service-card" data-reveal style="--reveal-delay: 0.08s">
+            <span class="card-index"></span>
+            <div class="card-icon" aria-hidden="true">
+              <!-- Feines Linien-Icon: Hosting-Ebenen -->
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                <ellipse cx="24" cy="12" rx="16" ry="5"/>
+                <path d="M8 12v12c0 2.8 7.2 5 16 5s16-2.2 16-5V12"/>
+                <path d="M8 24v12c0 2.8 7.2 5 16 5s16-2.2 16-5V24"/>
+              </svg>
+            </div>
+            <h3>Webseiten-Betreuung</h3>
+            <p>
+              Ihre Website läuft zuverlässig und bleibt aktuell. Um die Technik kümmere ich mich, damit Sie
+              es nicht müssen.
+            </p>
+            <a class="link-line" href="leistungen.html#betreuung">Mehr erfahren</a>
+          </article>
+
+          <article class="service-card" data-reveal style="--reveal-delay: 0.24s">
+            <span class="card-index"></span>
+            <div class="card-icon" aria-hidden="true">
+              <!-- Feines Linien-Icon: vernetzte Abläufe -->
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25">
+                <circle cx="10" cy="24" r="5"/>
+                <circle cx="24" cy="12" r="5"/>
+                <circle cx="24" cy="36" r="5"/>
+                <circle cx="38" cy="24" r="5"/>
+                <path d="M14.5 22l5-7M14.5 26l5 7M28.5 15l5 7M28.5 33l5-7"/>
+              </svg>
+            </div>
+            <h3>Automatisierung</h3>
+            <p>
+              Wiederkehrende Handgriffe wie Anfragen oder Terminbestätigungen automatisiert, als
+              Ergänzung zu Ihrer Website.
+            </p>
+            <a class="link-line" href="leistungen.html#automatisierung">Mehr erfahren</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         FAKTEN — belegt die Versprechen mit überprüfbaren Tatsachen statt
+         eines weiteren Zitats (siehe Details auf „Über mich"). Auf warmem
+         Grund (.section--warm), damit nach Intro und Leistungen nicht eine
+         dritte helle Cream-Section in Folge steht, aber auch kein zweiter
+         dunkler Vollbild-Block direkt vor der Prozess-Section entsteht.
+         ================================================================ -->
+    <section class="section section--warm" aria-labelledby="facts-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Keine leeren Worte</span>
+          <h2 id="facts-heading">Woher die Sorgfalt kommt.</h2>
+        </div>
+        <div class="fact-grid">
+          <div class="fact-item" data-reveal>
+            <span class="fact-label">Ausbildung</span>
+            <p class="fact-value"><strong>Wirtschaftsinformatik &amp; ERP.</strong> Danach eigenständige Betreuung geschäftskritischer Systeme bei der Jenoptik&nbsp;AG.</p>
+          </div>
+          <div class="fact-item" data-reveal style="--reveal-delay: 0.08s">
+            <span class="fact-label">Technik</span>
+            <p class="fact-value"><strong>Baut auch eigene Software.</strong> Entwickelt eine App (Flutter) für den Reitsport — kein reiner Baukasten-Betrieb.</p>
+          </div>
+          <div class="fact-item" data-reveal style="--reveal-delay: 0.16s">
+            <span class="fact-label">Verlässlichkeit</span>
+            <p class="fact-value"><strong>Über 10 Jahre Leistungssport.</strong> Springreiterin auf Landesniveau — Disziplin ist tägliche Praxis, kein Werbewort.</p>
+          </div>
+          <div class="fact-item" data-reveal style="--reveal-delay: 0.24s">
+            <span class="fact-label">Zusammenarbeit</span>
+            <p class="fact-value"><strong>Ein Ansprechpartner.</strong> Kein Agentur-Apparat, keine Warteschleife — Sie sprechen immer direkt mit mir.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         PROZESS — Vertrauen durch Klarheit
+         ================================================================ -->
+    <section class="section on-dark process" aria-labelledby="process-heading">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">So arbeite ich</span>
+          <h2 id="process-heading">Sechs Schritte.<br>Kein Rätselraten.</h2>
+        </div>
+
+        <ol class="process-list">
+          <li class="process-step" data-reveal>
+            <h3>Erstgespräch</h3>
+            <p>Unverbindlich. Sie erzählen, wo Sie stehen und was Ihnen fehlt.</p>
+          </li>
+          <li class="process-step" data-reveal style="--reveal-delay: 0.08s">
+            <h3>Konzept</h3>
+            <p>Ziele, Zielgruppen, Inhalte — am Ende ein klarer Plan, den Sie mittragen.</p>
+          </li>
+          <li class="process-step" data-reveal style="--reveal-delay: 0.16s">
+            <h3>Design</h3>
+            <p>Ein Entwurf, der zu Ihrem Betrieb passt: Typografie, Farben, Bildsprache.</p>
+          </li>
+          <li class="process-step" data-reveal style="--reveal-delay: 0.08s">
+            <h3>Feedback</h3>
+            <p>Sie sehen jede Entscheidung und sagen, was noch fehlt — bevor programmiert wird.</p>
+          </li>
+          <li class="process-step" data-reveal style="--reveal-delay: 0.16s">
+            <h3>Umsetzung</h3>
+            <p>Sauberer Code, schnelle Ladezeiten, auf jedem Gerät nutzbar.</p>
+          </li>
+          <li class="process-step" data-reveal style="--reveal-delay: 0.24s">
+            <h3>Veröffentlichung</h3>
+            <p>Ihre Website geht live — die Betreuung beginnt am selben Tag, direkt von mir.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         CALL-TO-ACTION
+         ================================================================ -->
+    <section class="section cta-band" aria-labelledby="cta-heading">
+      <div class="container">
+        <span class="eyebrow" data-reveal>Der nächste Schritt</span>
+        <h2 id="cta-heading" data-reveal style="--reveal-delay: 0.08s">
+          Erzählen Sie mir von Ihrem <span class="script">Betrieb</span>.
+        </h2>
+        <p class="lead" data-reveal style="--reveal-delay: 0.16s">
+          Ein Gespräch, kein Verkaufstermin. Ich höre zu und sage ehrlich,
+          was Ihr Projekt braucht — und was nicht.
+        </p>
+        <div class="cta-actions" data-reveal style="--reveal-delay: 0.24s">
+          <a class="btn btn--primary" href="kontakt.html">Beratungstermin anfragen <span class="btn-arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--outline" href="leistungen.html">Leistungen ansehen</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">Alewing<span class="brand-dot">.</span></a>
+          <p>Websites, Hosting und Datenschutz — gestaltet und betreut mit ruhiger Hand aus Gera.</p>
+        </div>
+        <nav class="footer-col" aria-label="Footer-Navigation">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="leistungen.html">Leistungen</a></li>
+            <li><a href="projekte.html">Projekte</a></li>
+            <li><a href="ueber-mich.html">Über mich</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <h3>Leistungen</h3>
+          <ul>
+            <li><a href="leistungen.html#erstellung">Webseiten-Erstellung</a></li>
+            <li><a href="leistungen.html#betreuung">Webseiten-Betreuung</a></li>
+            <li><a href="leistungen.html#automatisierung">Automatisierung</a></li>
+            <li><a href="leistungen.html#faq">Häufige Fragen</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Kontakt &amp; Rechtliches</h3>
+          <ul>
+            <li><a href="mailto:lena.gerth@outlook.de">lena.gerth@outlook.de</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span data-year>2026</span> Alewing, Gera. Alle Rechte vorbehalten.</p>
+        <p>Websites für kleine, regionale Betriebe.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

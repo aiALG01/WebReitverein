@@ -1,0 +1,2183 @@
+/* ==========================================================================
+   ALEWING — Quiet Luxury / Editorial Discipline
+   Design-System & Layout
+   --------------------------------------------------------------------------
+   Farbwelt:  Navy & Steel-Blue (Vertrauen, Professionalität)
+              Cream, Tan & Brown (Wärme, Exklusivität)
+   Typo:      Melodrama (Display-Serif) · Britney (Script-Akzent, sparsam)
+              Inter (Fließtext & UI)
+   Prinzip:   Mobile-first · viel Weißraum · ruhige Bewegung
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design-Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Die fünf Markenfarben — keine weiteren Farben erfinden */
+  --color-navy: #072768;
+  --color-steel-blue: #5079B2;
+  --color-cream: #F4EAE1;
+  --color-tan: #9D785D;
+  --color-brown: #936A4D;
+
+  /* Abgeleitete Tinten & Schleier (ausschließlich aus den fünf Farben gemischt) */
+  --tint-cream-deep: color-mix(in srgb, var(--color-cream) 92%, var(--color-tan));
+  --tint-navy-soft: color-mix(in srgb, var(--color-navy) 8%, var(--color-cream));
+  --veil-navy-40: color-mix(in srgb, var(--color-navy) 40%, transparent);
+  --veil-navy-70: color-mix(in srgb, var(--color-navy) 70%, transparent);
+  --line-soft: color-mix(in srgb, var(--color-tan) 35%, transparent);
+
+  /* Typografie */
+  --font-display: "Melodrama", "Cormorant Garamond", Georgia, serif;
+  --font-script: "Britney", "Melodrama", Georgia, serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  --text-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-small: 0.875rem;
+  --text-lead: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  --text-h3: clamp(1.375rem, 1.2rem + 0.9vw, 1.75rem);
+  --text-h2: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  /* Eine zweite, kleinere H2-Stufe für dichtere Kontexte (Leistungs-Detail,
+     Rechtsseiten) — ersetzt zwei vorherige, unabhängig erfundene clamp()-Werte,
+     die dieselbe Semantik unterschiedlich groß darstellten. */
+  --text-h2-compact: clamp(1.6rem, 1.3rem + 1.5vw, 2.5rem);
+  --text-h1: clamp(2.75rem, 1.8rem + 4.5vw, 5.5rem);
+  --text-hero: clamp(2.5rem, 1.5rem + 6vw, 6.5rem);
+
+  --tracking-wide: 0.18em;
+  --tracking-head: 0.02em;
+
+  /* Rhythmus — kompakter als zuvor: höhere Informationsdichte, weniger
+     frei schwebender Leerraum zwischen den Blöcken */
+  --space-section: clamp(2.25rem, 1.75rem + 3vw, 4.25rem);
+  --space-section-sm: calc(var(--space-section) * 0.5);
+  --space-inner: clamp(1.25rem, 1rem + 1.1vw, 2.1rem);
+  --container: 72rem;
+  --container-wide: 86rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* Bewegung */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-reveal: 0.9s;
+  /* Reveal-Staffelung: Verzögerungen sind Vielfache von --stagger
+     (0.08s / 0.16s / 0.24s / 0.32s) statt frei gewählter Werte. */
+  --stagger: 0.08s;
+
+  --header-h: 4.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Basis
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-navy);
+  background-color: var(--color-cream);
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-steel-blue);
+  text-decoration: none;
+  transition: color 0.25s var(--ease-out);
+}
+
+a:hover {
+  color: var(--color-navy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-steel-blue);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--color-navy);
+  color: var(--color-cream);
+}
+
+/* Anker-Ziele landen nicht unter dem fixen Header */
+[id] {
+  scroll-margin-top: calc(var(--header-h) + 1.5rem);
+}
+
+/* Skip-Link für Tastatur-Nutzer:innen */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-navy);
+  color: var(--color-cream);
+  font-size: var(--text-small);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  color: var(--color-cream);
+}
+
+/* --------------------------------------------------------------------------
+   3. Typografie
+   -------------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: var(--tracking-head);
+  color: var(--color-navy);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 {
+  font-size: var(--text-h3);
+  line-height: 1.25;
+}
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--color-tan);
+  font-style: normal;
+}
+
+.on-dark .script,
+.script--light {
+  color: var(--color-cream);
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+  margin-bottom: 0.85rem;
+}
+
+.on-dark .eyebrow {
+  color: color-mix(in srgb, var(--color-cream) 75%, var(--color-steel-blue));
+}
+
+.lead {
+  font-size: var(--text-lead);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
+  max-width: 42ch;
+}
+
+/* Für editoriale Fließtext-Absätze, die mehr als eine kurze Anmoderation
+   sind (z. B. "Warum es zählt") — breiter, damit lange Sätze nicht in
+   unnötig viele kurze Zeilen zerfallen. */
+.lead--wide {
+  max-width: 62ch;
+}
+
+p {
+  max-width: 62ch;
+}
+
+.text-brown { color: var(--color-brown); }
+
+/* Hervorhebung einzelner Wörter im Fließtext (Gewicht + Akzentfarbe,
+   nicht die Display-Schrift) — passt sich auf dunklem Grund an, wie
+   viele andere Klassen im System (.eyebrow, .script, .lead). */
+.text-accent { color: var(--color-tan); }
+.on-dark .text-accent { color: var(--color-cream); }
+
+/* Dichter, bewusster Fließtext-Rhythmus für längere Prosa-Blöcke (z. B.
+   Markenstory) — ersetzt einzeln inline gesetzte margin-top-Werte */
+.prose {
+  display: grid;
+  gap: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Layout-Helfer
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--wide {
+  max-width: var(--container-wide);
+}
+
+.section {
+  padding-block: var(--space-section);
+  position: relative;
+}
+
+.section--flush { padding-block: 0; }
+
+/* Ersetzt das wiederholt inline gesetzte style="padding-bottom: var(--space-section)"
+   auf .section--flush-Blöcken, die nur unten Luft brauchen (Seitenkopf übernimmt oben). */
+.section--flush-bottom { padding-block: 0 var(--space-section); }
+
+.section-head {
+  max-width: 46rem;
+  margin-bottom: var(--space-inner);
+}
+
+.on-dark {
+  background: var(--color-navy);
+  color: var(--color-cream);
+}
+
+.on-dark h1,
+.on-dark h2,
+.on-dark h3,
+.on-dark p,
+.on-dark .lead {
+  color: var(--color-cream);
+}
+
+.on-dark .lead {
+  color: color-mix(in srgb, var(--color-cream) 85%, var(--color-steel-blue));
+}
+
+.rule {
+  border: none;
+  height: 1px;
+  background: var(--line-soft);
+  margin-block: var(--space-inner);
+}
+
+/* --------------------------------------------------------------------------
+   5. Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.25rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--ease-out),
+    color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  background: var(--color-tan);
+  color: var(--color-cream);
+}
+
+.btn--primary:hover {
+  background: var(--color-brown);
+  color: var(--color-cream);
+}
+
+.btn--outline {
+  border-color: var(--color-navy);
+  color: var(--color-navy);
+  background: transparent;
+}
+
+.btn--outline:hover {
+  background: var(--color-navy);
+  color: var(--color-cream);
+}
+
+.btn--outline-light {
+  border-color: var(--color-cream);
+  color: var(--color-cream);
+  background: transparent;
+}
+
+.btn--outline-light:hover {
+  background: var(--color-cream);
+  color: var(--color-navy);
+}
+
+.btn .btn-arrow {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Textlink mit Unterstrich-Animation */
+.link-line {
+  position: relative;
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-brown);
+  padding-bottom: 0.35rem;
+}
+
+.link-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.link-line:hover {
+  color: var(--color-navy);
+}
+
+.link-line:hover::after {
+  transform: scaleX(1);
+}
+
+/* --------------------------------------------------------------------------
+   6. Header & Navigation
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: transparent;
+  transition:
+    background-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out),
+    height 0.4s var(--ease-out);
+}
+
+/* Zustand nach dem Scrollen: Cream-Fläche mit feinem Schatten */
+.site-header.is-scrolled {
+  background: color-mix(in srgb, var(--color-cream) 92%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--line-soft), 0 12px 32px -20px var(--veil-navy-40);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--color-navy);
+  white-space: nowrap;
+}
+
+.brand .brand-dot {
+  color: var(--color-tan);
+}
+
+/* Auf dunklem Hero startet die Marke hell und wechselt beim Scrollen */
+.header-on-dark:not(.is-scrolled) .brand,
+.header-on-dark:not(.is-scrolled) .nav-list a,
+.header-on-dark:not(.is-scrolled) .nav-cta {
+  color: var(--color-cream);
+}
+
+.header-on-dark:not(.is-scrolled) .nav-cta {
+  border-color: color-mix(in srgb, var(--color-cream) 60%, transparent);
+}
+
+.site-nav {
+  display: none;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+  list-style: none;
+  padding: 0;
+}
+
+.nav-list a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-navy);
+  position: relative;
+  padding-bottom: 0.3rem;
+}
+
+.nav-list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--color-tan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.nav-list a:hover::after,
+.nav-list a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.nav-cta {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--color-tan);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-navy);
+  transition:
+    background-color 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
+}
+
+.nav-cta:hover {
+  background: var(--color-tan);
+  color: var(--color-cream);
+}
+
+/* Mobiler Menü-Button */
+.nav-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 120;
+}
+
+.nav-toggle .bar {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-navy);
+  transition: transform 0.35s var(--ease-out), opacity 0.25s;
+}
+
+.header-on-dark:not(.is-scrolled) .nav-toggle .bar {
+  background: var(--color-cream);
+}
+
+.nav-toggle[aria-expanded="true"] .bar {
+  background: var(--color-cream);
+}
+
+.nav-toggle[aria-expanded="true"] .bar:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .bar:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Mobiles Overlay-Menü: Navy-Fläche, große Serif-Einträge */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--gutter);
+  background: var(--color-navy);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s var(--ease-out), visibility 0s linear 0.45s;
+}
+
+.nav-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.45s var(--ease-out);
+}
+
+.nav-overlay ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.nav-overlay a {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 3.25rem);
+  color: var(--color-cream);
+  line-height: 1.15;
+  display: inline-block;
+  transform: translateY(1.5rem);
+  opacity: 0;
+  transition: transform 0.6s var(--ease-out), opacity 0.6s var(--ease-out), color 0.3s;
+}
+
+.nav-overlay.is-open a {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.nav-overlay li:nth-child(2) a { transition-delay: 0.05s; }
+.nav-overlay li:nth-child(3) a { transition-delay: 0.1s; }
+.nav-overlay li:nth-child(4) a { transition-delay: 0.15s; }
+.nav-overlay li:nth-child(5) a { transition-delay: 0.2s; }
+
+.nav-overlay a:hover,
+.nav-overlay a[aria-current="page"] {
+  color: var(--color-tan);
+}
+
+.nav-overlay .overlay-meta {
+  margin-top: 3rem;
+  font-size: var(--text-small);
+  color: color-mix(in srgb, var(--color-cream) 70%, var(--color-steel-blue));
+}
+
+.nav-overlay .overlay-meta a {
+  font-family: var(--font-body);
+  font-size: inherit;
+  color: inherit;
+  opacity: 1;
+  transform: none;
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   7. Hero (Startseite) — GSAP/ScrollTrigger Video-Scrubbing, Navy → Cream
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+}
+
+/* Pin-Ziel für ScrollTrigger (siehe js/main.js, Abschnitt 4) — die
+   Scrollstrecke selbst legt GSAP per pin-spacer automatisch an. */
+#hero-scroll-container {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--color-navy);
+}
+
+/* Radiale Navy-Glut über dem Video: mix-blend-mode: screen hebt das
+   Schwarz am Bildrand auf, sodass das Video nahtlos in die Navy-Bühne
+   übergeht statt als hartes schwarzes Rechteck zu wirken. */
+.hero-silk {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(60% 70% at 15% 15%, color-mix(in srgb, var(--color-steel-blue) 40%, transparent), transparent 65%),
+    radial-gradient(85% 75% at 50% 50%, transparent 40%, color-mix(in srgb, var(--color-navy) 85%, var(--color-steel-blue)) 75%, var(--color-navy) 100%);
+}
+
+/* Standbild: verhindert unnatürliche KI-Augenbewegungen beim Laden, bis
+   der erste Scroll das Video übernehmen lässt (main.js blendet es aus). */
+#hero-fallback-image {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: opacity;
+}
+
+/* Über die gesamte Bühne fixiert, Video zoomt ab Scroll-Hälfte per JS heran */
+#hero-video {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* Editierbares, scharfes HTML über dem Video — sichtbar bis der Effekt
+   es im ersten Drittel des Scrollwegs ausblendet (siehe js/main.js).
+   Bewusst tief positioniert: "noch keine" ragt leicht über den Laptop im
+   Hintergrund, "webseite?" liegt auf dessen Höhe daneben. */
+.hero-intro-copy {
+  position: absolute;
+  z-index: 4;
+  top: auto;
+  bottom: 32%;
+  left: var(--gutter);
+  max-width: min(28rem, 44vw);
+  will-change: opacity, transform;
+}
+
+.hero-intro-copy-line {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--color-cream);
+}
+
+h1.hero-intro-copy-line {
+  font-size: var(--text-hero);
+  max-width: 12ch;
+}
+
+.hero-intro-copy .script {
+  font-size: 1.06em;
+  /* Auf Navy braucht der Tan-Akzent mehr Leuchtkraft */
+  color: color-mix(in srgb, var(--color-tan) 55%, var(--color-cream));
+}
+
+/* Kleiner Subtext, bewusst vom Heading gelöst und nah an den unteren
+   Rand der Hero-Bühne gerückt — eigenständig lesbar, nicht daran geklebt */
+.hero-intro-sub {
+  position: absolute;
+  z-index: 4;
+  left: var(--gutter);
+  bottom: clamp(4.5rem, 12vh, 7rem);
+  max-width: min(24rem, 44vw);
+  margin: 0;
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+  font-weight: 400;
+  color: color-mix(in srgb, var(--color-cream) 88%, var(--color-steel-blue));
+  will-change: opacity, transform;
+}
+
+/* Ausgeschalteter Laptop-Bildschirm: tiefschwarz, anfangs komplett
+   unsichtbar — blendet erst ein, wenn das Video ganz herangezoomt ist */
+.laptop-screen-overlay {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.laptop-screen-overlay-inner {
+  max-width: min(46rem, 80vw);
+  text-align: center;
+  display: grid;
+  gap: 1.25rem;
+  padding-inline: var(--gutter);
+}
+
+.trigger-headline,
+.trigger-text {
+  margin: 0;
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
+}
+
+.trigger-headline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--text-h1);
+  line-height: 1.05;
+  color: var(--color-cream);
+}
+
+.trigger-text {
+  font-size: var(--text-lead);
+  color: color-mix(in srgb, var(--color-cream) 85%, var(--color-steel-blue));
+}
+
+.hero-kicker {
+  position: absolute;
+  top: calc(var(--header-h) + clamp(1rem, 4vh, 3rem));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-cream) 80%, var(--color-steel-blue));
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--gutter));
+  text-align: center;
+  will-change: opacity;
+}
+
+/* Scroll-Hinweis */
+.hero-cue {
+  position: absolute;
+  bottom: clamp(1.5rem, 5vh, 3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: color-mix(in srgb, var(--color-cream) 75%, var(--color-steel-blue));
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  will-change: opacity;
+}
+
+.hero-cue::after {
+  content: "";
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, currentColor, transparent);
+  animation: cue-drop 2.2s var(--ease-out) infinite;
+}
+
+@keyframes cue-drop {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* Statischer Hero-Fallback (reduced motion / kein JS): nur Standbild und
+   Einstiegstext, kein Scroll-Effekt, kein Bildschirm-Reveal */
+.no-js .hero,
+.reduced-motion .hero {
+  height: auto;
+}
+
+.no-js #hero-scroll-container,
+.reduced-motion #hero-scroll-container {
+  position: relative;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 3rem) var(--gutter) 3rem;
+}
+
+.no-js .hero-kicker,
+.reduced-motion .hero-kicker,
+.no-js .hero-cue,
+.reduced-motion .hero-cue {
+  position: static;
+  transform: none;
+  opacity: 1;
+}
+
+.no-js .hero-intro-copy,
+.reduced-motion .hero-intro-copy,
+.no-js .hero-intro-sub,
+.reduced-motion .hero-intro-sub {
+  position: static;
+  opacity: 1;
+  transform: none;
+  max-width: 32rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.no-js #hero-fallback-image,
+.reduced-motion #hero-fallback-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.no-js #hero-video,
+.reduced-motion #hero-video,
+.no-js .laptop-screen-overlay,
+.reduced-motion .laptop-screen-overlay {
+  display: none;
+}
+
+.no-js .hero-cue::after,
+.reduced-motion .hero-cue::after {
+  animation: none;
+}
+
+/* --------------------------------------------------------------------------
+   8. Editorial-Bausteine
+   -------------------------------------------------------------------------- */
+
+/* Bild-Platzhalter im Moodboard-Stil — werden später durch echte Fotografien
+   ersetzt (siehe /assets/README.md). Die Flächen tragen die Stimmung schon
+   jetzt: warmes Licht, Seide, lange Schatten. */
+.media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  min-height: 20rem;
+  background: var(--tint-cream-deep);
+}
+
+.media--silk {
+  background:
+    radial-gradient(130% 90% at 20% 15%, color-mix(in srgb, var(--color-cream) 70%, var(--color-tan)), transparent 55%),
+    radial-gradient(120% 100% at 80% 80%, color-mix(in srgb, var(--color-brown) 55%, var(--color-cream)), transparent 60%),
+    radial-gradient(80% 70% at 55% 45%, color-mix(in srgb, var(--color-tan) 75%, var(--color-cream)), transparent 70%),
+    linear-gradient(150deg, var(--color-tan), var(--color-brown));
+}
+
+.media--light {
+  background:
+    radial-gradient(100% 120% at 75% 0%, color-mix(in srgb, var(--color-cream) 55%, transparent), transparent 55%),
+    linear-gradient(165deg, var(--tint-cream-deep) 0%, color-mix(in srgb, var(--color-tan) 45%, var(--color-cream)) 100%);
+}
+
+/* Navy-Duotone-Moment für Section-Übergänge */
+.media--duotone {
+  background:
+    radial-gradient(120% 90% at 25% 20%, color-mix(in srgb, var(--color-steel-blue) 60%, var(--color-navy)), transparent 60%),
+    radial-gradient(90% 80% at 80% 85%, color-mix(in srgb, var(--color-steel-blue) 35%, var(--color-navy)), transparent 60%),
+    linear-gradient(160deg, var(--color-navy), color-mix(in srgb, var(--color-navy) 72%, var(--color-steel-blue)));
+}
+
+/* Steel-Blue-Moment — hellere Variante für Abwechslung zu Navy-Duotone */
+.media--steel {
+  background:
+    radial-gradient(120% 90% at 20% 15%, color-mix(in srgb, var(--color-steel-blue) 85%, var(--color-cream)), transparent 60%),
+    radial-gradient(100% 80% at 85% 90%, color-mix(in srgb, var(--color-navy) 40%, var(--color-steel-blue)), transparent 65%),
+    linear-gradient(155deg, var(--color-steel-blue), color-mix(in srgb, var(--color-steel-blue) 70%, var(--color-navy)));
+}
+
+/* Feines Fensterlicht als Overlay — nur auf den abstrakten Verlaufs-
+   Platzhaltern; auf echten Fotos sieht dasselbe Muster wie ein Objektiv-
+   Reflex aus, den echte Aufnahmen nicht brauchen. */
+.media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 42%, color-mix(in srgb, var(--color-cream) 22%, transparent) 47%, transparent 55%, color-mix(in srgb, var(--color-cream) 14%, transparent) 62%, transparent 70%);
+  pointer-events: none;
+}
+
+.media:has(img)::after {
+  content: none;
+}
+
+.media .media-caption {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 1.25rem;
+  right: 1.5rem;
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-cream);
+  opacity: 0.85;
+}
+
+/* Echte Fotos haben unvorhersehbaren lokalen Kontrast — die Caption
+   bekommt hier zusätzlich einen dunklen Verlauf als Scrim, damit sie
+   unabhängig vom Bildinhalt lesbar bleibt (die reinen Verlaufs-Platzhalter
+   sind dafür bereits kontrastreich genug und brauchen ihn nicht). */
+.media:has(img) .media-caption {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3rem 1.5rem 1.1rem;
+  opacity: 1;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-navy) 80%, transparent) 0%,
+    color-mix(in srgb, var(--color-navy) 45%, transparent) 60%,
+    transparent 100%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   9. Leistungs-Karten (Startseite)
+   -------------------------------------------------------------------------- */
+.services-grid {
+  display: grid;
+  gap: 1.25rem;
+  counter-reset: service;
+}
+
+.service-card {
+  position: relative;
+  padding: 2rem 1.75rem;
+  background: color-mix(in srgb, var(--color-cream) 60%, transparent);
+  border: 1px solid var(--line-soft);
+  border-radius: 2px;
+  transition: transform 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--color-tan) 60%, transparent);
+  box-shadow: 0 30px 60px -35px var(--veil-navy-40);
+}
+
+.service-card .card-index {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  color: var(--color-tan);
+}
+
+.service-card .card-index::before {
+  content: counter(service, upper-roman);
+  counter-increment: service;
+}
+
+.service-card h3 {
+  margin-block: 1rem 0.75rem;
+}
+
+.service-card p {
+  color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
+  font-size: var(--text-small);
+  line-height: 1.6;
+}
+
+.service-card .link-line {
+  margin-top: 1.75rem;
+  display: inline-block;
+}
+
+.service-card .card-icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-brown);
+}
+
+.service-card .card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   9b. Warme Sektion & Trust-Badges — Farbvielfalt jenseits Cream/Navy
+   -------------------------------------------------------------------------- */
+.section--warm {
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--color-brown) 88%, var(--color-navy)),
+    color-mix(in srgb, var(--color-brown) 70%, var(--color-navy))
+  );
+  color: var(--color-cream);
+}
+
+.section--warm h2,
+.section--warm .eyebrow {
+  color: var(--color-cream);
+}
+
+.section--warm .eyebrow {
+  color: color-mix(in srgb, var(--color-cream) 80%, var(--color-navy));
+}
+
+/* Fakten-Grid auf warmem Grund: Label/Wert/Trennlinie auf Cream statt
+   Navy umgestellt, sonst gegen den dunkleren Untergrund unlesbar */
+.section--warm .fact-item {
+  border-left-color: color-mix(in srgb, var(--color-cream) 55%, transparent);
+}
+
+.section--warm .fact-item .fact-label {
+  color: var(--color-cream);
+}
+
+.section--warm .fact-item .fact-value {
+  color: color-mix(in srgb, var(--color-cream) 92%, transparent);
+}
+
+.section--warm .fact-item strong {
+  color: var(--color-cream);
+}
+
+.badge-strip {
+  display: grid;
+  gap: 1px;
+  background: color-mix(in srgb, var(--color-cream) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
+}
+
+.badge-item {
+  padding: 1.4rem 1.5rem;
+  background: linear-gradient(155deg, var(--color-tan), var(--color-brown));
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.badge-item .badge-icon {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--color-cream);
+}
+
+.badge-item .badge-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.badge-item p {
+  font-size: var(--text-small);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-cream);
+}
+
+/* --------------------------------------------------------------------------
+   9c. Fakten-Grid — belegt Versprechen mit überprüfbaren Fakten statt
+   eines weiteren Zitats. Bewusst auf warmem Grund (.section--warm, nicht
+   Cream, nicht on-dark): sonst stünden drei helle Cream-Sections in Folge
+   (Intro, Leistungen, Fakten), und direkt vor der dunklen Prozess-Section
+   wäre ein zweiter dunkler Vollbild-Block ebenfalls zu viel.
+   -------------------------------------------------------------------------- */
+.fact-grid {
+  display: grid;
+  gap: 1.5rem 2rem;
+}
+
+.fact-item {
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--color-tan);
+}
+
+.fact-item .fact-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+  margin-bottom: 0.4rem;
+}
+
+.fact-item .fact-value {
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
+}
+
+.fact-item strong {
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .fact-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Prozess-Sektion
+   -------------------------------------------------------------------------- */
+.process {
+  counter-reset: step;
+}
+
+/* Kompaktes Raster statt breiter vertikaler Liste — bei sechs Schritten
+   wäre eine lange Zeilen-für-Zeile-Liste unübersichtlich geworden.
+   Jede Zelle bekommt oben eine dünne Linie (dasselbe Verbindungsmotiv
+   wie .value-item auf "Über mich") statt eigener umrandeter Kästen. */
+.process-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1.75rem 1.5rem;
+}
+
+.process-step {
+  padding-top: 1.25rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
+}
+
+.process-step::before {
+  content: counter(step, upper-roman);
+  counter-increment: step;
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--color-tan);
+  margin-bottom: 0.6rem;
+}
+
+.process-step h3 {
+  margin-bottom: 0.4rem;
+  font-size: 1.05rem;
+}
+
+.process-step p {
+  font-size: var(--text-small);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--color-cream) 82%, var(--color-steel-blue));
+}
+
+/* --------------------------------------------------------------------------
+   11. CTA-Band
+   -------------------------------------------------------------------------- */
+.cta-band {
+  text-align: center;
+}
+
+.cta-band h2 {
+  max-width: 18ch;
+  margin-inline: auto;
+}
+
+.cta-band .lead {
+  margin: 1.25rem auto 2rem;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   12. Leistungen (Unterseite)
+   -------------------------------------------------------------------------- */
+.page-hero {
+  padding-top: calc(var(--header-h) + var(--space-section-sm));
+  padding-bottom: var(--space-section-sm);
+}
+
+.page-hero .lead {
+  margin-top: 1.25rem;
+}
+
+.detail-icon {
+  width: 3.25rem;
+  height: 3.25rem;
+  color: var(--color-brown);
+}
+
+.detail-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.1rem;
+  display: grid;
+  gap: 0.5rem;
+  font-size: var(--text-small);
+}
+
+.feature-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
+}
+
+.feature-list li::before {
+  content: "—";
+  color: var(--color-tan);
+  flex: none;
+}
+
+.feature-list .tag {
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+}
+
+.benefit {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.4rem;
+  border-left: 2px solid var(--color-tan);
+  background: color-mix(in srgb, var(--color-tan) 8%, transparent);
+  font-size: var(--text-small);
+  line-height: 1.6;
+}
+
+.benefit strong {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+  margin-bottom: 0.4rem;
+}
+
+/* Richtwerte statt Festpreisen — Trennlinien statt Karten, damit sich das
+   Muster in dieselbe ruhige Zeilen-Sprache wie .process-step/.value-item
+   einfügt statt eine eigene Preistabellen-Optik einzuführen. */
+.pricing-tiers {
+  display: grid;
+  margin-top: 1.25rem;
+}
+
+.pricing-tier {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-block: 0.85rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.pricing-tier:first-child {
+  border-top: none;
+}
+
+.pricing-tier-name {
+  display: block;
+  font-size: var(--text-small);
+  color: color-mix(in srgb, var(--color-navy) 85%, var(--color-cream));
+}
+
+.pricing-scope {
+  display: block;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--color-navy) 60%, var(--color-cream));
+  margin-top: 0.2rem;
+}
+
+.pricing-tier-value {
+  flex: none;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-brown);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.pricing-note {
+  margin-top: 0.85rem;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--color-navy) 62%, var(--color-cream));
+}
+
+/* --------------------------------------------------------------------------
+   12a. Leistungs-Übersicht — drei Karten, im Überblick sichtbar, per
+   natives <details>/<summary> aufklappbar (kein JS nötig, wie bei der FAQ
+   auf derselben Seite — bewusst dasselbe Muster statt eines neuen Widgets).
+   -------------------------------------------------------------------------- */
+/* Ein gemeinsames Panel statt drei einzeln umrandeter Karten: die drei
+   Leistungen gehören zusammen, nicht nebeneinander gestreut. Trennlinien
+   statt eigener Rahmen — und dank align-items: stretch (Grid-Standard)
+   ziehen sich diese Trennlinien immer über die volle Panel-Höhe, egal wie
+   unterschiedlich lang Überschrift/Text in den einzelnen Feldern sind. */
+.capability-panel {
+  display: grid;
+  border: 1px solid var(--line-soft);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--color-cream) 60%, transparent);
+  overflow: hidden;
+}
+
+.capability-details {
+  border-top: 1px solid var(--line-soft);
+}
+
+.capability-details:first-child {
+  border-top: none;
+}
+
+.capability-details[open] {
+  background: color-mix(in srgb, var(--color-tan) 6%, transparent);
+}
+
+.capability-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 2rem 1.75rem;
+  transition: background-color 0.25s ease;
+}
+
+/* Karten mit redaktionellem Foto/Textur-Kopf brauchen kein Padding auf
+   der Summary selbst — das übernimmt .capability-summary-body, damit
+   das Bild randlos bis an die Panel-Kante reicht. */
+.capability-summary:has(.capability-media) {
+  padding: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .capability-summary:hover {
+    background: color-mix(in srgb, var(--color-tan) 6%, transparent);
+  }
+}
+
+.capability-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Redaktionelles Foto (oder Textur-Platzhalter, wenn keines vorliegt) als
+   Vollbild-Kopf direkt in der Summary — bewusst keine eigene, separat
+   umrandete Karte darüber, sondern derselbe Panel-Ausschnitt wie der Rest. */
+.capability-media {
+  min-height: 12rem;
+}
+
+.capability-summary-body {
+  padding: 1.5rem 1.75rem 2rem;
+}
+
+/* Erstellung und Betreuung gehören als "Webseiten" zusammen — ein
+   gemeinsam beschrifteter Bereich, innen aber klar in zwei Felder
+   getrennt. Automatisierung ist keine Website-Leistung im engeren Sinn
+   und steht bewusst als eigene Zeile darunter, nicht daneben. */
+.capability-group-label {
+  display: block;
+  padding: 1.5rem 1.75rem 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+}
+
+.capability-group-row {
+  display: grid;
+}
+
+.capability-group-row .capability-details {
+  border-top: 1px solid var(--line-soft);
+}
+
+.capability-group-row .capability-details:first-child {
+  border-top: none;
+}
+
+.capability-summary .card-index {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  color: var(--color-tan);
+  margin-bottom: 0.75rem;
+}
+
+.capability-summary h3 {
+  font-size: var(--text-h3);
+  margin-bottom: 0.75rem;
+}
+
+.capability-intro {
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
+}
+
+.capability-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+}
+
+.capability-toggle-icon {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.capability-details[open] .capability-toggle-icon {
+  transform: rotate(45deg);
+}
+
+.capability-body {
+  padding: 0 1.75rem 2rem;
+  border-top: 1px solid var(--line-soft);
+  margin-top: -1px;
+}
+
+/* Der Inhalt blendet sanft ein statt schlagartig zu erscheinen — reine
+   Opacity/Transform-Animation (keine Höhe, kein Layout-Kostenpunkt), nur
+   in Browsern, die @starting-style kennen; überall sonst erscheint der
+   Inhalt einfach sofort, genau wie beim FAQ darunter. */
+.capability-body-inner {
+  padding-top: 1.5rem;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.22s var(--ease-out), transform 0.22s var(--ease-out);
+}
+
+@starting-style {
+  .capability-details[open] .capability-body-inner {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (min-width: 640px) {
+  .capability-group-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .capability-group-row .capability-details {
+    border-top: none;
+  }
+
+  .capability-group-row .capability-details:not(:first-child) {
+    border-left: 1px solid var(--line-soft);
+  }
+
+  /* Automatisierung steht als einzige Zeile auf voller Breite — Foto
+     und Text nebeneinander statt gestapelt, damit der zusätzliche
+     Platz nicht ungenutzt bleibt. */
+  .capability-summary:has(.capability-media) {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   12b. FAQ (native <details>/<summary>, kein JS nötig)
+   -------------------------------------------------------------------------- */
+.faq-list {
+  display: grid;
+  max-width: 46rem;
+}
+
+.faq-item {
+  border-top: 1px solid var(--line-soft);
+  padding-block: 1.15rem;
+}
+
+.faq-item:last-child {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--color-navy);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  flex: none;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-tan);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--color-steel-blue);
+  outline-offset: 4px;
+}
+
+.faq-item p {
+  margin-top: 1rem;
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
+  max-width: 58ch;
+}
+
+/* --------------------------------------------------------------------------
+   12b. Projekte & Referenzen
+   -------------------------------------------------------------------------- */
+.empty-state {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--line-soft);
+  background: color-mix(in srgb, var(--color-tan) 7%, transparent);
+  max-width: 46rem;
+}
+
+.empty-state p {
+  font-size: var(--text-small);
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
+}
+
+.empty-state p + p {
+  margin-top: 0.85rem;
+}
+
+.empty-state .btn {
+  margin-top: 1.4rem;
+}
+
+/* Bewusst klein und zurückhaltend, damit ein leeres Testimonial-Feld nicht
+   dieselbe Bühne bekommt wie ein echter Vertrauensbeweis. */
+.empty-state p.empty-state-note {
+  margin-top: 1.1rem;
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--color-navy) 60%, var(--color-cream));
+}
+
+.project-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: var(--space-inner);
+}
+
+/* Gestrichelter Rand ist hier bewusst anders als bei .service-card:
+   diese Kategorien sind Beispiele, keine abgeschlossenen Fallstudien —
+   der „Skizzen"-Rand trägt diese Ehrlichkeit mit. Kein Hover-Lift, weil
+   die Karte selbst kein Link ist (anders als .service-card mit "Mehr
+   erfahren"-Link) — ein Hebe-Effekt würde Klickbarkeit vortäuschen. */
+.project-card {
+  padding: 1.75rem 1.5rem;
+  border: 1px dashed color-mix(in srgb, var(--color-tan) 55%, transparent);
+  background: color-mix(in srgb, var(--color-cream) 55%, transparent);
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+
+.project-card:hover {
+  border-color: color-mix(in srgb, var(--color-tan) 85%, transparent);
+  background: color-mix(in srgb, var(--color-cream) 75%, transparent);
+}
+
+.project-card .card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-brown);
+  margin-bottom: 1.25rem;
+}
+
+.project-card .card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.project-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+.project-card p {
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-navy) 78%, var(--color-cream));
+}
+
+.testimonial-placeholder {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  text-align: center;
+  border-top: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
+}
+
+.testimonial-placeholder p {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+  line-height: 1.5;
+  max-width: 32rem;
+  margin-inline: auto;
+  color: var(--color-cream);
+}
+
+/* --------------------------------------------------------------------------
+   13. Über mich
+   -------------------------------------------------------------------------- */
+.about-grid {
+  display: grid;
+  gap: var(--space-inner);
+  align-items: start;
+}
+
+/* Aspect-ratio statt fixer min-height: das Bild wird nicht mehr je nach
+   Spaltenbreite unterschiedlich stark oben/unten beschnitten — es bleibt
+   immer vollständig zu sehen, in seinem eigenen Seitenverhältnis (4:5). */
+.about-portrait {
+  aspect-ratio: 4 / 5;
+  min-height: 20rem;
+}
+
+.values-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.value-item {
+  padding-top: 1.4rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-cream) 25%, transparent);
+}
+
+.value-item .value-word {
+  font-family: var(--font-script);
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  color: var(--color-tan);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.value-item p {
+  font-size: var(--text-small);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--color-cream) 82%, var(--color-steel-blue));
+}
+
+.founder-facts {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.founder-facts li {
+  display: grid;
+  gap: 0.15rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--color-tan);
+}
+
+.founder-facts .fact-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+}
+
+.founder-facts .fact-value {
+  font-size: var(--text-small);
+}
+
+/* Sport-Beleg: ein echtes Turnierfoto statt eines erfundenen Zitats */
+.sport-proof {
+  display: grid;
+  gap: var(--space-inner);
+}
+
+.sport-proof > .media {
+  min-height: 22rem;
+}
+
+.sport-proof-side {
+  display: grid;
+  align-content: center;
+}
+
+.sport-proof-side p {
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--color-navy) 82%, var(--color-cream));
+}
+
+@media (min-width: 768px) {
+  .sport-proof {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .sport-proof > .media {
+    min-height: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Kontakt & Formular
+   -------------------------------------------------------------------------- */
+.contact-grid {
+  display: grid;
+  gap: var(--space-inner);
+  align-items: start;
+}
+
+.contact-form {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-brown);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-navy);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-tan) 55%, transparent);
+  border-radius: 0;
+  padding: 0.65rem 0.1rem;
+  transition: border-color 0.3s var(--ease-out);
+  width: 100%;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--color-navy);
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: color-mix(in srgb, var(--color-brown) 55%, var(--color-cream));
+}
+
+.form-field.has-error input,
+.form-field.has-error select,
+.form-field.has-error textarea {
+  border-bottom-color: var(--color-brown);
+}
+
+.field-error {
+  font-size: 0.8rem;
+  color: var(--color-brown);
+  min-height: 1.2em;
+}
+
+.form-consent {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  font-size: var(--text-small);
+  color: color-mix(in srgb, var(--color-navy) 80%, var(--color-cream));
+}
+
+.form-consent input {
+  margin-top: 0.3rem;
+  accent-color: var(--color-navy);
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.form-status {
+  padding: 1.25rem 1.5rem;
+  border-left: 2px solid var(--color-steel-blue);
+  background: color-mix(in srgb, var(--color-steel-blue) 10%, transparent);
+  font-size: var(--text-small);
+}
+
+.form-status[hidden] {
+  display: none;
+}
+
+.contact-meta {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.contact-meta .meta-block h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-meta .meta-block p,
+.contact-meta .meta-block a {
+  font-size: var(--text-small);
+  line-height: 1.8;
+}
+
+.map-placeholder {
+  min-height: 16rem;
+  display: grid;
+  place-items: center;
+}
+
+.map-placeholder span {
+  position: relative;
+  z-index: 1;
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-cream);
+  text-align: center;
+  padding-inline: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   15. Rechtsseiten
+   -------------------------------------------------------------------------- */
+.legal-content {
+  max-width: 46rem;
+}
+
+/* Jeder Abschnitt bekommt einen sichtbaren Trenner statt einer
+   ununterbrochenen Textwand — klare Struktur beim Überfliegen */
+.legal-content > h2 {
+  font-size: var(--text-h2-compact);
+  margin-top: var(--space-inner);
+  padding-top: var(--space-inner);
+  margin-bottom: 0.85rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.legal-content > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.legal-content h3 {
+  font-size: 1.15rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.legal-content p,
+.legal-content li {
+  font-size: var(--text-small);
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--color-navy) 85%, var(--color-cream));
+}
+
+.legal-content p + p {
+  margin-top: 0.85rem;
+}
+
+.legal-content ul {
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.4rem;
+  margin-block: 0.6rem;
+}
+
+.legal-content address {
+  font-style: normal;
+  font-size: var(--text-small);
+  line-height: 1.65;
+  margin-top: 0.6rem;
+}
+
+/* --------------------------------------------------------------------------
+   16. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background: var(--color-navy);
+  color: var(--color-cream);
+  padding-block: var(--space-inner) 2rem;
+  margin-top: 0;
+}
+
+.footer-grid {
+  display: grid;
+  gap: 2rem;
+  padding-bottom: var(--space-inner);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
+}
+
+.footer-brand .brand {
+  color: var(--color-cream);
+  font-size: 1.5rem;
+}
+
+.footer-brand p {
+  margin-top: 1rem;
+  font-size: var(--text-small);
+  color: color-mix(in srgb, var(--color-cream) 72%, var(--color-steel-blue));
+  max-width: 30ch;
+}
+
+.footer-col h3 {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-cream) 65%, var(--color-steel-blue));
+  margin-bottom: 1.15rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.footer-col a {
+  color: var(--color-cream);
+  font-size: var(--text-small);
+}
+
+.footer-col a:hover {
+  color: var(--color-tan);
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--color-cream) 60%, var(--color-steel-blue));
+}
+
+.footer-claim {
+  font-family: var(--font-script);
+  font-size: 1.1rem;
+  color: var(--color-tan);
+}
+
+/* --------------------------------------------------------------------------
+   17. Scroll-Reveal (IntersectionObserver setzt .is-visible)
+   -------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+
+[data-reveal="left"] { transform: translateX(-2.5rem); }
+[data-reveal="right"] { transform: translateX(2.5rem); }
+[data-reveal="fade"] { transform: none; }
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Kein JS: Inhalte niemals verstecken */
+.no-js [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   18. CSS Scroll-Driven Animations (progressive enhancement)
+   JS-Fallback: main.js prüft CSS.supports('animation-timeline: scroll()')
+   und übernimmt sonst per requestAnimationFrame.
+   -------------------------------------------------------------------------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 101;
+  background: var(--color-tan);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: progress-grow linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes progress-grow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+}
+
+/* --------------------------------------------------------------------------
+   19. Reduced Motion — alle Animationen bekommen eine ruhige Alternative
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-progress {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   20. Breakpoints — mobile-first
+   -------------------------------------------------------------------------- */
+@media (min-width: 480px) {
+  .services-grid {
+    gap: 1.75rem;
+  }
+
+  .cta-actions {
+    gap: 1.25rem;
+  }
+
+  .process-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: 5rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .about-grid {
+    grid-template-columns: 5fr 7fr;
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 7fr 5fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+
+  .process-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .badge-strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-nav {
+    display: block;
+  }
+
+  .nav-toggle,
+  .nav-overlay {
+    display: none;
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --container: 78rem;
+    --container-wide: 96rem;
+  }
+
+  h1.hero-intro-copy-line {
+    max-width: 11ch;
+  }
+}

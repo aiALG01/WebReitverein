@@ -1,0 +1,31 @@
+# Alewing
+
+> Alewing baut Websites für kleine, regionale Betriebe ohne eigene Website —
+> persönlich betreut von der Gründerin Anna Lena Gerth, mit Website-Erstellung,
+> Betreuung und Automatisierung wiederkehrender Abläufe aus einer Hand. Solo-Studio
+> mit Sitz in Gera, Thüringen (Deutschland). Der Name spielt auf Pegasus an: Flügel
+> als Bild für Pferde-Bezug und dafür, Kundschaft sichtbar nach oben zu tragen.
+
+Anna Lena Gerth ist Wirtschaftsinformatikerin und ehemalige ERP-Expertin bei der
+Jenoptik AG. Sie arbeitet bewusst allein, ohne Agentur-Apparat: Eine Ansprechperson,
+kein Baukasten, kein Fachchinesisch. Zielgruppe sind kleine, regionale Betriebe aus
+Handwerk, Handel und Dienstleistung, die noch keine oder keine überzeugende Website
+haben.
+
+## Leistungen
+
+- [Leistungen im Überblick](https://www.studio-gerth.de/leistungen.html): Webseiten-Erstellung, Webseiten-Betreuung und Automatisierung wiederkehrender Abläufe — inklusive Preisen und häufiger Fragen (FAQ).
+- [Webseiten-Erstellung](https://www.studio-gerth.de/leistungen.html#erstellung): individuelles Design und Umsetzung in sauberem Code, kein Baukasten. Richtwerte: Kleine Website (1–5 Seiten) 1.200–2.000 €, Business Website (5–10 Seiten) 2.000–3.500 €, individuelle Projekte auf Anfrage. Zusatz Video-Hero-Section: 350 €.
+- [Webseiten-Betreuung](https://www.studio-gerth.de/leistungen.html#betreuung): Hosting, Updates, Inhaltsänderungen und technische Wartung aus einer Hand. Richtwert: 50–200 € pro Monat, abhängig von Hosting, Wartung und Änderungsaufwand.
+- [Automatisierung wiederkehrender Abläufe](https://www.studio-gerth.de/leistungen.html#automatisierung): Formular- und E-Mail-Workflows, Termin- und Anfragenmanagement, inklusive Auftragsverarbeitungsvertrag. Individuelle Kalkulation.
+
+## Über Alewing
+
+- [Über mich](https://www.studio-gerth.de/ueber-mich.html): Markenstory und Werdegang der Gründerin Anna Lena Gerth.
+- [Projekte & Referenzen](https://www.studio-gerth.de/projekte.html): aktueller Projektstand, ehrlich ohne erfundene Referenzen.
+- [Kontakt](https://www.studio-gerth.de/kontakt.html): Kontaktformular, E-Mail lena.gerth@outlook.de, Telefon +49 1520 2758286, Naulitz 9a, 07554 Gera.
+
+## Rechtliches
+
+- [Impressum](https://www.studio-gerth.de/impressum.html)
+- [Datenschutzerklärung](https://www.studio-gerth.de/datenschutz.html)
