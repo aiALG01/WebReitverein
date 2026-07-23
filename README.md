@@ -1,4 +1,4 @@
-# Alewing — Website
+# AL-WING — Website
 
 Minimalistische, hochwertige Agentur-Website im Stil „Quiet Luxury /
 Editorial Discipline". Reines HTML/CSS/Vanilla-JS — kein Build-Step, direkt
